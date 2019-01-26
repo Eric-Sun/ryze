@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <base/>
+    <title>Your Shopping Cart</title>
+    <script src="/static/js/angular.min.js"></script>
+</head>
+<body ng-controller='CartController'>
+<h1>Your Order</h1>
+
+<input ng-model="a" ng-change="bbbbb()" />
+<span>{{b}}</span>
+</body>
+</html>
+
+<script>
+    var myApp = angular.module('myApp', []);
+
+    myApp.controller('CartController', function ($scope) {
+        $scope.b="aaa";
+
+        $scope.bbbbb=function(){
+            console.log("fdafdas");
+            $scope.b=$scope.b+"bbb";
+        }
+    });
+
+
+
+</script>
