@@ -2,87 +2,110 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="239e95d5-f826-4059-b689-a8ffd3a480cd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AddTopicReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AddTopicResp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarAddReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarAddResp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/BarDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarDeleteReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarListReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarListResp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarMemberAddReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarMemberAddResp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/BarMemberDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarMemberDeleteReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/BarVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/ListTopicReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/ListTopicResp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/PostAddReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/PostAddResp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/PostDeleteReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/PostDetailResp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/PostFacade.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/PostListReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/PostListResp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/PostUpdateContentReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/TopicDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/TopicDeleteReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/TopicDetailResp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/TopicFacade.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/TopicUpdateContentReq.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/TopicVO.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/AccountDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/AuthorityDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/BannerDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/ImgDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/ItemDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/OrderActionRecordDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/OrderDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/PainterInfoDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/ResourceDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/RoomChatDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/UserDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/WechatInfoDAO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/AccountFacade.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/AdminPainterFacade.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/AuthorityFacade.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/BannerFacade.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/ItemFacade.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/OrderFacade.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/PainterFacade.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/ResourceFacade.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/RoomChatFacade.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/UserFacade.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/services/ImgService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/services/OrderService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/services/ThumbService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/AccountVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/AuthorityVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/BannerVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/ImgVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/ItemVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/OrderActionRecordVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/OrderVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/PainterVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/ResourceVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/RoomChatContentVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/UserVO.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/rezy.iml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/core/Constants.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/core/Constants.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/core/ErrorCode.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/core/ErrorCode.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/utils/InternetUtil.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/utils/InternetUtil.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/utils/MD5Util.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/utils/MD5Util.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/utils/WechatUtil.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/utils/WechatUtil.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/wx/WechatMenuManager.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/wx/WechatMenuManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/wx/WechatTokenManager.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/wx/WechatTokenManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/wx/resp/AccessTokenResp.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/wx/resp/AccessTokenResp.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/garen/wx/resp/ErrorResp.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/wx/resp/ErrorResp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/config/dev/dataSource.xml" afterPath="$PROJECT_DIR$/core/config/dev/dataSource.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/config/dev/log4j.properties" afterPath="$PROJECT_DIR$/core/config/dev/log4j.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/pom.xml" afterPath="$PROJECT_DIR$/api/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/pom.xml" afterPath="$PROJECT_DIR$/core/pom.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/AccountDAO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AccountFacade.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/AccountVO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/AuthorityDAO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AuthorityFacade.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/AuthorityVO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ResourceDAO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ResourceFacade.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/ResourceVO.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AdminPainterOrderGetReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AdminPainterOrderListReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AdminPainterRecordAddReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/BannerListReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ItemAddReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ItemDeleteReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ItemGetReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ItemListReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ItemUpdateReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/OrderAddReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/OrderDeleteReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/OrderGetReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/OrderListByUserIdReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/OrderListReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/OrderSetPainterReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/OrderUpdateBasicInfoReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/OrderUpdateStatusReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/OrderUploadImgReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/PainterAddReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/PainterDeleteReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/PainterGetReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/PainterListReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/PainterUpdateReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/UserCheckMobileReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/UserLoginReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/UserRegisterReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/WechatCheckTokenReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/WechatLoginRequest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/WechatMenuCreateReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/WechatRegisterRequest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatContentResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatCreateRoomReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatCreateRoomResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatInitRoomReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatInitRoomResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatJoinRoomReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatJoinRoomResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatLoadContentReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatLoadContentResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatSendContentReq.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatSendContentResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AdminPainterOrderActionRecordResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AdminPainterOrderGetResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AdminPainterOrderListResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/BannerGetResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/BannerListResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/ImgGetResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/ItemAddResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/ItemGetResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/ItemListResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/OrderAddResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/OrderGetResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/OrderListResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/OrderUploadImgResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/PainterAddResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/PainterGetResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/PainterListResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/PainterSimpleResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/UserLoginResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/UserRegisterResp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/WechatLoginResponse.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AccountAddReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AccountAddReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AccountCheckExistedReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AccountCheckExistedReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AccountDeleteReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AccountDeleteReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AccountGetAccountIdByNameReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AccountGetAccountIdByNameReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AccountGetAuthorityByNameReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AccountGetAuthorityByNameReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AccountGetReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AccountGetReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AccountListReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AccountListReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AccountUpdateReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AccountUpdateReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AuthorityAddReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AuthorityAddReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AuthorityDeleteReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AuthorityDeleteReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AuthorityGetReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AuthorityGetReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AuthorityListReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AuthorityListReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AuthorityUpdateReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AuthorityUpdateReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ResourceAddReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/ResourceAddReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ResourceDeleteReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/ResourceDeleteReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ResourceGetReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/ResourceGetReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ResourceGetResourceListByAuthorityIdReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/ResourceGetResourceListByAuthorityIdReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ResourceListReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/ResourceListReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ResourceUpdateReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/ResourceUpdateReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/ResourcetAuthorityListByResourceNameReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/ResourcetAuthorityListByResourceNameReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AccountAddResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AccountAddResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AccountCheckExistedResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AccountCheckExistedResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AccountGetAccountIdByNameResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AccountGetAccountIdByNameResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AccountGetAuthorityByNameResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AccountGetAuthorityByNameResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AccountGetResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AccountGetResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AccountListResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AccountListResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AuthorityAddResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AuthorityAddResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AuthorityGetResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AuthorityGetResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/AuthorityListResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AuthorityListResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/ResourceAddResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/ResourceAddResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/ResourceGetResourceListByAuthorityIdResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/ResourceGetResourceListByAuthorityIdResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/ResourceGetResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/ResourceGetResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/resp/ResourceListResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/ResourceListResp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/server.jar" afterPath="$PROJECT_DIR$/core/server.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="che.iws" />
@@ -157,11 +180,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TopicFacade.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/TopicFacade.java">
+      <file leaf-file-name="ResourceFacade.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ResourceFacade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4054054" vertical-offset="270" max-vertical-offset="1005">
-              <caret line="48" column="44" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1022" max-vertical-offset="1440">
+              <caret line="90" column="42" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.23498695" vertical-offset="0" max-vertical-offset="383">
+              <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -185,14 +220,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/RoomChatVO.java" />
-        <option value="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatLoadContentResp.java" />
-        <option value="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatInitRoomResp.java" />
-        <option value="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatLoadContentReq.java" />
-        <option value="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatSendContentReq.java" />
-        <option value="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatSendContentResp.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/garen/vos/RoomChatContentVO.java" />
-        <option value="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatContentResp.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/garen/core/Constants.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/RoomChatFacade.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/RoomChatDAO.java" />
@@ -236,6 +263,14 @@
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarMemberDeleteReq.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/BarMemberDAO.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/AccountVO.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/ResourceVO.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ResourceDAO.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/AccountDAO.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AccountFacade.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AuthorityFacade.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/AuthorityDAO.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ResourceFacade.java" />
       </list>
     </option>
   </component>
@@ -474,120 +509,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="j13" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="facades" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="j13" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="daos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="j13" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -675,82 +596,6 @@
               <option name="myItemId" value="j13" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="api" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="api" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="j13" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="api" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="req" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="api" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="j13" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -784,18 +629,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.j13.ryze.vos" />
+      <recent name="com.j13.ryze.daos" />
+      <recent name="com.j13.ryze.facades" />
       <recent name="com.j13.garen.api.req" />
       <recent name="com.j13.garen.api.resp" />
-      <recent name="com.j13.garen.poppy" />
-      <recent name="com.j13.garen.utils" />
-      <recent name="com.j13.garen.facade.req" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos" />
+      <recent name="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos" />
       <recent name="$PROJECT_DIR$/core/src" />
       <recent name="$PROJECT_DIR$/core/target/classes" />
       <recent name="$PROJECT_DIR$/core/src/main/java" />
-      <recent name="$PROJECT_DIR$/api/src/main/java/com/j13/garen/api" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/j13/garen/facade" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.j13.bar.server.services" />
@@ -1633,12 +1478,12 @@
       <workItem from="1548511958022" duration="110000" />
       <workItem from="1548512473043" duration="3888000" />
       <workItem from="1548907840708" duration="122000" />
-      <workItem from="1549379571034" duration="12825000" />
+      <workItem from="1549379571034" duration="15545000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="540191000" />
+    <option name="totallyTimeSpent" value="542911000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1662,7 +1507,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="724" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1672,7 +1517,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32178217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32178217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6699507" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2625202" sideWeight="0.4097561" order="3" side_tool="true" content_ui="tabs" />
@@ -1684,7 +1529,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18739903" sideWeight="0.73594546" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3441034" sideWeight="0.5902439" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3441034" sideWeight="0.5902439" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28877887" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1802,7 +1647,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="181" />
+      <option name="time" value="182" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1811,62 +1656,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/utils/WechatUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="163" max-vertical-offset="750">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/roomChat/RoomChatLoadContentReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
-          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/garen/api/req/AccountAddReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/core/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1170">
-          <caret line="6" column="71" selection-start-line="6" selection-start-column="71" selection-end-line="6" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/config/deploy/beans.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.6" vertical-offset="0" max-vertical-offset="255">
-          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/config/deploy/dataSource.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.2" vertical-offset="0" max-vertical-offset="600">
-          <caret line="17" column="50" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/UserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AddTopicResp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12975779" vertical-offset="0" max-vertical-offset="578">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/ListTopicResp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.23356402" vertical-offset="0" max-vertical-offset="578">
@@ -1913,13 +1702,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4650">
           <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
-          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -2329,14 +2111,14 @@
         <state vertical-scroll-proportion="0.19582245" vertical-offset="30" max-vertical-offset="480">
           <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
           <folding>
-            <element signature="e#229#230#0" expanded="true" />
-            <element signature="e#257#258#0" expanded="true" />
-            <element signature="e#296#297#0" expanded="true" />
-            <element signature="e#330#331#0" expanded="true" />
-            <element signature="e#360#361#0" expanded="true" />
-            <element signature="e#389#390#0" expanded="true" />
-            <element signature="e#430#431#0" expanded="true" />
-            <element signature="e#466#467#0" expanded="true" />
+            <element signature="e#229#230#0" expanded="false" />
+            <element signature="e#257#258#0" expanded="false" />
+            <element signature="e#296#297#0" expanded="false" />
+            <element signature="e#330#331#0" expanded="false" />
+            <element signature="e#360#361#0" expanded="false" />
+            <element signature="e#389#390#0" expanded="false" />
+            <element signature="e#430#431#0" expanded="false" />
+            <element signature="e#466#467#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2391,10 +2173,121 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/AuthorityDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3918919" vertical-offset="1055" max-vertical-offset="1425">
+          <caret line="89" column="41" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..authority..." />
+            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
+            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
+            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="update autho..." />
+            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="delete from ..." />
+            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
+            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="update autho..." />
+            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..authority..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AuthorityFacade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23498695" vertical-offset="255" max-vertical-offset="1230">
+          <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/ResourceVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33159268" vertical-offset="8" max-vertical-offset="405">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/AccountVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07832898" vertical-offset="0" max-vertical-offset="525">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ResourceDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.113513514" vertical-offset="423" max-vertical-offset="1215">
+          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select a.id,..authority..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select * fro..resource..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select * fro..resource..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update resou..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update resou..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select resou..authority_resource..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/AccountDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6891892" vertical-offset="1890" max-vertical-offset="2490">
+          <caret line="118" column="21" selection-start-line="118" selection-start-column="21" selection-end-line="118" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update accou..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update accou..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select a.id,..account..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select id fr..account..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select count..account..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select count..account..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select a.id ..account..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select a.id ..account..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update accou..." />
+            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update accou..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AccountFacade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2027028" vertical-offset="1355" max-vertical-offset="1980">
+          <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/TopicFacade.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4054054" vertical-offset="270" max-vertical-offset="1005">
-          <caret line="48" column="44" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.36486486" vertical-offset="270" max-vertical-offset="1005">
+          <caret line="47" column="27" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ResourceFacade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1022" max-vertical-offset="1440">
+          <caret line="90" column="42" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23498695" vertical-offset="0" max-vertical-offset="383">
+          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
           <folding />
         </state>
       </provider>
