@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="239e95d5-f826-4059-b689-a8ffd3a480cd" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/services/UserService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/UserDAO.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/UserDAO.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="che.iws" />
@@ -79,20 +83,18 @@
       <file leaf-file-name="ResourceFacade.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ResourceFacade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1022" max-vertical-offset="1440">
-              <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1260">
+              <caret line="81" column="28" selection-start-line="81" selection-start-column="28" selection-end-line="81" selection-end-column="28" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="BarVO.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/BarVO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.23498695" vertical-offset="0" max-vertical-offset="383">
-              <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.37220845" vertical-offset="0" max-vertical-offset="540">
+              <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -116,11 +118,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/garen/core/Constants.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/RoomChatFacade.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/RoomChatDAO.java" />
         <option value="$PROJECT_DIR$/core/config/deploy/dataSource.xml" />
-        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/UserDAO.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AddTopicReq.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AddTopicResp.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/TopicDetailResp.java" />
@@ -148,7 +148,6 @@
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarListResp.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/TopicVO.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/BarVO.java" />
-        <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/BarDAO.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/TopicDAO.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarMemberAddReq.java" />
@@ -158,7 +157,6 @@
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/TopicFacade.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarMemberDeleteReq.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/BarMemberDAO.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/AccountVO.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/ResourceVO.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ResourceDAO.java" />
@@ -167,6 +165,10 @@
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AuthorityFacade.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/AuthorityDAO.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ResourceFacade.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/UserDAO.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/services/UserService.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java" />
       </list>
     </option>
   </component>
@@ -217,6 +219,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -387,7 +390,83 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="vos" />
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryze" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryze" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="j13" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryze" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="facades" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryze" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryze" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="j13" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryze" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daos" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -495,7 +574,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -505,7 +583,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="dynamic.classpath" value="false" />
@@ -1375,11 +1453,13 @@
       <workItem from="1548512473043" duration="3888000" />
       <workItem from="1548907840708" duration="122000" />
       <workItem from="1549379571034" duration="15545000" />
+      <workItem from="1549593183497" duration="1767000" />
+      <workItem from="1549683508753" duration="1424000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="542911000" />
+    <option name="totallyTimeSpent" value="546102000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1403,7 +1483,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="724" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1425,8 +1505,8 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18739903" sideWeight="0.73594546" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3441034" sideWeight="0.5902439" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28877887" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3441034" sideWeight="0.5902439" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28877887" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959612" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1552,20 +1632,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/ListTopicResp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23356402" vertical-offset="0" max-vertical-offset="578">
-          <caret line="9" column="32" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/config/deploy/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="403">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/config/dev/log4j.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
@@ -1626,7 +1692,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
           <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1641,24 +1706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="780">
           <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
-          <folding>
-            <element signature="e#326#327#0" expanded="true" />
-            <element signature="e#354#355#0" expanded="true" />
-            <element signature="e#393#394#0" expanded="true" />
-            <element signature="e#427#428#0" expanded="true" />
-            <element signature="e#461#462#0" expanded="true" />
-            <element signature="e#491#492#0" expanded="true" />
-            <element signature="e#537#538#0" expanded="true" />
-            <element signature="e#575#576#0" expanded="true" />
-            <element signature="e#606#607#0" expanded="true" />
-            <element signature="e#636#637#0" expanded="true" />
-            <element signature="e#679#680#0" expanded="true" />
-            <element signature="e#717#718#0" expanded="true" />
-            <element signature="e#747#748#0" expanded="true" />
-            <element signature="e#776#777#0" expanded="true" />
-            <element signature="e#817#818#0" expanded="true" />
-            <element signature="e#853#854#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1666,7 +1713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10380623" vertical-offset="0" max-vertical-offset="578">
           <caret line="4" column="28" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1674,16 +1720,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6747405" vertical-offset="0" max-vertical-offset="578">
           <caret line="26" column="56" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding>
-            <element signature="e#226#227#0" expanded="false" />
-            <element signature="e#255#256#0" expanded="false" />
-            <element signature="e#296#297#0" expanded="false" />
-            <element signature="e#332#333#0" expanded="false" />
-            <element signature="e#362#363#0" expanded="false" />
-            <element signature="e#391#392#0" expanded="false" />
-            <element signature="e#432#433#0" expanded="false" />
-            <element signature="e#468#469#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1691,12 +1727,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.25951558" vertical-offset="0" max-vertical-offset="578">
           <caret line="10" column="47" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-          <folding>
-            <element signature="e#291#292#0" expanded="false" />
-            <element signature="e#321#322#0" expanded="false" />
-            <element signature="e#367#368#0" expanded="false" />
-            <element signature="e#405#406#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1704,20 +1734,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.065743946" vertical-offset="22" max-vertical-offset="630">
           <caret line="4" column="34" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="34" />
-          <folding>
-            <element signature="e#293#294#0" expanded="false" />
-            <element signature="e#323#324#0" expanded="false" />
-            <element signature="e#369#370#0" expanded="false" />
-            <element signature="e#407#408#0" expanded="false" />
-            <element signature="e#438#439#0" expanded="false" />
-            <element signature="e#468#469#0" expanded="false" />
-            <element signature="e#511#512#0" expanded="false" />
-            <element signature="e#549#550#0" expanded="false" />
-            <element signature="e#579#580#0" expanded="false" />
-            <element signature="e#608#609#0" expanded="false" />
-            <element signature="e#649#650#0" expanded="false" />
-            <element signature="e#685#686#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1738,16 +1754,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10380623" vertical-offset="0" max-vertical-offset="578">
           <caret line="4" column="22" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="22" />
-          <folding>
-            <element signature="e#224#225#0" expanded="false" />
-            <element signature="e#251#252#0" expanded="false" />
-            <element signature="e#291#292#0" expanded="false" />
-            <element signature="e#323#324#0" expanded="false" />
-            <element signature="e#353#354#0" expanded="false" />
-            <element signature="e#382#383#0" expanded="false" />
-            <element signature="e#423#424#0" expanded="false" />
-            <element signature="e#459#460#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1755,33 +1761,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1816609" vertical-offset="0" max-vertical-offset="578">
           <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-          <folding>
-            <element signature="e#223#224#0" expanded="false" />
-            <element signature="e#251#252#0" expanded="false" />
-            <element signature="e#290#291#0" expanded="false" />
-            <element signature="e#324#325#0" expanded="false" />
-            <element signature="e#354#355#0" expanded="false" />
-            <element signature="e#383#384#0" expanded="false" />
-            <element signature="e#424#425#0" expanded="false" />
-            <element signature="e#460#461#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarListReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1816609" vertical-offset="0" max-vertical-offset="578">
-          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-          <folding>
-            <element signature="e#223#224#0" expanded="false" />
-            <element signature="e#253#254#0" expanded="false" />
-            <element signature="e#296#297#0" expanded="false" />
-            <element signature="e#334#335#0" expanded="false" />
-            <element signature="e#362#363#0" expanded="false" />
-            <element signature="e#389#390#0" expanded="false" />
-            <element signature="e#426#427#0" expanded="false" />
-            <element signature="e#458#459#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1789,32 +1768,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.70069206" vertical-offset="45" max-vertical-offset="1080">
           <caret line="30" column="37" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="37" />
-          <folding>
-            <element signature="e#456#457#0" expanded="false" />
-            <element signature="e#489#490#0" expanded="false" />
-            <element signature="e#539#540#0" expanded="false" />
-            <element signature="e#583#584#0" expanded="false" />
-            <element signature="e#617#618#0" expanded="false" />
-            <element signature="e#647#648#0" expanded="false" />
-            <element signature="e#693#694#0" expanded="false" />
-            <element signature="e#731#732#0" expanded="false" />
-            <element signature="e#761#762#0" expanded="false" />
-            <element signature="e#790#791#0" expanded="false" />
-            <element signature="e#831#832#0" expanded="false" />
-            <element signature="e#867#868#0" expanded="false" />
-            <element signature="e#897#898#0" expanded="false" />
-            <element signature="e#926#927#0" expanded="false" />
-            <element signature="e#967#968#0" expanded="false" />
-            <element signature="e#1003#1004#0" expanded="false" />
-            <element signature="e#1038#1039#0" expanded="false" />
-            <element signature="e#1069#1070#0" expanded="false" />
-            <element signature="e#1117#1118#0" expanded="false" />
-            <element signature="e#1157#1158#0" expanded="false" />
-            <element signature="e#1196#1197#0" expanded="false" />
-            <element signature="e#1231#1232#0" expanded="false" />
-            <element signature="e#1287#1288#0" expanded="false" />
-            <element signature="e#1335#1336#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1822,9 +1775,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1816609" vertical-offset="0" max-vertical-offset="578">
           <caret line="7" column="31" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1832,12 +1782,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.12975779" vertical-offset="0" max-vertical-offset="578">
           <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-          <folding>
-            <element signature="e#175#176#0" expanded="true" />
-            <element signature="e#204#205#0" expanded="true" />
-            <element signature="e#245#246#0" expanded="true" />
-            <element signature="e#281#282#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1845,24 +1789,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.25951558" vertical-offset="30" max-vertical-offset="780">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <element signature="e#322#323#0" expanded="false" />
-            <element signature="e#350#351#0" expanded="false" />
-            <element signature="e#389#390#0" expanded="false" />
-            <element signature="e#423#424#0" expanded="false" />
-            <element signature="e#454#455#0" expanded="false" />
-            <element signature="e#484#485#0" expanded="false" />
-            <element signature="e#527#528#0" expanded="false" />
-            <element signature="e#565#566#0" expanded="false" />
-            <element signature="e#593#594#0" expanded="false" />
-            <element signature="e#620#621#0" expanded="false" />
-            <element signature="e#657#658#0" expanded="false" />
-            <element signature="e#689#690#0" expanded="false" />
-            <element signature="e#720#721#0" expanded="false" />
-            <element signature="e#750#751#0" expanded="false" />
-            <element signature="e#793#794#0" expanded="false" />
-            <element signature="e#831#832#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1870,16 +1796,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10380623" vertical-offset="0" max-vertical-offset="578">
           <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-          <folding>
-            <element signature="e#229#230#0" expanded="true" />
-            <element signature="e#259#260#0" expanded="true" />
-            <element signature="e#302#303#0" expanded="true" />
-            <element signature="e#340#341#0" expanded="true" />
-            <element signature="e#370#371#0" expanded="true" />
-            <element signature="e#399#400#0" expanded="true" />
-            <element signature="e#440#441#0" expanded="true" />
-            <element signature="e#476#477#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1887,23 +1803,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.79646015" vertical-offset="0" max-vertical-offset="615">
           <caret line="34" column="29" selection-start-line="34" selection-start-column="29" selection-end-line="34" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarListResp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23356402" vertical-offset="0" max-vertical-offset="578">
-          <caret line="9" column="27" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#229#230#0" expanded="false" />
-            <element signature="e#256#257#0" expanded="false" />
-            <element signature="e#309#310#0" expanded="false" />
-            <element signature="e#341#342#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1921,33 +1820,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/BarVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9399478" vertical-offset="0" max-vertical-offset="570">
-          <caret line="34" column="16" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="16" />
-          <folding>
-            <element signature="e#673#674#0" expanded="false" />
-            <element signature="e#717#718#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.618799" vertical-offset="108" max-vertical-offset="540">
-          <caret line="33" column="69" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/TopicDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33243242" vertical-offset="282" max-vertical-offset="705">
           <caret line="44" column="40" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
-          <folding>
-            <marker date="1549456950000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1549456950000" expanded="true" signature="-1:-1" placeholder="select user_..topic..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1955,16 +1832,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19582245" vertical-offset="30" max-vertical-offset="480">
           <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-          <folding>
-            <element signature="e#226#227#0" expanded="false" />
-            <element signature="e#254#255#0" expanded="false" />
-            <element signature="e#293#294#0" expanded="false" />
-            <element signature="e#327#328#0" expanded="false" />
-            <element signature="e#357#358#0" expanded="false" />
-            <element signature="e#386#387#0" expanded="false" />
-            <element signature="e#427#428#0" expanded="false" />
-            <element signature="e#463#464#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1985,7 +1852,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6475196" vertical-offset="277" max-vertical-offset="675">
           <caret line="35" column="47" selection-start-line="35" selection-start-column="47" selection-end-line="35" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1993,12 +1859,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3524804" vertical-offset="30" max-vertical-offset="600">
           <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
-          <folding>
-            <element signature="e#323#324#0" expanded="false" />
-            <element signature="e#352#353#0" expanded="false" />
-            <element signature="e#393#394#0" expanded="false" />
-            <element signature="e#429#430#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2006,16 +1866,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19582245" vertical-offset="30" max-vertical-offset="480">
           <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-          <folding>
-            <element signature="e#229#230#0" expanded="false" />
-            <element signature="e#257#258#0" expanded="false" />
-            <element signature="e#296#297#0" expanded="false" />
-            <element signature="e#330#331#0" expanded="false" />
-            <element signature="e#360#361#0" expanded="false" />
-            <element signature="e#389#390#0" expanded="false" />
-            <element signature="e#430#431#0" expanded="false" />
-            <element signature="e#466#467#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2024,20 +1874,7 @@
         <state vertical-scroll-proportion="0.5135135" vertical-offset="275" max-vertical-offset="795">
           <caret line="34" column="61" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1549525118000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1549525118000" expanded="true" signature="-1:-1" placeholder="select count..bar_member..." />
-            <marker date="1549525118000" expanded="true" signature="-1:-1" placeholder="update bar_m..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33159268" vertical-offset="263" max-vertical-offset="1335">
-          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2047,13 +1884,7 @@
         <state vertical-scroll-proportion="0.47297296" vertical-offset="200" max-vertical-offset="1290">
           <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="39" selection-end-column="42" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1549455302000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1549455302000" expanded="true" signature="-1:-1" placeholder="update bar s..." />
-            <marker date="1549455302000" expanded="true" signature="-1:-1" placeholder="update bar s..." />
-            <marker date="1549455302000" expanded="true" signature="-1:-1" placeholder="select id,na..bar..." />
-            <marker date="1549455302000" expanded="true" signature="-1:-1" placeholder="select count..bar..." />
-            <marker date="1549455302000" expanded="true" signature="-1:-1" placeholder="select count..bar..." />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2062,10 +1893,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.14804469" vertical-offset="218" max-vertical-offset="585">
           <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
-          <folding>
-            <element signature="e#447#448#0" expanded="true" />
-            <element signature="e#489#490#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2074,15 +1901,7 @@
         <state vertical-scroll-proportion="0.3918919" vertical-offset="1055" max-vertical-offset="1425">
           <caret line="89" column="41" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..authority..." />
-            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="update autho..." />
-            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="delete from ..." />
-            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="update autho..." />
-            <marker date="1549531144000" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..authority..." />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2091,9 +1910,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.23498695" vertical-offset="255" max-vertical-offset="1230">
           <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2101,7 +1917,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33159268" vertical-offset="8" max-vertical-offset="405">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2118,14 +1933,7 @@
         <state vertical-scroll-proportion="0.113513514" vertical-offset="423" max-vertical-offset="1215">
           <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select a.id,..authority..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select * fro..resource..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select * fro..resource..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update resou..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update resou..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select resou..authority_resource..." />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2135,19 +1943,7 @@
         <state vertical-scroll-proportion="-0.6891892" vertical-offset="1890" max-vertical-offset="2490">
           <caret line="118" column="21" selection-start-line="118" selection-start-column="21" selection-end-line="118" selection-end-column="21" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update accou..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update accou..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select a.id,..account..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select id fr..account..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select count..account..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select count..account..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select a.id ..account..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="select a.id ..account..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update accou..." />
-            <marker date="1549530180000" expanded="true" signature="-1:-1" placeholder="update accou..." />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2156,9 +1952,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.2027028" vertical-offset="1355" max-vertical-offset="1980">
           <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2170,20 +1963,82 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarListReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38927335" vertical-offset="0" max-vertical-offset="578">
+          <caret line="21" column="39" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22332506" vertical-offset="0" max-vertical-offset="403">
+          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ResourceFacade.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1022" max-vertical-offset="1440">
-          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1260">
+          <caret line="81" column="28" selection-start-line="81" selection-start-column="28" selection-end-line="81" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/services/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2605459" vertical-offset="0" max-vertical-offset="403">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#292#293#0" expanded="true" />
+            <element signature="e#342#343#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/UserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22332506" vertical-offset="0" max-vertical-offset="420">
+          <caret line="9" column="34" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <marker date="1549727241000" expanded="true" signature="-1:-1" placeholder="select nickn..user..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5955335" vertical-offset="0" max-vertical-offset="690">
+          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarListResp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22332506" vertical-offset="0" max-vertical-offset="403">
+          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6277916" vertical-offset="992" max-vertical-offset="1395">
+          <caret line="83" column="25" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/BarVO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23498695" vertical-offset="0" max-vertical-offset="383">
-          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.37220845" vertical-offset="0" max-vertical-offset="540">
+          <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
           <folding />
         </state>
       </provider>

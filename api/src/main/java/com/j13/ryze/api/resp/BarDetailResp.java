@@ -11,6 +11,16 @@ public class BarDetailResp {
     private int name;
     @Parameter(desc = "")
     private long createtime;
+    @Parameter(desc = "")
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public long getCreatetime() {
         return createtime;

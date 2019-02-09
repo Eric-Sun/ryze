@@ -13,6 +13,7 @@ import com.j13.ryze.api.resp.BarMemberAddResp;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.BarMemberDAO;
+import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.BarVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,8 @@ public class BarFacade {
     BarDAO barDAO;
     @Autowired
     BarMemberDAO barMemberDAO;
+    @Autowired
+    UserService userService;
 
     @Action(name = "bar.add")
     public BarAddResp add(CommandContext ctxt, BarAddReq req) {
@@ -75,6 +78,7 @@ public class BarFacade {
         for (BarVO vo : list) {
             BarDetailResp r = new BarDetailResp();
             BeanUtils.copyProperties(r, vo);
+            r.setUserName(userService.getNickName(vo.getUserId()));
             resp.getData().add(r);
         }
         return resp;
