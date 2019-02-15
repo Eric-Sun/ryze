@@ -6,10 +6,10 @@ import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
-import com.j13.ryze.api.resp.BarAddResp;
-import com.j13.ryze.api.resp.BarDetailResp;
-import com.j13.ryze.api.resp.BarListResp;
-import com.j13.ryze.api.resp.BarMemberAddResp;
+import com.j13.ryze.api.resp.AdminBarAddResp;
+import com.j13.ryze.api.resp.AdminBarDetailResp;
+import com.j13.ryze.api.resp.AdminBarListResp;
+import com.j13.ryze.api.resp.AdminBarMemberAddResp;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.BarMemberDAO;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BarFacade {
+public class AdminBarFacade {
     @Autowired
     BarDAO barDAO;
     @Autowired
@@ -29,21 +29,21 @@ public class BarFacade {
     @Autowired
     UserService userService;
 
-    @Action(name = "bar.add")
-    public BarAddResp add(CommandContext ctxt, BarAddReq req) {
-        BarAddResp resp = new BarAddResp();
+    @Action(name = "admin.bar.add")
+    public AdminBarAddResp add(CommandContext ctxt, AdminBarAddReq req) {
+        AdminBarAddResp resp = new AdminBarAddResp();
         int barId = barDAO.add(req.getUserId(), req.getName());
         int barMemberId = barMemberDAO.addMember(barId, req.getUserId());
         resp.setBarId(barId);
         return resp;
     }
 
-    @Action(name = "bar.addMember")
-    public BarMemberAddResp addMember(CommandContext ctxt, BarMemberAddReq req) {
-        BarMemberAddResp resp = new BarMemberAddResp();
-        if (barMemberDAO.hasMember(req.getBarId(), req.getUserId())) {
-            throw new CommonException(ErrorCode.Bar.HAS_MEMBER);
-        }
+    @Action(name = "admin.bar.addMember")
+    public AdminBarMemberAddResp addMember(CommandContext ctxt, AdminBarMemberAddReq req) {
+        AdminBarMemberAddResp resp = new AdminBarMemberAddResp();
+//        if (barMemberDAO.hasMember(req.getBarId(), req.getUserId())) {
+//            throw new CommonException(ErrorCode.Bar.HAS_MEMBER);
+//        }
 
         int barMemberId = barMemberDAO.addMember(req.getBarId(), req.getUserId());
         resp.setBarMemberId(barMemberId);
@@ -51,32 +51,32 @@ public class BarFacade {
 
     }
 
-    @Action(name = "bar.deleteMember")
-    public CommonResultResp deleteMember(CommandContext ctxt, BarMemberDeleteReq req) {
-        if (!barMemberDAO.hasMember(req.getBarId(), req.getUserId())) {
-            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
-        }
+    @Action(name = "admin.bar.deleteMember")
+    public CommonResultResp deleteMember(CommandContext ctxt, AdminBarMemberDeleteReq req) {
+//        if (!barMemberDAO.hasMember(req.getBarId(), req.getUserId())) {
+//            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
+//        }
 
         barMemberDAO.deleteMember(req.getUserId(), req.getBarId());
         return CommonResultResp.success();
     }
 
-    @Action(name = "bar.delete")
-    public CommonResultResp delete(CommandContext ctxt, BarDeleteReq req) {
-        if (!barDAO.checkBarOwner(req.getBarId(), req.getUserId())) {
-            throw new CommonException(ErrorCode.Bar.NOT_BAR_OWNER);
-        }
+    @Action(name = "admin.bar.delete")
+    public CommonResultResp delete(CommandContext ctxt, AdminBarDeleteReq req) {
+//        if (!barDAO.checkBarOwner(req.getBarId(), req.getUserId())) {
+//            throw new CommonException(ErrorCode.Bar.NOT_BAR_OWNER);
+//        }
         barDAO.delete(req.getUserId(), req.getBarId());
         return CommonResultResp.success();
     }
 
 
-    @Action(name = "bar.list")
-    public BarListResp list(CommandContext ctxt, BarListReq req) {
-        BarListResp resp = new BarListResp();
+    @Action(name = "admin.bar.list")
+    public AdminBarListResp list(CommandContext ctxt, AdminBarListReq req) {
+        AdminBarListResp resp = new AdminBarListResp();
         List<BarVO> list = barDAO.list(req.getSize(), req.getPageNum());
         for (BarVO vo : list) {
-            BarDetailResp r = new BarDetailResp();
+            AdminBarDetailResp r = new AdminBarDetailResp();
             BeanUtils.copyProperties(r, vo);
             r.setUserName(userService.getNickName(vo.getUserId()));
             resp.getData().add(r);

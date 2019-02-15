@@ -2,7 +2,7 @@ package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class BarAddReq {
+public class AdminBarAddReq {
     @Parameter(desc = "")
     private int userId;
     @Parameter(desc = "")

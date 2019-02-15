@@ -2,10 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="239e95d5-f826-4059-b689-a8ffd3a480cd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/services/UserService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/UserDAO.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/UserDAO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminBarListResp.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarListResp.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarAddReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarAddReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarDeleteReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarMemberDeleteReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarListReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarListReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarMemberAddReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarDeleteReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarMemberDeleteReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarMemberAddReq.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarAddResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminBarAddResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminBarDetailResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarMemberAddResp.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminBarMemberAddResp.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminBarFacade.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/server.jar" afterPath="$PROJECT_DIR$/core/server.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="che.iws" />
@@ -80,21 +88,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ResourceFacade.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ResourceFacade.java">
+      <file leaf-file-name="AccountFacade.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AccountFacade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1260">
-              <caret line="81" column="28" selection-start-line="81" selection-start-column="28" selection-end-line="81" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1185" max-vertical-offset="1725">
+              <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BarVO.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/BarVO.java">
+      <file leaf-file-name="AdminBarFacade.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminBarFacade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37220845" vertical-offset="0" max-vertical-offset="540">
-              <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+            <state vertical-scroll-proportion="-0.8610422" vertical-offset="992" max-vertical-offset="1395">
+              <caret line="43" column="24" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminBarMemberAddReq.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarMemberAddReq.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
+              <caret line="21" column="23" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -118,8 +138,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/garen/facade/RoomChatFacade.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/garen/daos/RoomChatDAO.java" />
         <option value="$PROJECT_DIR$/core/config/deploy/dataSource.xml" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AddTopicReq.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AddTopicResp.java" />
@@ -169,6 +187,8 @@
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/services/UserService.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarMemberAddReq.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminBarFacade.java" />
       </list>
     </option>
   </component>
@@ -539,6 +559,40 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryze" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryze" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="j13" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1454,12 +1508,12 @@
       <workItem from="1548907840708" duration="122000" />
       <workItem from="1549379571034" duration="15545000" />
       <workItem from="1549593183497" duration="1767000" />
-      <workItem from="1549683508753" duration="1424000" />
+      <workItem from="1549683508753" duration="4730000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="546102000" />
+    <option name="totallyTimeSpent" value="549408000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1506,7 +1560,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3441034" sideWeight="0.5902439" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28877887" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28877887" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959612" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1737,30 +1791,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarAddResp.java">
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminBarAddResp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.12975779" vertical-offset="0" max-vertical-offset="578">
           <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
           <folding>
-            <element signature="e#172#173#0" expanded="false" />
-            <element signature="e#200#201#0" expanded="false" />
-            <element signature="e#239#240#0" expanded="false" />
-            <element signature="e#273#274#0" expanded="false" />
+            <element signature="e#177#178#0" expanded="false" />
+            <element signature="e#205#206#0" expanded="false" />
+            <element signature="e#244#245#0" expanded="false" />
+            <element signature="e#278#279#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarAddReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10380623" vertical-offset="0" max-vertical-offset="578">
-          <caret line="4" column="22" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarDeleteReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1816609" vertical-offset="0" max-vertical-offset="578">
-          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -1828,22 +1868,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarMemberAddReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19582245" vertical-offset="30" max-vertical-offset="480">
-          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarMemberAddResp.java">
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminBarMemberAddResp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3524804" vertical-offset="0" max-vertical-offset="383">
           <caret line="9" column="57" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
           <folding>
-            <element signature="e#181#182#0" expanded="false" />
-            <element signature="e#215#216#0" expanded="false" />
-            <element signature="e#266#267#0" expanded="false" />
-            <element signature="e#312#313#0" expanded="false" />
+            <element signature="e#186#187#0" expanded="false" />
+            <element signature="e#220#221#0" expanded="false" />
+            <element signature="e#271#272#0" expanded="false" />
+            <element signature="e#317#318#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1862,7 +1895,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarMemberDeleteReq.java">
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarMemberDeleteReq.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19582245" vertical-offset="30" max-vertical-offset="480">
           <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
@@ -1948,25 +1981,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AccountFacade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2027028" vertical-offset="1355" max-vertical-offset="1980">
-          <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/TopicFacade.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.36486486" vertical-offset="270" max-vertical-offset="1005">
           <caret line="47" column="27" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/BarListReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38927335" vertical-offset="0" max-vertical-offset="578">
-          <caret line="21" column="39" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1979,22 +1997,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ResourceFacade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1260">
-          <caret line="81" column="28" selection-start-line="81" selection-start-column="28" selection-end-line="81" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/services/UserService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2605459" vertical-offset="0" max-vertical-offset="403">
           <caret line="7" column="24" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="24" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#292#293#0" expanded="true" />
-            <element signature="e#342#343#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#292#293#0" expanded="false" />
+            <element signature="e#342#343#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2009,7 +2019,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarDetailResp.java">
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminBarDetailResp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5955335" vertical-offset="0" max-vertical-offset="690">
           <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
@@ -2017,7 +2027,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarListResp.java">
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminBarListResp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22332506" vertical-offset="0" max-vertical-offset="403">
           <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
@@ -2025,13 +2035,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/BarFacade.java">
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarListReq.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6277916" vertical-offset="992" max-vertical-offset="1395">
-          <caret line="83" column="25" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.66997516" vertical-offset="0" max-vertical-offset="403">
+          <caret line="26" column="14" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarDeleteReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2605459" vertical-offset="0" max-vertical-offset="403">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2040,6 +2056,48 @@
         <state vertical-scroll-proportion="0.37220845" vertical-offset="0" max-vertical-offset="540">
           <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ResourceFacade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9230769" vertical-offset="675" max-vertical-offset="1260">
+          <caret line="81" column="28" selection-start-line="81" selection-start-column="28" selection-end-line="81" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarAddReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14888337" vertical-offset="0" max-vertical-offset="403">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AccountFacade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1185" max-vertical-offset="1725">
+          <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarMemberAddReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
+          <caret line="21" column="23" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminBarFacade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.8610422" vertical-offset="992" max-vertical-offset="1395">
+          <caret line="43" column="24" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

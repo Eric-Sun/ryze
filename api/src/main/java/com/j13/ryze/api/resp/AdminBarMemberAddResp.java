@@ -2,7 +2,7 @@ package com.j13.ryze.api.resp;
 
 import com.j13.poppy.anno.Parameter;
 
-public class BarMemberAddResp {
+public class AdminBarMemberAddResp {
     @Parameter()
     private int barMemberId;
 
