@@ -5,17 +5,13 @@ import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
-import com.j13.ryze.api.req.AdminPostAddReq;
-import com.j13.ryze.api.req.AdminPostListReq;
-import com.j13.ryze.api.req.AdminPostDeleteReq;
-import com.j13.ryze.api.req.AdminPostUpdateContentReq;
-import com.j13.ryze.api.resp.AdminPostAddResp;
-import com.j13.ryze.api.resp.AdminPostListResp;
-import com.j13.ryze.api.resp.AdminPostDetailResp;
+import com.j13.ryze.api.req.*;
+import com.j13.ryze.api.resp.*;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.BarMemberDAO;
 import com.j13.ryze.daos.PostDAO;
+import com.j13.ryze.vos.BarVO;
 import com.j13.ryze.vos.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -72,7 +68,7 @@ public class AdminPostFacade {
 
     @Action(name = "admin.post.updateContent")
     public CommonResultResp updateContent(CommandContext ctxt, AdminPostUpdateContentReq req) {
-        postDAO.updateContent(req.getBarId(), req.getPostId(), req.getContent());
+        postDAO.updateContent(req.getPostId(), req.getContent());
         return CommonResultResp.success();
     }
 
@@ -82,4 +78,18 @@ public class AdminPostFacade {
         postDAO.delete(req.getPostId());
         return CommonResultResp.success();
     }
+
+//    @Action(name = "admin.post.query")
+//    public AdminPostQueryResp query(CommandContext ctxt, AdminPostQueryReq req) {
+//        AdminBarQueryResp resp = new AdminBarQueryResp();
+//        List<BarVO> list = barDAO.queryForBarName(req.getQueryBarName(), req.getSize(), req.getPageNum());
+//        for (BarVO vo : list) {
+//            AdminBarDetailResp r = new AdminBarDetailResp();
+//            BeanUtils.copyProperties(r, vo);
+//            r.setUserName(userService.getNickName(vo.getUserId()));
+//            resp.getData().add(r);
+//        }
+//        return resp;
+//    }
+
 }

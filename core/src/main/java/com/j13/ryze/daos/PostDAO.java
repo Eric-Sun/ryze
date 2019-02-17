@@ -1,6 +1,7 @@
 package com.j13.ryze.daos;
 
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.vos.BarVO;
 import com.j13.ryze.vos.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -59,9 +60,9 @@ public class PostDAO {
     }
 
 
-    public void updateContent(int barId, int postId, String content) {
-        String sql = "update post set content=? where id=? and bar_id=? and deleted=?";
-        j.update(sql, new Object[]{content, postId, barId, Constants.DB.NOT_DELETED});
+    public void updateContent(int postId, String content) {
+        String sql = "update post set content=? where id=? and deleted=?";
+        j.update(sql, new Object[]{content, postId, Constants.DB.NOT_DELETED});
     }
 
     public void delete(int postId) {
@@ -70,4 +71,18 @@ public class PostDAO {
     }
 
 
+    public List<PostVO> queryForPostName(String queryPostName, int size, int pageNum) {
+        String sql = "select id,createtime,user_id,bar_id from post where name like ? and deleted=? limit ?,?";
+        return j.query(sql, new Object[]{"%" + queryPostName + "%", Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<PostVO>() {
+            @Override
+            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                PostVO vo = new PostVO();
+                vo.setPostId(rs.getInt(1));
+                vo.setCreatetime(rs.getTimestamp(2).getTime());
+                vo.setUserId(rs.getInt(3));
+                vo.setBarId(rs.getInt(4));
+                return vo;
+            }
+        });
+    }
 }

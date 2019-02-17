@@ -15,6 +15,16 @@ public class AdminReplyDetailResp {
     private String content;
     @Parameter(desc = "")
     private long createtime;
+    @Parameter(desc = "")
+    private int postId;
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
 
     public long getCreatetime() {
         return createtime;
