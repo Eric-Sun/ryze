@@ -2,13 +2,13 @@ package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class PostAddReq {
+public class AdminReplyAddReq {
     @Parameter(desc = "")
     private int userId;
     @Parameter(desc = "")
     private int barId;
     @Parameter(desc = "")
-    private int topicId;
+    private int postId;
     @Parameter(desc = "")
     private String content;
 
@@ -28,12 +28,12 @@ public class PostAddReq {
         this.content = content;
     }
 
-    public int getTopicId() {
-        return topicId;
+    public int getPostId() {
+        return postId;
     }
 
-    public void setTopicId(int topicId) {
-        this.topicId = topicId;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     public int getUserId() {

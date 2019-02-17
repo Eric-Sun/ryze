@@ -2,18 +2,18 @@ package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class TopicDeleteReq {
+public class AdminReplyDeleteReq {
     @Parameter(desc = "")
     private int userId;
     @Parameter(desc = "")
-    private int topicId;
+    private int replyId;
 
-    public int getTopicId() {
-        return topicId;
+    public int getReplyId() {
+        return replyId;
     }
 
-    public void setTopicId(int topicId) {
-        this.topicId = topicId;
+    public void setReplyId(int replyId) {
+        this.replyId = replyId;
     }
 
     public int getUserId() {

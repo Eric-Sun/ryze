@@ -2,7 +2,7 @@ package com.j13.ryze.api.resp;
 
 import com.j13.poppy.anno.Parameter;
 
-public class PostAddResp {
+public class AdminPostAddResp {
     @Parameter(desc = "")
     private int postId;
 

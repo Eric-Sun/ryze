@@ -41,9 +41,9 @@ public class BarDAO {
     }
 
 
-    public void delete(int userId, int barId) {
-        String sql = "update bar set deleted=? where user_id=? and id=?";
-        j.update(sql, new Object[]{Constants.DB.DELETED, userId, barId});
+    public void delete(int barId) {
+        String sql = "update bar set deleted=? where id=?";
+        j.update(sql, new Object[]{Constants.DB.DELETED, barId});
     }
 
 
@@ -83,4 +83,18 @@ public class BarDAO {
     }
 
 
+    public List<BarVO> queryForBarName(String queryBarName, int size, int pageNum) {
+        String sql = "select id,name,createtime,user_id from bar where name like ? and deleted=? limit ?,?";
+        return j.query(sql, new Object[]{"%" + queryBarName + "%", Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<BarVO>() {
+            @Override
+            public BarVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                BarVO vo = new BarVO();
+                vo.setBarId(rs.getInt(1));
+                vo.setName(rs.getString(2));
+                vo.setCreatetime(rs.getTimestamp(3).getTime());
+                vo.setUserId(rs.getInt(4));
+                return vo;
+            }
+        });
+    }
 }

@@ -2,23 +2,15 @@ package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class ListTopicReq {
-    @Parameter(desc = "")
-    private int userId;
+public class AdminReplyListReq {
     @Parameter(desc = "")
     private int barId;
+    @Parameter(desc = "")
+    private int postId;
     @Parameter(desc = "")
     private int pageNum;
     @Parameter(desc = "")
     private int size;
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public int getBarId() {
         return barId;
@@ -42,5 +34,13 @@ public class ListTopicReq {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 }

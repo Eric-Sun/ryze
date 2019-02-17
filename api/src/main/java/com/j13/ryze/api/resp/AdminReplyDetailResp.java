@@ -2,9 +2,9 @@ package com.j13.ryze.api.resp;
 
 import com.j13.poppy.anno.Parameter;
 
-public class PostDetailResp {
+public class AdminReplyDetailResp {
     @Parameter(desc = "")
-    private int postId;
+    private int replyId;
     @Parameter(desc = "")
     private int userId;
     @Parameter(desc = "")
@@ -32,12 +32,12 @@ public class PostDetailResp {
         this.content = content;
     }
 
-    public int getPostId() {
-        return postId;
+    public int getReplyId() {
+        return replyId;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setReplyId(int replyId) {
+        this.replyId = replyId;
     }
 
     public int getUserId() {

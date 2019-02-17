@@ -6,10 +6,7 @@ import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
-import com.j13.ryze.api.resp.AdminBarAddResp;
-import com.j13.ryze.api.resp.AdminBarDetailResp;
-import com.j13.ryze.api.resp.AdminBarListResp;
-import com.j13.ryze.api.resp.AdminBarMemberAddResp;
+import com.j13.ryze.api.resp.*;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.BarMemberDAO;
@@ -66,7 +63,7 @@ public class AdminBarFacade {
 //        if (!barDAO.checkBarOwner(req.getBarId(), req.getUserId())) {
 //            throw new CommonException(ErrorCode.Bar.NOT_BAR_OWNER);
 //        }
-        barDAO.delete(req.getUserId(), req.getBarId());
+        barDAO.delete(req.getBarId());
         return CommonResultResp.success();
     }
 
@@ -75,6 +72,19 @@ public class AdminBarFacade {
     public AdminBarListResp list(CommandContext ctxt, AdminBarListReq req) {
         AdminBarListResp resp = new AdminBarListResp();
         List<BarVO> list = barDAO.list(req.getSize(), req.getPageNum());
+        for (BarVO vo : list) {
+            AdminBarDetailResp r = new AdminBarDetailResp();
+            BeanUtils.copyProperties(r, vo);
+            r.setUserName(userService.getNickName(vo.getUserId()));
+            resp.getData().add(r);
+        }
+        return resp;
+    }
+
+    @Action(name = "admin.bar.query")
+    public AdminBarQueryResp query(CommandContext ctxt, AdminBarQueryReq req) {
+        AdminBarQueryResp resp = new AdminBarQueryResp();
+        List<BarVO> list = barDAO.queryForBarName(req.getQueryBarName(), req.getSize(), req.getPageNum());
         for (BarVO vo : list) {
             AdminBarDetailResp r = new AdminBarDetailResp();
             BeanUtils.copyProperties(r, vo);

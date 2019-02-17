@@ -2,23 +2,13 @@ package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class PostListReq {
+public class AdminBarQueryReq {
     @Parameter(desc = "")
-    private int barId;
-    @Parameter(desc = "")
-    private int topicId;
-    @Parameter(desc = "")
-    private int pageNum;
+    private String queryBarName;
     @Parameter(desc = "")
     private int size;
-
-    public int getBarId() {
-        return barId;
-    }
-
-    public void setBarId(int barId) {
-        this.barId = barId;
-    }
+    @Parameter(desc = "")
+    private int pageNum;
 
     public int getPageNum() {
         return pageNum;
@@ -36,11 +26,11 @@ public class PostListReq {
         this.size = size;
     }
 
-    public int getTopicId() {
-        return topicId;
+    public String getQueryBarName() {
+        return queryBarName;
     }
 
-    public void setTopicId(int topicId) {
-        this.topicId = topicId;
+    public void setQueryBarName(String queryBarName) {
+        this.queryBarName = queryBarName;
     }
 }

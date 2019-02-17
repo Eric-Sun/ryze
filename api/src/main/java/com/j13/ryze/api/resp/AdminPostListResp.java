@@ -5,15 +5,15 @@ import com.j13.poppy.anno.Parameter;
 
 import java.util.List;
 
-public class ListTopicResp {
+public class AdminPostListResp {
     @Parameter(desc = "")
-    private List<TopicDetailResp> list = Lists.newLinkedList();
+    private List<AdminPostDetailResp> list = Lists.newLinkedList();
 
-    public List<TopicDetailResp> getList() {
+    public List<AdminPostDetailResp> getList() {
         return list;
     }
 
-    public void setList(List<TopicDetailResp> list) {
+    public void setList(List<AdminPostDetailResp> list) {
         this.list = list;
     }
 }

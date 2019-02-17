@@ -1,18 +1,18 @@
 package com.j13.ryze.vos;
 
-public class TopicVO {
-    private int topicId;
+public class PostVO {
+    private int postId;
     private int userId;
     private int barId;
     private String content;
     private long createtime;
 
-    public int getTopicId() {
-        return topicId;
+    public int getPostId() {
+        return postId;
     }
 
-    public void setTopicId(int topicId) {
-        this.topicId = topicId;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     public int getBarId() {

@@ -1,25 +1,14 @@
-package com.j13.ryze.api.resp;
+package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class TopicDetailResp {
-
+public class AdminReplyUpdateContentReq {
     @Parameter(desc = "")
     private int userId;
     @Parameter(desc = "")
-    private int barId;
+    private int replyId;
     @Parameter(desc = "")
     private String content;
-    @Parameter(desc = "")
-    private long createtime;
-
-    public int getBarId() {
-        return barId;
-    }
-
-    public void setBarId(int barId) {
-        this.barId = barId;
-    }
 
     public String getContent() {
         return content;
@@ -29,12 +18,12 @@ public class TopicDetailResp {
         this.content = content;
     }
 
-    public long getCreatetime() {
-        return createtime;
+    public int getReplyId() {
+        return replyId;
     }
 
-    public void setCreatetime(long createtime) {
-        this.createtime = createtime;
+    public void setReplyId(int replyId) {
+        this.replyId = replyId;
     }
 
     public int getUserId() {

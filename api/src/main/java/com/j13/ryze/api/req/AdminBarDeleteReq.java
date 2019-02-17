@@ -4,8 +4,6 @@ import com.j13.poppy.anno.Parameter;
 
 public class AdminBarDeleteReq {
     @Parameter(desc = "")
-    private int userId;
-    @Parameter(desc = "")
     private int barId;
 
     public int getBarId() {
@@ -16,11 +14,4 @@ public class AdminBarDeleteReq {
         this.barId = barId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }
