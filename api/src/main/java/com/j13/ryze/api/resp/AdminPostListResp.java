@@ -8,6 +8,16 @@ import java.util.List;
 public class AdminPostListResp {
     @Parameter(desc = "")
     private List<AdminPostDetailResp> list = Lists.newLinkedList();
+    @Parameter(desc = "")
+    private String barName;
+
+    public String getBarName() {
+        return barName;
+    }
+
+    public void setBarName(String barName) {
+        this.barName = barName;
+    }
 
     public List<AdminPostDetailResp> getList() {
         return list;

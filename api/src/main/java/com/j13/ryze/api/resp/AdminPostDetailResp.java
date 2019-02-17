@@ -14,6 +14,16 @@ public class AdminPostDetailResp {
     private long createtime;
     @Parameter(desc = "")
     private int postId;
+    @Parameter(desc = "")
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public int getPostId() {
         return postId;

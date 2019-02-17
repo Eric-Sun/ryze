@@ -97,4 +97,11 @@ public class BarDAO {
             }
         });
     }
+
+
+    public String getBarName(int barId) {
+        String sql = "select name from bar where id=?";
+        return j.queryForObject(sql, new Object[]{barId}, String.class);
+
+    }
 }

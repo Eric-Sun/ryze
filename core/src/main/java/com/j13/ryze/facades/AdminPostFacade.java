@@ -11,6 +11,7 @@ import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.BarMemberDAO;
 import com.j13.ryze.daos.PostDAO;
+import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.vos.BarVO;
 import com.j13.ryze.vos.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class AdminPostFacade {
 
     @Autowired
     BarMemberDAO barMemberDAO;
+
+    @Autowired
+    UserDAO userDAO;
 
     @Action(name = "admin.post.add", desc = "")
     public AdminPostAddResp add(CommandContext ctxt, AdminPostAddReq req) {
@@ -56,11 +60,14 @@ public class AdminPostFacade {
 //            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
 //        }
 
+        String barName = barDAO.getBarName(req.getBarId());
+        resp.setBarName(barName);
         List<PostVO> list = postDAO.list(req.getBarId(), req.getPageNum(), req.getSize());
 
         for (PostVO vo : list) {
             AdminPostDetailResp r = new AdminPostDetailResp();
             BeanUtils.copyProperties(r, vo);
+            r.setUserName(userDAO.getNickName(r.getUserId()));
             resp.getList().add(r);
         }
         return resp;
