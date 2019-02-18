@@ -85,4 +85,19 @@ public class PostDAO {
             }
         });
     }
+
+    public PostVO get(int postId) {
+        String sql = "select id,createtime,user_id,bar_id from post where id=? and deleted=?";
+        return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, new RowMapper<PostVO>() {
+            @Override
+            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                PostVO vo = new PostVO();
+                vo.setPostId(rs.getInt(1));
+                vo.setCreatetime(rs.getTimestamp(2).getTime());
+                vo.setUserId(rs.getInt(3));
+                vo.setBarId(rs.getInt(4));
+                return vo;
+            }
+        });
+    }
 }

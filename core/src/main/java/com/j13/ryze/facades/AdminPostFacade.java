@@ -86,6 +86,14 @@ public class AdminPostFacade {
         return CommonResultResp.success();
     }
 
+    @Action(name = "admin.post.detail")
+    public AdminPostDetailResp detail(CommandContext ctxt, AdminPostDetailReq req) {
+        AdminPostDetailResp resp = new AdminPostDetailResp();
+        PostVO vo = postDAO.get(req.getPostId());
+        BeanUtils.copyProperties(resp, vo);
+        return resp;
+    }
+
 //    @Action(name = "admin.post.query")
 //    public AdminPostQueryResp query(CommandContext ctxt, AdminPostQueryReq req) {
 //        AdminBarQueryResp resp = new AdminBarQueryResp();
