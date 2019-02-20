@@ -4,21 +4,11 @@ import com.j13.poppy.anno.Parameter;
 
 public class AdminReplyListReq {
     @Parameter(desc = "")
-    private int barId;
-    @Parameter(desc = "")
     private int postId;
     @Parameter(desc = "")
     private int pageNum;
     @Parameter(desc = "")
     private int size;
-
-    public int getBarId() {
-        return barId;
-    }
-
-    public void setBarId(int barId) {
-        this.barId = barId;
-    }
 
     public int getPageNum() {
         return pageNum;

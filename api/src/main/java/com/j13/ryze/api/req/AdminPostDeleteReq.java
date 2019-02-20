@@ -4,8 +4,6 @@ import com.j13.poppy.anno.Parameter;
 
 public class AdminPostDeleteReq {
     @Parameter(desc = "")
-    private int userId;
-    @Parameter(desc = "")
     private int postId;
 
     public int getPostId() {
@@ -16,11 +14,4 @@ public class AdminPostDeleteReq {
         this.postId = postId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }

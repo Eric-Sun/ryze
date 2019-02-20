@@ -43,9 +43,9 @@ public class ReplyDAO {
         return holder.getKey().intValue();
     }
 
-    public List<ReplyVO> list(int barId, int postId, int pageName, int size) {
-        String sql = "select user_id,bar_id,content,createtime,id,post_id from reply where deleted=? and bar_id=? and post_id=? limit ?,?";
-        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, postId, pageName * size, size}, new RowMapper<ReplyVO>() {
+    public List<ReplyVO> list(int postId, int pageName, int size) {
+        String sql = "select user_id,bar_id,content,createtime,id,post_id from reply where deleted=? and post_id=? limit ?,?";
+        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, postId, pageName * size, size}, new RowMapper<ReplyVO>() {
             @Override
             public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
                 ReplyVO vo = new ReplyVO();

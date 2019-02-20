@@ -12,6 +12,7 @@ import com.j13.ryze.api.resp.AdminReplyAddResp;
 import com.j13.ryze.api.resp.AdminReplyDetailResp;
 import com.j13.ryze.api.resp.AdminReplyListResp;
 import com.j13.ryze.daos.ReplyDAO;
+import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.vos.ReplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,8 @@ public class AdminReplyFacade {
 
     @Autowired
     ReplyDAO replyDAO;
+    @Autowired
+    UserDAO userDAO;
 
 
     @Action(name = "admin.reply.add", desc = "")
@@ -37,10 +40,11 @@ public class AdminReplyFacade {
     @Action(name = "admin.reply.list")
     public AdminReplyListResp replyList(CommandContext ctxt, AdminReplyListReq req) {
         AdminReplyListResp resp = new AdminReplyListResp();
-        List<ReplyVO> list = replyDAO.list(req.getBarId(), req.getPostId(), req.getPageNum(), req.getSize());
+        List<ReplyVO> list = replyDAO.list(req.getPostId(), req.getPageNum(), req.getSize());
         for (ReplyVO vo : list) {
             AdminReplyDetailResp r = new AdminReplyDetailResp();
             BeanUtils.copyProperties(r, vo);
+            r.setUserName(userDAO.getNickName(vo.getUserId()));
             resp.getData().add(r);
         }
         return resp;

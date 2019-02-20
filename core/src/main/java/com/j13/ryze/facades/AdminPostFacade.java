@@ -91,6 +91,7 @@ public class AdminPostFacade {
         AdminPostDetailResp resp = new AdminPostDetailResp();
         PostVO vo = postDAO.get(req.getPostId());
         BeanUtils.copyProperties(resp, vo);
+        resp.setUserName(userDAO.getNickName(vo.getUserId()));
         return resp;
     }
 
