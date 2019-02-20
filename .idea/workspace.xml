@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="239e95d5-f826-4059-b689-a8ffd3a480cd" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyDetailReq.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/lib/ryze-api-0.0.1-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/core/lib/ryze-api-0.0.1-SNAPSHOT.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/server.jar" afterPath="$PROJECT_DIR$/core/server.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminPostDeleteReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminPostDeleteReq.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminPostFacade.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminPostFacade.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminReplyFacade.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminReplyFacade.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyListReq.java" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyListReq.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/PostDAO.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/PostDAO.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ReplyDAO.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ReplyDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/ReplyVO.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/ReplyVO.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="che.iws" />
@@ -84,14 +82,79 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AdminPostFacade.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AdminPostFacade.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminPostFacade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7162162" vertical-offset="1145" max-vertical-offset="1755">
-              <caret line="94" column="11" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="320" max-vertical-offset="1755">
+              <caret line="37" column="59" selection-start-line="37" selection-start-column="59" selection-end-line="37" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminReplyFacade.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminReplyFacade.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.259259" vertical-offset="452" max-vertical-offset="960">
+              <caret line="59" column="87" selection-start-line="59" selection-start-column="87" selection-end-line="59" selection-end-column="87" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminReplyUpdateContentReq.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyUpdateContentReq.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.15665796" vertical-offset="0" max-vertical-offset="450">
+              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PostDAO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/PostDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="725" max-vertical-offset="1305">
+              <caret line="92" column="38" selection-start-line="92" selection-start-column="21" selection-end-line="92" selection-end-column="21" />
+              <folding>
+                <element signature="e#4263#4264#0" expanded="true" />
+                <marker date="1550470459000" expanded="true" signature="889:1041" placeholder="insert into ..." />
+                <marker date="1550470459000" expanded="true" signature="1674:1766" placeholder="select user_..post..." />
+                <marker date="1550470459000" expanded="true" signature="2424:2474" placeholder="update post ..." />
+                <marker date="1550470459000" expanded="true" signature="2623:2673" placeholder="update post ..." />
+                <marker date="1550470459000" expanded="true" signature="2887:2982" placeholder="select id,cr..post..." />
+                <marker date="1550470459000" expanded="true" signature="3634:3712" placeholder="select id,cr..post..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReplyDAO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ReplyDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="845" max-vertical-offset="1320">
+              <caret line="74" column="22" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <marker date="1550665904000" expanded="true" signature="940:1103" placeholder="insert into ..." />
+                <marker date="1550665904000" expanded="true" signature="1778:1880" placeholder="select user_..reply..." />
+                <marker date="1550665904000" expanded="true" signature="2589:2640" placeholder="update reply..." />
+                <marker date="1550665904000" expanded="true" signature="2791:2842" placeholder="update reply..." />
+                <marker date="1550665904000" expanded="true" signature="3007:3094" placeholder="select user_..reply..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminPostUpdateContentReq.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminPostUpdateContentReq.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
+              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -114,7 +177,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/PostFacade.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/BarListResp.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/TopicVO.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/BarVO.java" />
@@ -152,7 +214,6 @@
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminBarQueryResp.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminBarQueryReq.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminBarFacade.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/ReplyVO.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminPostUpdateContentReq.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminReplyDetailResp.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminPostDetailResp.java" />
@@ -162,8 +223,10 @@
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/PostDAO.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminPostFacade.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminPostDeleteReq.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ReplyDAO.java" />
         <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyListReq.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyDetailReq.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/ReplyVO.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ReplyDAO.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminReplyFacade.java" />
       </list>
     </option>
@@ -1495,12 +1558,12 @@
       <workItem from="1549379571034" duration="15545000" />
       <workItem from="1549593183497" duration="1767000" />
       <workItem from="1549683508753" duration="10823000" />
-      <workItem from="1550393935042" duration="11592000" />
+      <workItem from="1550393935042" duration="15402000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="567093000" />
+    <option name="totallyTimeSpent" value="570903000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1673,19 +1736,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminBarMemberAddResp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3524804" vertical-offset="0" max-vertical-offset="383">
-          <caret line="9" column="57" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-          <folding>
-            <element signature="e#186#187#0" expanded="false" />
-            <element signature="e#220#221#0" expanded="false" />
-            <element signature="e#271#272#0" expanded="false" />
-            <element signature="e#317#318#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/core/ErrorCode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6475196" vertical-offset="277" max-vertical-offset="675">
@@ -1933,47 +1983,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/ReplyVO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03916449" vertical-offset="15" max-vertical-offset="960">
-          <caret line="2" column="20" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="20" />
-          <folding>
-            <element signature="e#230#231#0" expanded="true" />
-            <element signature="e#258#259#0" expanded="true" />
-            <element signature="e#297#298#0" expanded="true" />
-            <element signature="e#331#332#0" expanded="true" />
-            <element signature="e#365#366#0" expanded="true" />
-            <element signature="e#395#396#0" expanded="true" />
-            <element signature="e#441#442#0" expanded="true" />
-            <element signature="e#479#480#0" expanded="true" />
-            <element signature="e#514#515#0" expanded="true" />
-            <element signature="e#547#548#0" expanded="true" />
-            <element signature="e#597#598#0" expanded="true" />
-            <element signature="e#641#642#0" expanded="true" />
-            <element signature="e#671#672#0" expanded="true" />
-            <element signature="e#700#701#0" expanded="true" />
-            <element signature="e#741#742#0" expanded="true" />
-            <element signature="e#777#778#0" expanded="true" />
-            <element signature="e#808#809#0" expanded="true" />
-            <element signature="e#838#839#0" expanded="true" />
-            <element signature="e#881#882#0" expanded="true" />
-            <element signature="e#919#920#0" expanded="true" />
-            <element signature="e#949#950#0" expanded="true" />
-            <element signature="e#978#979#0" expanded="true" />
-            <element signature="e#1019#1020#0" expanded="true" />
-            <element signature="e#1055#1056#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyAddReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15665796" vertical-offset="0" max-vertical-offset="540">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AuthorityFacade.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3368146" vertical-offset="6" max-vertical-offset="1020">
@@ -1989,22 +1998,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyUpdateContentReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15665796" vertical-offset="0" max-vertical-offset="450">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminPostUpdateContentReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7049608" vertical-offset="0" max-vertical-offset="383">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2080,30 +2073,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/PostDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4135135" vertical-offset="882" max-vertical-offset="1305">
-          <caret line="93" column="48" selection-start-line="93" selection-start-column="48" selection-end-line="93" selection-end-column="48" />
-          <folding>
-            <element signature="e#4263#4264#0" expanded="true" />
-            <marker date="1550470459000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1550470459000" expanded="true" signature="-1:-1" placeholder="select user_..post..." />
-            <marker date="1550470459000" expanded="true" signature="-1:-1" placeholder="update post ..." />
-            <marker date="1550470459000" expanded="true" signature="-1:-1" placeholder="update post ..." />
-            <marker date="1550470459000" expanded="true" signature="-1:-1" placeholder="select id,cr..post..." />
-            <marker date="1550470459000" expanded="true" signature="-1:-1" placeholder="select id,cr..post..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminPostAddReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3524804" vertical-offset="0" max-vertical-offset="450">
-          <caret line="9" column="43" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/resp/AdminReplyListResp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19582245" vertical-offset="0" max-vertical-offset="383">
@@ -2128,20 +2097,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ReplyDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.61621624" vertical-offset="507" max-vertical-offset="1125">
-          <caret line="54" column="85" selection-start-line="54" selection-start-column="63" selection-end-line="54" selection-end-column="63" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1550640772000" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1550640772000" expanded="true" signature="-1:-1" placeholder="select user_..reply..." />
-            <marker date="1550640772000" expanded="true" signature="-1:-1" placeholder="update reply..." />
-            <marker date="1550640772000" expanded="true" signature="-1:-1" placeholder="update reply..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyListReq.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4699739" vertical-offset="0" max-vertical-offset="465">
@@ -2150,21 +2105,109 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminReplyFacade.java">
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminPostUpdateContentReq.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3918919" vertical-offset="185" max-vertical-offset="825">
-          <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyDetailReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.15665796" vertical-offset="0" max-vertical-offset="383">
+          <caret line="4" column="32" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="32" />
+          <folding>
+            <element signature="e#184#185#0" expanded="true" />
+            <element signature="e#214#215#0" expanded="true" />
+            <element signature="e#257#258#0" expanded="true" />
+            <element signature="e#295#296#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/vos/ReplyVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3916449" vertical-offset="15" max-vertical-offset="735">
+          <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+          <folding>
+            <element signature="e#296#297#0" expanded="true" />
+            <element signature="e#344#345#0" expanded="true" />
+            <element signature="e#384#385#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ReplyDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="845" max-vertical-offset="1320">
+          <caret line="74" column="22" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1550665904000" expanded="true" signature="940:1103" placeholder="insert into ..." />
+            <marker date="1550665904000" expanded="true" signature="1778:1880" placeholder="select user_..reply..." />
+            <marker date="1550665904000" expanded="true" signature="2589:2640" placeholder="update reply..." />
+            <marker date="1550665904000" expanded="true" signature="2791:2842" placeholder="update reply..." />
+            <marker date="1550665904000" expanded="true" signature="3007:3094" placeholder="select user_..reply..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminPostAddReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5091384" vertical-offset="0" max-vertical-offset="450">
+          <caret line="15" column="50" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminPostFacade.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7162162" vertical-offset="1145" max-vertical-offset="1755">
-          <caret line="94" column="11" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="320" max-vertical-offset="1755">
+          <caret line="37" column="59" selection-start-line="37" selection-start-column="59" selection-end-line="37" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/PostDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="725" max-vertical-offset="1305">
+          <caret line="92" column="38" selection-start-line="92" selection-start-column="21" selection-end-line="92" selection-end-column="21" />
+          <folding>
+            <element signature="e#4263#4264#0" expanded="true" />
+            <marker date="1550470459000" expanded="true" signature="889:1041" placeholder="insert into ..." />
+            <marker date="1550470459000" expanded="true" signature="1674:1766" placeholder="select user_..post..." />
+            <marker date="1550470459000" expanded="true" signature="2424:2474" placeholder="update post ..." />
+            <marker date="1550470459000" expanded="true" signature="2623:2673" placeholder="update post ..." />
+            <marker date="1550470459000" expanded="true" signature="2887:2982" placeholder="select id,cr..post..." />
+            <marker date="1550470459000" expanded="true" signature="3634:3712" placeholder="select id,cr..post..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyAddReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3524804" vertical-offset="0" max-vertical-offset="540">
+          <caret line="9" column="37" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminReplyFacade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.259259" vertical-offset="452" max-vertical-offset="960">
+          <caret line="59" column="87" selection-start-line="59" selection-start-column="87" selection-end-line="59" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/AdminReplyUpdateContentReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.15665796" vertical-offset="0" max-vertical-offset="450">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>

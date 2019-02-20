@@ -4,10 +4,7 @@ import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.util.BeanUtils;
-import com.j13.ryze.api.req.AdminReplyAddReq;
-import com.j13.ryze.api.req.AdminReplyDeleteReq;
-import com.j13.ryze.api.req.AdminReplyListReq;
-import com.j13.ryze.api.req.AdminReplyUpdateContentReq;
+import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.AdminReplyAddResp;
 import com.j13.ryze.api.resp.AdminReplyDetailResp;
 import com.j13.ryze.api.resp.AdminReplyListResp;
@@ -48,6 +45,15 @@ public class AdminReplyFacade {
             resp.getData().add(r);
         }
         return resp;
+    }
+
+    @Action(name = "admin.reply.detail")
+    public AdminReplyDetailResp detail(CommandContext ctxt, AdminReplyDetailReq req) {
+        ReplyVO vo = replyDAO.get(req.getReplyId());
+        AdminReplyDetailResp r = new AdminReplyDetailResp();
+        BeanUtils.copyProperties(r, vo);
+        r.setUserName(userDAO.getNickName(vo.getUserId()));
+        return r;
     }
 
     @Action(name = "admin.reply.updateContent")

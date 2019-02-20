@@ -4,9 +4,18 @@ public class ReplyVO {
     private int replyId;
     private int postId;
     private int userId;
+    private String userName;
     private int barId;
     private String content;
     private long createtime;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public int getBarId() {
         return barId;
