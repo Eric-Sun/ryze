@@ -3,16 +3,13 @@ package com.j13.ryze.facades;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
-import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.*;
-import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.BarMemberDAO;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.UserDAO;
-import com.j13.ryze.vos.BarVO;
 import com.j13.ryze.vos.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -109,17 +106,30 @@ public class AdminPostFacade {
         return CommonResultResp.success();
     }
 
-//    @Action(name = "admin.post.query")
-//    public AdminPostQueryResp query(CommandContext ctxt, AdminPostQueryReq req) {
-//        AdminBarQueryResp resp = new AdminBarQueryResp();
-//        List<BarVO> list = barDAO.queryForBarName(req.getQueryBarName(), req.getSize(), req.getPageNum());
-//        for (BarVO vo : list) {
-//            AdminBarDetailResp r = new AdminBarDetailResp();
-//            BeanUtils.copyProperties(r, vo);
-//            r.setUserName(userService.getNickName(vo.getUserId()));
-//            resp.getData().add(r);
-//        }
-//        return resp;
-//    }
+    @Action(name = "admin.post.queryTitle")
+    public AdminPostQueryTitleResp queryTitle(CommandContext ctxt, AdminPostQueryTitleReq req) {
+        AdminPostQueryTitleResp resp = new AdminPostQueryTitleResp();
+        List<PostVO> list = postDAO.queryByTtile(req.getBarId(), req.getName(), req.getPageNum(), req.getSize());
+        for (PostVO vo : list) {
+            AdminPostDetailResp r = new AdminPostDetailResp();
+            BeanUtils.copyProperties(r, vo);
+            r.setUserName(userDAO.getNickName(r.getUserId()));
+            resp.getList().add(r);
+        }
+        return resp;
+    }
+
+    @Action(name = "admin.post.queryUserId")
+    public AdminPostQueryUserIdResp queryByUserId(CommandContext ctxt, AdminPostQueryUserIdReq req) {
+        AdminPostQueryUserIdResp resp = new AdminPostQueryUserIdResp();
+        List<PostVO> list = postDAO.queryByUserId(req.getBarId(), req.getUserId(), req.getPageNum(), req.getSize());
+        for (PostVO vo : list) {
+            AdminPostDetailResp r = new AdminPostDetailResp();
+            BeanUtils.copyProperties(r, vo);
+            r.setUserName(userDAO.getNickName(r.getUserId()));
+            resp.getList().add(r);
+        }
+        return resp;
+    }
 
 }

@@ -82,4 +82,21 @@ public class PostVO {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PostVO)) return false;
+
+        PostVO postVO = (PostVO) o;
+
+        if (postId != postVO.postId) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return postId;
+    }
 }
