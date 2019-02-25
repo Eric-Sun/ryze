@@ -26,9 +26,9 @@ public class PostDAO {
     public int add(final int userId, final int barId, final String content) {
         KeyHolder holder = new GeneratedKeyHolder();
         final String sql = "insert into post " +
-                "(user_id,bar_id,content,createtime,updatetime) " +
+                "(user_id,bar_id,content,reply_count,createtime,updatetime) " +
                 "values" +
-                "(?,?,?,now(),now())";
+                "(?,?,?,0,now(),now())";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -44,7 +44,7 @@ public class PostDAO {
 
 
     public List<PostVO> list(int barId, int pageName, int size) {
-        String sql = "select user_id,bar_id,content,createtime,id from post where deleted=? and bar_id=? limit ?,?";
+        String sql = "select user_id,bar_id,content,createtime,id,reply_count from post where deleted=? and bar_id=? limit ?,?";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, pageName * size, size}, new RowMapper<PostVO>() {
             @Override
             public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -54,6 +54,7 @@ public class PostDAO {
                 vo.setContent(rs.getString(3));
                 vo.setCreatetime(rs.getTimestamp(4).getTime());
                 vo.setPostId(rs.getInt(5));
+                vo.setReplyCount(rs.getInt(6));
                 return vo;
             }
         });
@@ -72,7 +73,7 @@ public class PostDAO {
 
 
     public List<PostVO> queryForPostName(String queryPostName, int size, int pageNum) {
-        String sql = "select id,createtime,user_id,bar_id,content from post where name like ? and deleted=? limit ?,?";
+        String sql = "select id,createtime,user_id,bar_id,content,reply_count from post where name like ? and deleted=? limit ?,?";
         return j.query(sql, new Object[]{"%" + queryPostName + "%", Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<PostVO>() {
             @Override
             public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -82,13 +83,14 @@ public class PostDAO {
                 vo.setUserId(rs.getInt(3));
                 vo.setBarId(rs.getInt(4));
                 vo.setContent(rs.getString(5));
+                vo.setReplyCount(rs.getInt(6));
                 return vo;
             }
         });
     }
 
     public PostVO get(int postId) {
-        String sql = "select id,createtime,user_id,bar_id,content from post where id=? and deleted=?";
+        String sql = "select id,createtime,user_id,bar_id,content,reply_count from post where id=? and deleted=?";
         return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, new RowMapper<PostVO>() {
             @Override
             public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -98,8 +100,19 @@ public class PostDAO {
                 vo.setUserId(rs.getInt(3));
                 vo.setBarId(rs.getInt(4));
                 vo.setContent(rs.getString(5));
+                vo.setReplyCount(rs.getInt(6));
                 return vo;
             }
         });
+    }
+
+    public void addReplyCount(int postId) {
+        String sql = "update post set reply_count=reply_count+1 where id=? and deleted=?";
+        j.update(sql, new Object[]{postId, Constants.DB.NOT_DELETED});
+    }
+
+    public void reduceReplyCount(int postId) {
+        String sql = "update post set reply_count=reply_count-1 where id=? and deleted=?";
+        j.update(sql, new Object[]{postId, Constants.DB.NOT_DELETED});
     }
 }

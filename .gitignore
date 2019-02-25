@@ -2,3 +2,5 @@
 /target/
 /api/target/
 /core/target/
+/core/server.jar
+/core/lib

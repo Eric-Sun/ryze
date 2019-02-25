@@ -7,6 +7,16 @@ public class AdminReplyDeleteReq {
     private int userId;
     @Parameter(desc = "")
     private int replyId;
+    @Parameter(desc = "")
+    private int postId;
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
 
     public int getReplyId() {
         return replyId;

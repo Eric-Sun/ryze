@@ -8,6 +8,7 @@ import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.AdminReplyAddResp;
 import com.j13.ryze.api.resp.AdminReplyDetailResp;
 import com.j13.ryze.api.resp.AdminReplyListResp;
+import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.vos.ReplyVO;
@@ -23,12 +24,14 @@ public class AdminReplyFacade {
     ReplyDAO replyDAO;
     @Autowired
     UserDAO userDAO;
-
+    @Autowired
+    PostDAO postDAO;
 
     @Action(name = "admin.reply.add", desc = "")
     public AdminReplyAddResp replyAdd(CommandContext ctxt, AdminReplyAddReq req) {
         AdminReplyAddResp resp = new AdminReplyAddResp();
         int id = replyDAO.add(req.getUserId(), req.getBarId(), req.getPostId(), req.getContent());
+        postDAO.addReplyCount(req.getPostId());
         resp.setReplyId(id);
         return resp;
     }
@@ -65,6 +68,7 @@ public class AdminReplyFacade {
     @Action(name = "admin.reply.delete")
     public CommonResultResp replyDelete(CommandContext ctxt, AdminReplyDeleteReq req) {
         replyDAO.delete(req.getReplyId());
+        postDAO.reduceReplyCount(req.getPostId());
         return CommonResultResp.success();
     }
 

@@ -25,9 +25,9 @@ public class BarDAO {
     public int add(final int userId, final String name) {
         KeyHolder holder = new GeneratedKeyHolder();
         final String sql = "insert into bar " +
-                "(user_id,name,createtime,updatetime) " +
+                "(user_id,name,post_count,createtime,updatetime) " +
                 "values" +
-                "(?,?,now(),now())";
+                "(?,?,0,now(),now())";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -54,7 +54,7 @@ public class BarDAO {
 
 
     public List<BarVO> list(int size, int pageNum) {
-        String sql = "select id,name,createtime,user_id from bar where deleted=? limit ?,?";
+        String sql = "select id,name,createtime,user_id,post_count from bar where deleted=? limit ?,?";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<BarVO>() {
             @Override
             public BarVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -63,6 +63,7 @@ public class BarDAO {
                 vo.setName(rs.getString(2));
                 vo.setCreatetime(rs.getTimestamp(3).getTime());
                 vo.setUserId(rs.getInt(4));
+                vo.setPostCount(rs.getInt(5));
                 return vo;
             }
         });
@@ -84,7 +85,7 @@ public class BarDAO {
 
 
     public List<BarVO> queryForBarName(String queryBarName, int size, int pageNum) {
-        String sql = "select id,name,createtime,user_id from bar where name like ? and deleted=? limit ?,?";
+        String sql = "select id,name,createtime,user_id,post_count from bar where name like ? and deleted=? limit ?,?";
         return j.query(sql, new Object[]{"%" + queryBarName + "%", Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<BarVO>() {
             @Override
             public BarVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -93,6 +94,7 @@ public class BarDAO {
                 vo.setName(rs.getString(2));
                 vo.setCreatetime(rs.getTimestamp(3).getTime());
                 vo.setUserId(rs.getInt(4));
+                vo.setPostCount(rs.getInt(5));
                 return vo;
             }
         });
@@ -103,5 +105,16 @@ public class BarDAO {
         String sql = "select name from bar where id=?";
         return j.queryForObject(sql, new Object[]{barId}, String.class);
 
+    }
+
+
+    public void addPostCount(int barId) {
+        String sql = "update bar set post_count=post_count+1 where id=? and deleted=?";
+        j.update(sql, new Object[]{barId, Constants.DB.NOT_DELETED});
+    }
+
+    public void reducePostCount(int barId) {
+        String sql = "update bar set post_count=post_count-1 where id=? and deleted=?";
+        j.update(sql, new Object[]{barId, Constants.DB.NOT_DELETED});
     }
 }

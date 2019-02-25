@@ -11,6 +11,16 @@ public class BarVO {
     private long createtime;
     @Parameter(desc = "")
     private int userId;
+    @Parameter(desc = "")
+    private int postCount;
+
+    public int getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(int postCount) {
+        this.postCount = postCount;
+    }
 
     public int getUserId() {
         return userId;

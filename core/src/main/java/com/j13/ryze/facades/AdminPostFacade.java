@@ -46,6 +46,7 @@ public class AdminPostFacade {
 //        }
 
         int id = postDAO.add(req.getUserId(), req.getBarId(), req.getContent());
+        barDAO.addPostCount(req.getBarId());
         resp.setPostId(id);
         return resp;
     }
@@ -83,6 +84,7 @@ public class AdminPostFacade {
     @Action(name = "admin.post.delete")
     public CommonResultResp delete(CommandContext ctxt, AdminPostDeleteReq req) {
         postDAO.delete(req.getPostId());
+        barDAO.reducePostCount(req.getBarId());
         return CommonResultResp.success();
     }
 

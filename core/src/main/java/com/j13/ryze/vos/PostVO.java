@@ -6,6 +6,15 @@ public class PostVO {
     private int barId;
     private String content;
     private long createtime;
+    private int replyCount;
+
+    public int getReplyCount() {
+        return replyCount;
+    }
+
+    public void setReplyCount(int replyCount) {
+        this.replyCount = replyCount;
+    }
 
     public int getPostId() {
         return postId;
