@@ -109,12 +109,12 @@ public class BarDAO {
 
 
     public void addPostCount(int barId) {
-        String sql = "update bar set post_count=post_count+1 where id=? and deleted=?";
-        j.update(sql, new Object[]{barId, Constants.DB.NOT_DELETED});
+        String sql = "update bar set post_count=post_count+1 where id=?";
+        j.update(sql, new Object[]{barId});
     }
 
     public void reducePostCount(int barId) {
-        String sql = "update bar set post_count=post_count-1 where id=? and deleted=?";
-        j.update(sql, new Object[]{barId, Constants.DB.NOT_DELETED});
+        String sql = "update bar set post_count=post_count-1 where id=?";
+        j.update(sql, new Object[]{barId});
     }
 }

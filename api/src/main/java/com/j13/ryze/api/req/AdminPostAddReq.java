@@ -9,6 +9,16 @@ public class AdminPostAddReq {
     private int barId;
     @Parameter(desc = "")
     private String content;
+    @Parameter(desc = "")
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public int getBarId() {
         return barId;

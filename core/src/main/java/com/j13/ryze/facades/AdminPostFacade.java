@@ -45,7 +45,7 @@ public class AdminPostFacade {
 //            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
 //        }
 
-        int id = postDAO.add(req.getUserId(), req.getBarId(), req.getContent());
+        int id = postDAO.add(req.getUserId(), req.getBarId(), req.getTitle(), req.getContent());
         barDAO.addPostCount(req.getBarId());
         resp.setPostId(id);
         return resp;
@@ -74,9 +74,9 @@ public class AdminPostFacade {
         return resp;
     }
 
-    @Action(name = "admin.post.updateContent")
-    public CommonResultResp updateContent(CommandContext ctxt, AdminPostUpdateContentReq req) {
-        postDAO.updateContent(req.getPostId(), req.getContent());
+    @Action(name = "admin.post.updateContentAndTitle")
+    public CommonResultResp updateContentAndTitle(CommandContext ctxt, AdminPostUpdateContentReq req) {
+        postDAO.updateContentAndTitle(req.getPostId(), req.getContent(), req.getTitle());
         return CommonResultResp.success();
     }
 
@@ -95,6 +95,18 @@ public class AdminPostFacade {
         BeanUtils.copyProperties(resp, vo);
         resp.setUserName(userDAO.getNickName(vo.getUserId()));
         return resp;
+    }
+
+    @Action(name = "admin.post.offline")
+    public CommonResultResp offline(CommandContext ctxt, AdminPostOfflineReq req) {
+        postDAO.offline(req.getPostId());
+        return CommonResultResp.success();
+    }
+
+    @Action(name = "admin.post.online")
+    public CommonResultResp online(CommandContext ctxt, AdminPostOnlineReq req) {
+        postDAO.online(req.getPostId());
+        return CommonResultResp.success();
     }
 
 //    @Action(name = "admin.post.query")

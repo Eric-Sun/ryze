@@ -69,4 +69,9 @@ public class Constants {
         public static int OWNER = 0;
         public static int WECHAT = 1;
     }
+
+    public static class POST_STATUS {
+        public static int ONLINE = 0;
+        public static int OFFLINE = 1;
+    }
 }
