@@ -7,6 +7,15 @@ public class PostVO {
     private String content;
     private long createtime;
     private int replyCount;
+    private long updatetime;
+
+    public long getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(long updatetime) {
+        this.updatetime = updatetime;
+    }
 
     public int getReplyCount() {
         return replyCount;

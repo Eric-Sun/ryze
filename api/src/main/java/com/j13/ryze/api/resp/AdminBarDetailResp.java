@@ -13,6 +13,16 @@ public class AdminBarDetailResp {
     private long createtime;
     @Parameter(desc = "")
     private String userName;
+    @Parameter(desc = "")
+    private int postCount;
+
+    public int getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(int postCount) {
+        this.postCount = postCount;
+    }
 
     public String getUserName() {
         return userName;

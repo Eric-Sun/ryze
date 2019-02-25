@@ -32,6 +32,7 @@ public class AdminReplyFacade {
         AdminReplyAddResp resp = new AdminReplyAddResp();
         int id = replyDAO.add(req.getUserId(), req.getBarId(), req.getPostId(), req.getContent());
         postDAO.addReplyCount(req.getPostId());
+        postDAO.updateTime(req.getPostId());
         resp.setReplyId(id);
         return resp;
     }

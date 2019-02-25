@@ -16,6 +16,16 @@ public class AdminPostDetailResp {
     private int postId;
     @Parameter(desc = "")
     private String userName;
+    @Parameter(desc = "")
+    private long updatetime;
+
+    public long getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(long updatetime) {
+        this.updatetime = updatetime;
+    }
 
     public String getUserName() {
         return userName;

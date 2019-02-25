@@ -54,7 +54,7 @@ public class BarDAO {
 
 
     public List<BarVO> list(int size, int pageNum) {
-        String sql = "select id,name,createtime,user_id,post_count from bar where deleted=? limit ?,?";
+        String sql = "select id,name,createtime,user_id,post_count from bar where deleted=? order by post_count desc limit ?,?";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<BarVO>() {
             @Override
             public BarVO mapRow(ResultSet rs, int rowNum) throws SQLException {
