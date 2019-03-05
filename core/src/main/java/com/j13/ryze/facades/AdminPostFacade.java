@@ -42,7 +42,8 @@ public class AdminPostFacade {
 //            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
 //        }
 
-        int id = postDAO.add(req.getUserId(), req.getBarId(), req.getTitle(), req.getContent());
+        int id = postDAO.add(req.getUserId(),
+                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType());
         barDAO.addPostCount(req.getBarId());
         resp.setPostId(id);
         return resp;
@@ -71,9 +72,9 @@ public class AdminPostFacade {
         return resp;
     }
 
-    @Action(name = "admin.post.updateContentAndTitle")
+    @Action(name = "admin.post.update")
     public CommonResultResp updateContentAndTitle(CommandContext ctxt, AdminPostUpdateContentReq req) {
-        postDAO.updateContentAndTitle(req.getPostId(), req.getContent(), req.getTitle());
+        postDAO.update(req.getPostId(), req.getContent(), req.getTitle(), req.getAnonymous(), req.getType());
         return CommonResultResp.success();
     }
 

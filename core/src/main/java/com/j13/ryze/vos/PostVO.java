@@ -10,6 +10,24 @@ public class PostVO {
     private long updatetime;
     private String title;
     private int status;
+    private int anonymous;
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(int anonymous) {
+        this.anonymous = anonymous;
+    }
 
     public int getStatus() {
         return status;

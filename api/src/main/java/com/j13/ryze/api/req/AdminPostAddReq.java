@@ -11,6 +11,26 @@ public class AdminPostAddReq {
     private String content;
     @Parameter(desc = "")
     private String title;
+    @Parameter(desc = "")
+    private int anonymous;
+    @Parameter(desc = "")
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(int anonymous) {
+        this.anonymous = anonymous;
+    }
 
     public String getTitle() {
         return title;

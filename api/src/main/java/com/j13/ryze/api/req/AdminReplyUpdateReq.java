@@ -2,13 +2,23 @@ package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class AdminReplyUpdateContentReq {
+public class AdminReplyUpdateReq {
     @Parameter(desc = "")
     private int userId;
     @Parameter(desc = "")
     private int replyId;
     @Parameter(desc = "")
     private String content;
+    @Parameter(desc = "")
+    private int anonymous;
+
+    public int getAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(int anonymous) {
+        this.anonymous = anonymous;
+    }
 
     public String getContent() {
         return content;

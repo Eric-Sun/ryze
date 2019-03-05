@@ -30,7 +30,8 @@ public class AdminReplyFacade {
     @Action(name = "admin.reply.add", desc = "")
     public AdminReplyAddResp replyAdd(CommandContext ctxt, AdminReplyAddReq req) {
         AdminReplyAddResp resp = new AdminReplyAddResp();
-        int id = replyDAO.add(req.getUserId(), req.getBarId(), req.getPostId(), req.getContent());
+        int id = replyDAO.add(req.getUserId(), req.getBarId(), req.getPostId(),
+                req.getContent(), req.getAnonymous(),req.getLastReplyId());
         postDAO.addReplyCount(req.getPostId());
         postDAO.updateTime(req.getPostId());
         resp.setReplyId(id);
@@ -47,6 +48,22 @@ public class AdminReplyFacade {
             BeanUtils.copyProperties(r, vo);
             r.setUserName(userDAO.getNickName(vo.getUserId()));
             resp.getData().add(r);
+            // 尝试找二级回复
+            List<ReplyVO> list2 = replyDAO.lastReplylist(r.getReplyId(), req.getPageNum(), req.getSize());
+            for (ReplyVO vo2 : list2) {
+                AdminReplyDetailResp r2 = new AdminReplyDetailResp();
+                BeanUtils.copyProperties(r2, vo2);
+                r2.setUserName(userDAO.getNickName(vo2.getUserId()));
+                r.getReplyList().add(r2);
+                // 尝试找第三级
+                List<ReplyVO> list3 = replyDAO.lastReplylist(r2.getReplyId(), req.getPageNum(), req.getSize());
+                for (ReplyVO vo3 : list3) {
+                    AdminReplyDetailResp r3 = new AdminReplyDetailResp();
+                    BeanUtils.copyProperties(r3, vo3);
+                    r3.setUserName(userDAO.getNickName(vo3.getUserId()));
+                    r2.getReplyList().add(r3);
+                }
+            }
         }
         return resp;
     }
@@ -57,12 +74,28 @@ public class AdminReplyFacade {
         AdminReplyDetailResp r = new AdminReplyDetailResp();
         BeanUtils.copyProperties(r, vo);
         r.setUserName(userDAO.getNickName(vo.getUserId()));
+        // 尝试找二级回复
+        List<ReplyVO> list2 = replyDAO.lastReplylist(r.getReplyId(), 0, 500);
+        for (ReplyVO vo2 : list2) {
+            AdminReplyDetailResp r2 = new AdminReplyDetailResp();
+            BeanUtils.copyProperties(r2, vo2);
+            r2.setUserName(userDAO.getNickName(vo2.getUserId()));
+            r.getReplyList().add(r2);
+            // 尝试找第三级
+            List<ReplyVO> list3 = replyDAO.lastReplylist(r2.getReplyId(), 0, 500);
+            for (ReplyVO vo3 : list3) {
+                AdminReplyDetailResp r3 = new AdminReplyDetailResp();
+                BeanUtils.copyProperties(r3, vo3);
+                r3.setUserName(userDAO.getNickName(vo3.getUserId()));
+                r2.getReplyList().add(r3);
+            }
+        }
         return r;
     }
 
-    @Action(name = "admin.reply.updateContent")
-    public CommonResultResp replyUpdateContent(CommandContext ctxt, AdminReplyUpdateContentReq req) {
-        replyDAO.updateContent(req.getReplyId(), req.getContent());
+    @Action(name = "admin.reply.update")
+    public CommonResultResp update(CommandContext ctxt, AdminReplyUpdateReq req) {
+        replyDAO.update(req.getReplyId(), req.getContent(), req.getAnonymous());
         return CommonResultResp.success();
     }
 

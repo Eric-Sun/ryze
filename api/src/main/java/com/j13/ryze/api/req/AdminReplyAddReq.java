@@ -11,6 +11,26 @@ public class AdminReplyAddReq {
     private int postId;
     @Parameter(desc = "")
     private String content;
+    @Parameter(desc = "")
+    private int anonymous;
+    @Parameter(desc = "")
+    private int lastReplyId;
+
+    public int getLastReplyId() {
+        return lastReplyId;
+    }
+
+    public void setLastReplyId(int lastReplyId) {
+        this.lastReplyId = lastReplyId;
+    }
+
+    public int getAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(int anonymous) {
+        this.anonymous = anonymous;
+    }
 
     public int getBarId() {
         return barId;

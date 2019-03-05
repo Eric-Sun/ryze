@@ -1,5 +1,9 @@
 package com.j13.ryze.vos;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 public class ReplyVO {
     private int replyId;
     private int postId;
@@ -8,6 +12,24 @@ public class ReplyVO {
     private int barId;
     private String content;
     private long createtime;
+    private int anonymous;
+    private int lastReplyId;
+
+    public int getLastReplyId() {
+        return lastReplyId;
+    }
+
+    public void setLastReplyId(int lastReplyId) {
+        this.lastReplyId = lastReplyId;
+    }
+
+    public int getAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(int anonymous) {
+        this.anonymous = anonymous;
+    }
 
     public String getUserName() {
         return userName;

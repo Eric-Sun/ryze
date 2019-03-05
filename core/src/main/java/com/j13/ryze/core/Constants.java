@@ -7,9 +7,6 @@ public class Constants {
     public static String APP_SECRET = "29c0a0547b381b38bd68e7750897c186";
 
 
-    public static int USER_IS_MACHINE = 1;
-    public static int DEFAULT_IMG_ID = 0;
-    public static int ADMIN_ACCOUNT_ID = -1;
 
     public static class ResponseStatus {
         public static int SUCCESS = 0;
@@ -74,4 +71,32 @@ public class Constants {
         public static int ONLINE = 0;
         public static int OFFLINE = 1;
     }
+
+    public static class POST_ANONYMOUS {
+        public static int COMMON = 0;
+        public static int ANONYMOUS = 1;
+    }
+
+    public static class REPLY_ANONYMOUS {
+        public static int COMMON = 0;
+        public static int ANONYMOUS = 1;
+    }
+
+    public static class POST_TYPE {
+        public static int STORE = 0;
+        public static int DIARY = 1;
+    }
+
+    public static class USER_SEX {
+        public static int MALE = 0;       // 男
+        public static int FEMALE = 1;     // 女
+    }
+
+    public static class USER_IS_MACHINE {
+        // 机器人
+        public static int MACHINE = 1;
+        // 普通用户
+        public static int COMMON = 0;
+    }
+
 }

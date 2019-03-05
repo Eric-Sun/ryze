@@ -1,6 +1,9 @@
 package com.j13.ryze.api.resp;
 
+import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Parameter;
+
+import java.util.List;
 
 public class AdminReplyDetailResp {
     @Parameter(desc = "")
@@ -17,6 +20,45 @@ public class AdminReplyDetailResp {
     private long createtime;
     @Parameter(desc = "")
     private int postId;
+    @Parameter(desc = "")
+    private int anonymous;
+    @Parameter(desc = "")
+    private int lastReplyId;
+    @Parameter(desc = "")
+    private int barId;
+    private List<AdminReplyDetailResp> replyList = Lists.newLinkedList();
+
+    public int getBarId() {
+        return barId;
+    }
+
+    public void setBarId(int barId) {
+        this.barId = barId;
+    }
+
+    public int getLastReplyId() {
+        return lastReplyId;
+    }
+
+    public void setLastReplyId(int lastReplyId) {
+        this.lastReplyId = lastReplyId;
+    }
+
+    public List<AdminReplyDetailResp> getReplyList() {
+        return replyList;
+    }
+
+    public void setReplyList(List<AdminReplyDetailResp> replyList) {
+        this.replyList = replyList;
+    }
+
+    public int getAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(int anonymous) {
+        this.anonymous = anonymous;
+    }
 
     public int getPostId() {
         return postId;

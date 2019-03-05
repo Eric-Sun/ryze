@@ -23,12 +23,13 @@ public class PostDAO {
     @Autowired
     JdbcTemplate j;
 
-    public int add(final int userId, final int barId, final String title, final String content) {
+    public int add(final int userId, final int barId, final String title, final String content,
+                   final int anonymous, final int type) {
         KeyHolder holder = new GeneratedKeyHolder();
         final String sql = "insert into post " +
-                "(user_id,bar_id,content,reply_count,createtime,updatetime,title,status) " +
+                "(user_id,bar_id,content,reply_count,createtime,updatetime,title,status,anonymous,`type`) " +
                 "values" +
-                "(?,?,?,0,now(),now(),?,?)";
+                "(?,?,?,0,now(),now(),?,?,?,?)";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -38,6 +39,8 @@ public class PostDAO {
                 pstmt.setString(3, content);
                 pstmt.setString(4, title);
                 pstmt.setInt(5, Constants.POST_STATUS.ONLINE);
+                pstmt.setInt(6, anonymous);
+                pstmt.setInt(7, type);
                 return pstmt;
             }
         }, holder);
@@ -46,7 +49,8 @@ public class PostDAO {
 
 
     public List<PostVO> list(int barId, int pageName, int size) {
-        String sql = "select user_id,bar_id,content,createtime,id,reply_count,updatetime,title,status from post where deleted=? and bar_id=? order by updatetime desc limit ?,?";
+        String sql = "select user_id,bar_id,content,createtime,id," +
+                "reply_count,updatetime,title,status,anonymous,`type` from post where deleted=? and bar_id=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, pageName * size, size}, new RowMapper<PostVO>() {
             @Override
             public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -60,15 +64,17 @@ public class PostDAO {
                 vo.setUpdatetime(rs.getTimestamp(7).getTime());
                 vo.setTitle(rs.getString(8));
                 vo.setStatus(rs.getInt(9));
+                vo.setAnonymous(rs.getInt(10));
+                vo.setType(rs.getInt(11));
                 return vo;
             }
         });
     }
 
 
-    public void updateContentAndTitle(int postId, String content, String title) {
-        String sql = "update post set content=?,title=? where id=? and deleted=?";
-        j.update(sql, new Object[]{content, title, postId, Constants.DB.NOT_DELETED});
+    public void update(int postId, String content, String title, int anonymous, int type) {
+        String sql = "update post set content=?,title=?,anonymous=?,`type`=? where id=? and deleted=?";
+        j.update(sql, new Object[]{content, title, anonymous, type, postId, Constants.DB.NOT_DELETED});
     }
 
     public void delete(int postId) {
@@ -78,7 +84,8 @@ public class PostDAO {
 
 
     public PostVO get(int postId) {
-        String sql = "select id,createtime,user_id,bar_id,content,reply_count,updatetime,title,status from post where id=? and deleted=?";
+        String sql = "select id,createtime,user_id,bar_id,content,reply_count,updatetime," +
+                "title,status,anonymous,`type` from post where id=? and deleted=?";
         return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, new RowMapper<PostVO>() {
             @Override
             public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -92,6 +99,8 @@ public class PostDAO {
                 vo.setUpdatetime(rs.getTimestamp(7).getTime());
                 vo.setTitle(rs.getString(8));
                 vo.setStatus(rs.getInt(9));
+                vo.setAnonymous(rs.getInt(10));
+                vo.setType(rs.getInt(11));
                 return vo;
             }
         });
@@ -123,7 +132,8 @@ public class PostDAO {
     }
 
     public List<PostVO> queryByTtile(int barId, String name, int pageNum, int size) {
-        String sql = "select id,createtime,user_id,bar_id,content,reply_count,title,updatetime,status " +
+        String sql = "select id,createtime,user_id,bar_id,content,reply_count,title," +
+                "updatetime,status,anonymous,`type` " +
                 "from post where title like ? and bar_id = ? and deleted=?  order by updatetime desc  limit ?,?";
         return j.query(sql, new Object[]{"%" + name + "%", barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<PostVO>() {
             @Override
@@ -138,6 +148,7 @@ public class PostDAO {
                 vo.setTitle(rs.getString(7));
                 vo.setUpdatetime(rs.getTimestamp(8).getTime());
                 vo.setStatus(rs.getInt(9));
+                vo.setAnonymous(rs.getInt(10));
                 return vo;
             }
         });
@@ -145,7 +156,7 @@ public class PostDAO {
 
 
     public List<PostVO> queryByUserId(int barId, int userId, int pageNum, int size) {
-        String sql = "select id,createtime,user_id,bar_id,content,reply_count,title,updatetime,status " +
+        String sql = "select id,createtime,user_id,bar_id,content,reply_count,title,updatetime,status,anonymous,`type` " +
                 "from post where user_id=? and bar_id = ? and deleted=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{userId, barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<PostVO>() {
             @Override
@@ -160,6 +171,8 @@ public class PostDAO {
                 vo.setTitle(rs.getString(7));
                 vo.setUpdatetime(rs.getTimestamp(8).getTime());
                 vo.setStatus(rs.getInt(9));
+                vo.setAnonymous(rs.getInt(10));
+                vo.setType(rs.getInt(11));
                 return vo;
             }
         });
