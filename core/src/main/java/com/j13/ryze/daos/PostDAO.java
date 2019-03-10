@@ -50,7 +50,8 @@ public class PostDAO {
 
     public List<PostVO> list(int barId, int pageName, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
-                "reply_count,updatetime,title,status,anonymous,`type` from post where deleted=? and bar_id=? order by updatetime desc limit ?,?";
+                "reply_count,updatetime,title,status,anonymous,`type` " +
+                "from post where deleted=? and bar_id=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, pageName * size, size}, new RowMapper<PostVO>() {
             @Override
             public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -7,7 +7,6 @@ public class Constants {
     public static String APP_SECRET = "29c0a0547b381b38bd68e7750897c186";
 
 
-
     public static class ResponseStatus {
         public static int SUCCESS = 0;
         public static int FAILURE = 1;
@@ -58,8 +57,7 @@ public class Constants {
     }
 
     public static class IMG_TYPE {
-        public static int ORDER = 1;
-        public static int ORDER_RECORD = 2;
+        public static int AVATAR = 0;
     }
 
     public static class USER_SOURCE_TYPE {

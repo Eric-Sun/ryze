@@ -36,4 +36,10 @@ public class ErrorCode {
         public static int NOT_HAS_MEMBER=10004;
     }
 
+
+    public static class Img{
+        public static int TYPE_IS_WRONG=20001;
+        public static int UPLOAD_IMG_ERROR=20002;
+    }
+
 }
