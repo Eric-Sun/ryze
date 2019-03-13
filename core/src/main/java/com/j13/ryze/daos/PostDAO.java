@@ -72,6 +72,31 @@ public class PostDAO {
         });
     }
 
+    public List<PostVO> listByType(int barId, int type, int pageName, int size) {
+        String sql = "select user_id,bar_id,content,createtime,id," +
+                "reply_count,updatetime,title,status,anonymous,`type` " +
+                "from post where deleted=? and bar_id=? and `type`=? order by updatetime desc limit ?,?";
+        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, type,
+                pageName * size, size}, new RowMapper<PostVO>() {
+            @Override
+            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                PostVO vo = new PostVO();
+                vo.setUserId(rs.getInt(1));
+                vo.setBarId(rs.getInt(2));
+                vo.setContent(rs.getString(3));
+                vo.setCreatetime(rs.getTimestamp(4).getTime());
+                vo.setPostId(rs.getInt(5));
+                vo.setReplyCount(rs.getInt(6));
+                vo.setUpdatetime(rs.getTimestamp(7).getTime());
+                vo.setTitle(rs.getString(8));
+                vo.setStatus(rs.getInt(9));
+                vo.setAnonymous(rs.getInt(10));
+                vo.setType(rs.getInt(11));
+                return vo;
+            }
+        });
+    }
+
 
     public void update(int postId, String content, String title, int anonymous, int type) {
         String sql = "update post set content=?,title=?,anonymous=?,`type`=? where id=? and deleted=?";

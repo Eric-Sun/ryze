@@ -10,7 +10,9 @@ import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.BarMemberDAO;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.UserDAO;
+import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.PostVO;
+import com.j13.ryze.vos.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +30,9 @@ public class AdminPostFacade {
     @Autowired
     BarMemberDAO barMemberDAO;
 
+
     @Autowired
-    UserDAO userDAO;
+    UserService userService;
 
     @Action(name = "admin.post.add", desc = "")
     public AdminPostAddResp add(CommandContext ctxt, AdminPostAddReq req) {
@@ -66,7 +69,9 @@ public class AdminPostFacade {
         for (PostVO vo : list) {
             AdminPostDetailResp r = new AdminPostDetailResp();
             BeanUtils.copyProperties(r, vo);
-            r.setUserName(userDAO.getNickName(r.getUserId()));
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            r.setUserName(user.getNickName());
+            r.setUserAvatarUrl(user.getAvatarUrl());
             resp.getList().add(r);
         }
         return resp;
@@ -91,7 +96,9 @@ public class AdminPostFacade {
         AdminPostDetailResp resp = new AdminPostDetailResp();
         PostVO vo = postDAO.get(req.getPostId());
         BeanUtils.copyProperties(resp, vo);
-        resp.setUserName(userDAO.getNickName(vo.getUserId()));
+        UserVO user = userService.getUserInfo(vo.getUserId());
+        resp.setUserName(user.getNickName());
+        resp.setUserAvatarUrl(user.getAvatarUrl());
         return resp;
     }
 
@@ -114,7 +121,9 @@ public class AdminPostFacade {
         for (PostVO vo : list) {
             AdminPostDetailResp r = new AdminPostDetailResp();
             BeanUtils.copyProperties(r, vo);
-            r.setUserName(userDAO.getNickName(r.getUserId()));
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            r.setUserName(user.getNickName());
+            r.setUserAvatarUrl(user.getAvatarUrl());
             resp.getList().add(r);
         }
         return resp;
@@ -127,7 +136,9 @@ public class AdminPostFacade {
         for (PostVO vo : list) {
             AdminPostDetailResp r = new AdminPostDetailResp();
             BeanUtils.copyProperties(r, vo);
-            r.setUserName(userDAO.getNickName(r.getUserId()));
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            r.setUserName(user.getNickName());
+            r.setUserAvatarUrl(user.getAvatarUrl());
             resp.getList().add(r);
         }
         return resp;

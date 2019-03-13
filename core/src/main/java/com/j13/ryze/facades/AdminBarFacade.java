@@ -12,6 +12,7 @@ import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.BarMemberDAO;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.BarVO;
+import com.j13.ryze.vos.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -75,7 +76,9 @@ public class AdminBarFacade {
         for (BarVO vo : list) {
             AdminBarDetailResp r = new AdminBarDetailResp();
             BeanUtils.copyProperties(r, vo);
-            r.setUserName(userService.getNickName(vo.getUserId()));
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            r.setUserName(user.getNickName());
+            r.setUserAvatarUrl(user.getAvatarUrl());
             resp.getData().add(r);
         }
         return resp;
@@ -88,7 +91,9 @@ public class AdminBarFacade {
         for (BarVO vo : list) {
             AdminBarDetailResp r = new AdminBarDetailResp();
             BeanUtils.copyProperties(r, vo);
-            r.setUserName(userService.getNickName(vo.getUserId()));
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            r.setUserName(user.getNickName());
+            r.setUserAvatarUrl(user.getAvatarUrl());
             resp.getData().add(r);
         }
         return resp;

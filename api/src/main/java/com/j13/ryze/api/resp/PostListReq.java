@@ -11,6 +11,16 @@ public class PostListReq {
     private int pageNum;
     @Parameter(desc = "")
     private int size;
+    @Parameter(desc = "")
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getBarId() {
         return barId;

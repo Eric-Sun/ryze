@@ -15,6 +15,16 @@ public class AdminBarDetailResp {
     private String userName;
     @Parameter(desc = "")
     private int postCount;
+    @Parameter(desc = "")
+    private String userAvatarUrl;
+
+    public String getUserAvatarUrl() {
+        return userAvatarUrl;
+    }
+
+    public void setUserAvatarUrl(String userAvatarUrl) {
+        this.userAvatarUrl = userAvatarUrl;
+    }
 
     public int getPostCount() {
         return postCount;

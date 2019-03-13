@@ -11,7 +11,9 @@ import com.j13.ryze.api.resp.AdminReplyListResp;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.daos.UserDAO;
+import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.ReplyVO;
+import com.j13.ryze.vos.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,9 @@ public class AdminReplyFacade {
     UserDAO userDAO;
     @Autowired
     PostDAO postDAO;
+
+    @Autowired
+    UserService userService;
 
     @Action(name = "admin.reply.add", desc = "")
     public AdminReplyAddResp replyAdd(CommandContext ctxt, AdminReplyAddReq req) {
@@ -46,21 +51,27 @@ public class AdminReplyFacade {
         for (ReplyVO vo : list) {
             AdminReplyDetailResp r = new AdminReplyDetailResp();
             BeanUtils.copyProperties(r, vo);
-            r.setUserName(userDAO.getNickName(vo.getUserId()));
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            r.setUserName(user.getNickName());
+            r.setUserAvatarUrl(user.getAvatarUrl());
             resp.getData().add(r);
             // 尝试找二级回复
             List<ReplyVO> list2 = replyDAO.lastReplylist(r.getReplyId(), req.getPageNum(), req.getSize());
             for (ReplyVO vo2 : list2) {
                 AdminReplyDetailResp r2 = new AdminReplyDetailResp();
                 BeanUtils.copyProperties(r2, vo2);
-                r2.setUserName(userDAO.getNickName(vo2.getUserId()));
+                UserVO user2 = userService.getUserInfo(vo2.getUserId());
+                r.setUserName(user2.getNickName());
+                r.setUserAvatarUrl(user2.getAvatarUrl());
                 r.getReplyList().add(r2);
                 // 尝试找第三级
                 List<ReplyVO> list3 = replyDAO.lastReplylist(r2.getReplyId(), req.getPageNum(), req.getSize());
                 for (ReplyVO vo3 : list3) {
                     AdminReplyDetailResp r3 = new AdminReplyDetailResp();
                     BeanUtils.copyProperties(r3, vo3);
-                    r3.setUserName(userDAO.getNickName(vo3.getUserId()));
+                    UserVO user3 = userService.getUserInfo(vo3.getUserId());
+                    r.setUserName(user3.getNickName());
+                    r.setUserAvatarUrl(user3.getAvatarUrl());
                     r2.getReplyList().add(r3);
                 }
             }
@@ -73,20 +84,26 @@ public class AdminReplyFacade {
         ReplyVO vo = replyDAO.get(req.getReplyId());
         AdminReplyDetailResp r = new AdminReplyDetailResp();
         BeanUtils.copyProperties(r, vo);
-        r.setUserName(userDAO.getNickName(vo.getUserId()));
+        UserVO user1 = userService.getUserInfo(vo.getUserId());
+        r.setUserName(user1.getNickName());
+        r.setUserAvatarUrl(user1.getAvatarUrl());
         // 尝试找二级回复
         List<ReplyVO> list2 = replyDAO.lastReplylist(r.getReplyId(), 0, 500);
         for (ReplyVO vo2 : list2) {
             AdminReplyDetailResp r2 = new AdminReplyDetailResp();
             BeanUtils.copyProperties(r2, vo2);
-            r2.setUserName(userDAO.getNickName(vo2.getUserId()));
+            UserVO user2 = userService.getUserInfo(vo2.getUserId());
+            r.setUserName(user2.getNickName());
+            r.setUserAvatarUrl(user2.getAvatarUrl());
             r.getReplyList().add(r2);
             // 尝试找第三级
             List<ReplyVO> list3 = replyDAO.lastReplylist(r2.getReplyId(), 0, 500);
             for (ReplyVO vo3 : list3) {
                 AdminReplyDetailResp r3 = new AdminReplyDetailResp();
                 BeanUtils.copyProperties(r3, vo3);
-                r3.setUserName(userDAO.getNickName(vo3.getUserId()));
+                UserVO user3 = userService.getUserInfo(vo3.getUserId());
+                r.setUserName(user3.getNickName());
+                r.setUserAvatarUrl(user3.getAvatarUrl());
                 r2.getReplyList().add(r3);
             }
         }

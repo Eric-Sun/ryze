@@ -3,8 +3,7 @@ package com.j13.ryze.core;
 
 public class Constants {
 
-    public static String APP_ID = "wx2d015e71c9f5362a";
-    public static String APP_SECRET = "29c0a0547b381b38bd68e7750897c186";
+    public static String USER_DEFAULT_AVATAR_FILENAME = "1552208882018.jpeg";
 
 
     public static class ResponseStatus {
@@ -80,9 +79,13 @@ public class Constants {
         public static int ANONYMOUS = 1;
     }
 
+    /**
+     * 帖子类型
+     */
     public static class POST_TYPE {
-        public static int STORE = 0;
-        public static int DIARY = 1;
+        public static int STORE = 0;   // 故事贴
+        public static int DIARY = 1;   // 一日一记
+        public static int ALL_TYPE = -1;
     }
 
     public static class USER_SEX {

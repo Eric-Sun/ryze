@@ -26,6 +26,16 @@ public class AdminPostDetailResp {
     private int anonymous;
     @Parameter(desc = "")
     private int type;
+    @Parameter(desc = "")
+    private String userAvatarUrl;
+
+    public String getUserAvatarUrl() {
+        return userAvatarUrl;
+    }
+
+    public void setUserAvatarUrl(String userAvatarUrl) {
+        this.userAvatarUrl = userAvatarUrl;
+    }
 
     public int getType() {
         return type;

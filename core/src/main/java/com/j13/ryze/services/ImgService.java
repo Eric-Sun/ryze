@@ -5,6 +5,7 @@ import com.j13.poppy.config.PropertiesConfiguration;
 import com.j13.poppy.exceptions.ServerException;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.daos.ImgDAO;
+import com.j13.ryze.vos.ImgVO;
 import org.apache.commons.fileupload.FileItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,12 @@ public class ImgService {
         return imgId;
     }
 
+
+    public String getFileUrl(int imgId) {
+        ImgVO imgVO = imgDAO.get(imgId);
+        String url = ossClientService.getFileUrl(imgVO.getName(), imgVO.getType());
+        return url;
+    }
 
     private int insertImg(String fileName, int type) {
         return imgDAO.insert(fileName, type);

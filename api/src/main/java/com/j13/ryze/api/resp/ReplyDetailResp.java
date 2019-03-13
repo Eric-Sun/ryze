@@ -5,7 +5,7 @@ import com.j13.poppy.anno.Parameter;
 
 import java.util.List;
 
-public class AdminReplyDetailResp {
+public class ReplyDetailResp {
     @Parameter(desc = "")
     private int replyId;
     @Parameter(desc = "")
@@ -26,7 +26,7 @@ public class AdminReplyDetailResp {
     private int lastReplyId;
     @Parameter(desc = "")
     private int barId;
-    private List<AdminReplyDetailResp> replyList = Lists.newLinkedList();
+    private List<ReplyDetailResp> replyList = Lists.newLinkedList();
     @Parameter(desc = "")
     private String userAvatarUrl;
 
@@ -54,11 +54,11 @@ public class AdminReplyDetailResp {
         this.lastReplyId = lastReplyId;
     }
 
-    public List<AdminReplyDetailResp> getReplyList() {
+    public List<ReplyDetailResp> getReplyList() {
         return replyList;
     }
 
-    public void setReplyList(List<AdminReplyDetailResp> replyList) {
+    public void setReplyList(List<ReplyDetailResp> replyList) {
         this.replyList = replyList;
     }
 

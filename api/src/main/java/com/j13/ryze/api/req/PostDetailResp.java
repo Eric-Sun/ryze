@@ -1,6 +1,10 @@
 package com.j13.ryze.api.req;
 
+import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Parameter;
+import com.j13.ryze.api.resp.AdminReplyDetailResp;
+
+import java.util.List;
 
 public class PostDetailResp {
     @Parameter(desc = "")
@@ -21,6 +25,26 @@ public class PostDetailResp {
     private int type;
     @Parameter(desc = "")
     private String createtime;
+    @Parameter(desc = "")
+    private String userAvatarUrl;
+
+    private List<AdminReplyDetailResp> replies = Lists.newLinkedList();
+
+    public List<AdminReplyDetailResp> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<AdminReplyDetailResp> replies) {
+        this.replies = replies;
+    }
+
+    public String getUserAvatarUrl() {
+        return userAvatarUrl;
+    }
+
+    public void setUserAvatarUrl(String userAvatarUrl) {
+        this.userAvatarUrl = userAvatarUrl;
+    }
 
     public int getAnonymous() {
         return anonymous;

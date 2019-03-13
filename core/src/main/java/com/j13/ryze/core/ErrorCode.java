@@ -32,14 +32,19 @@ public class ErrorCode {
     public static class Bar {
         public static int NOT_BAR_OWNER = 10001;
         public static int NOT_EXIST = 10002;
-        public static int HAS_MEMBER=10003;
-        public static int NOT_HAS_MEMBER=10004;
+        public static int HAS_MEMBER = 10003;
+        public static int NOT_HAS_MEMBER = 10004;
     }
 
 
-    public static class Img{
-        public static int TYPE_IS_WRONG=20001;
-        public static int UPLOAD_IMG_ERROR=20002;
+    public static class Img {
+        public static int TYPE_IS_WRONG = 20001;
+        public static int UPLOAD_IMG_ERROR = 20002;
+    }
+
+    public static class POST {
+        public static int QUERY_POST_TYPE_ERROR = 30001;
+
     }
 
 }

@@ -1,15 +1,18 @@
 package com.j13.ryze.daos;
 
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.vos.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Repository
@@ -19,9 +22,22 @@ public class UserDAO {
     JdbcTemplate j;
 
 
-    public String getNickName(int userId) {
-        String sql = "select nickname from user where id=? and deleted=?";
-        return j.queryForObject(sql, new Object[]{userId, Constants.DB.NOT_DELETED}, String.class);
+//    public String getNickName(int userId) {
+//        String sql = "select nickname from user where id=? and deleted=?";
+//        return j.queryForObject(sql, new Object[]{userId, Constants.DB.NOT_DELETED}, String.class);
+//    }
+
+    public UserVO getUser(int userId) {
+        String sql = "select nickname,avatar_url from user where id=? and deleted=?";
+        return j.queryForObject(sql, new Object[]{userId, Constants.DB.NOT_DELETED}, new RowMapper<UserVO>() {
+            @Override
+            public UserVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                UserVO vo = new UserVO();
+                vo.setNickName(rs.getString(1));
+                vo.setAvatarUrl(rs.getString(2));
+                return vo;
+            }
+        });
     }
 
 
@@ -42,8 +58,6 @@ public class UserDAO {
         }, holder);
         return holder.getKey().intValue();
     }
-
-
 
 
 }

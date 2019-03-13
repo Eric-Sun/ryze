@@ -29,6 +29,8 @@ public class OSSClientService {
     private String accessKeySecret = null;
     private String bucketName = null;
 
+    private static long EXPIRE_TIME = 3600l * 1000;
+
     @PostConstruct
     public void init() {
         endpoint = PropertiesConfiguration.getInstance().getStringValue("ossclient.endpoint");
@@ -42,6 +44,7 @@ public class OSSClientService {
 
     /**
      * 保存文件，反馈文件名
+     *
      * @param item
      * @param type
      * @return
@@ -64,7 +67,6 @@ public class OSSClientService {
     }
 
 
-
     /**
      * 获取图片类型对韵存储在oss上的目录名称
      *
@@ -79,4 +81,17 @@ public class OSSClientService {
         }
     }
 
+    /**
+     * 获得外网的URL
+     * @param name
+     * @param type
+     * @return
+     */
+    public String getFileUrl(String name, int type) {
+        Date expiration = new Date(new Date().getTime() + EXPIRE_TIME);
+        String fullFileName = findDir(type) + "/" + name;
+        // 生成URL
+        URL url = ossClient.generatePresignedUrl(bucketName, fullFileName, expiration);
+        return url.toString();
+    }
 }
