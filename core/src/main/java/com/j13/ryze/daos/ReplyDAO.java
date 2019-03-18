@@ -114,4 +114,10 @@ public class ReplyDAO {
             }
         });
     }
+
+    public List<Integer> recentlyList(int barId, int userId, int pageNum, int size) {
+        String sql = "select post_id from reply where bar_id=? and user_id=? and deleted=? " +
+                "order by updatetime desc limit ?,?";
+        return j.queryForList(sql, new Object[]{barId, userId, Constants.DB.NOT_DELETED, pageNum * size, size}, Integer.class);
+    }
 }

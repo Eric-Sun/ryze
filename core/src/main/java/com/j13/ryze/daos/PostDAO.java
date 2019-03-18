@@ -48,11 +48,11 @@ public class PostDAO {
     }
 
 
-    public List<PostVO> list(int barId, int pageName, int size) {
+    public List<PostVO> list(int barId, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
                 "reply_count,updatetime,title,status,anonymous,`type` " +
                 "from post where deleted=? and bar_id=? order by updatetime desc limit ?,?";
-        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, pageName * size, size}, new RowMapper<PostVO>() {
+        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new RowMapper<PostVO>() {
             @Override
             public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
                 PostVO vo = new PostVO();
@@ -72,12 +72,12 @@ public class PostDAO {
         });
     }
 
-    public List<PostVO> listByType(int barId, int type, int pageName, int size) {
+    public List<PostVO> listByType(int barId, int type, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
                 "reply_count,updatetime,title,status,anonymous,`type` " +
                 "from post where deleted=? and bar_id=? and `type`=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, type,
-                pageName * size, size}, new RowMapper<PostVO>() {
+                pageNum * size, size}, new RowMapper<PostVO>() {
             @Override
             public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
                 PostVO vo = new PostVO();
@@ -196,6 +196,30 @@ public class PostDAO {
                 vo.setReplyCount(rs.getInt(6));
                 vo.setTitle(rs.getString(7));
                 vo.setUpdatetime(rs.getTimestamp(8).getTime());
+                vo.setStatus(rs.getInt(9));
+                vo.setAnonymous(rs.getInt(10));
+                vo.setType(rs.getInt(11));
+                return vo;
+            }
+        });
+    }
+
+    public List<PostVO> listByUserId(int barId, int userId, int pageNum, int size) {
+        String sql = "select user_id,bar_id,content,createtime,id," +
+                "reply_count,updatetime,title,status,anonymous,`type` " +
+                "from post where user_id=? and deleted=? and bar_id=? order by updatetime desc limit ?,?";
+        return j.query(sql, new Object[]{userId, Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new RowMapper<PostVO>() {
+            @Override
+            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                PostVO vo = new PostVO();
+                vo.setUserId(rs.getInt(1));
+                vo.setBarId(rs.getInt(2));
+                vo.setContent(rs.getString(3));
+                vo.setCreatetime(rs.getTimestamp(4).getTime());
+                vo.setPostId(rs.getInt(5));
+                vo.setReplyCount(rs.getInt(6));
+                vo.setUpdatetime(rs.getTimestamp(7).getTime());
+                vo.setTitle(rs.getString(8));
                 vo.setStatus(rs.getInt(9));
                 vo.setAnonymous(rs.getInt(10));
                 vo.setType(rs.getInt(11));

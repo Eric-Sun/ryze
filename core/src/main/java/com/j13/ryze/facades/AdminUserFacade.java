@@ -31,7 +31,7 @@ public class AdminUserFacade {
         BufferedWriter bw = null;
         try {
             br = new BufferedReader(new FileReader(new File(req.getPath())));
-            File outputFile = new File(req.getPath()+".done");
+            File outputFile = new File(req.getPath() + ".done");
             outputFile.createNewFile();
             bw = new BufferedWriter(new FileWriter(outputFile));
             String line = null;
@@ -40,19 +40,23 @@ public class AdminUserFacade {
                 String nickName = strs[0];
                 int sex = strs[1].equals("男") ? Constants.USER_SEX.MALE : Constants.USER_SEX.FEMALE;
                 String anonNickName = "匿名侠" + random.nextInt(1000000);
-                int userId = userDAO.add(nickName, anonNickName, sex, Constants.USER_IS_MACHINE.MACHINE);
+                int userId = userDAO.register(nickName, anonNickName, -1, Constants.USER_SOURCE_TYPE.MACHINE);
+                // 插入到user_info表中
+                userDAO.updateInfoFromWechat(userId, "", "", "", sex, "");
                 String newLine = strs[0] + "," + strs[1] + "," + userId + "\n";
                 bw.write(newLine);
             }
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
+            ;
             return CommonResultResp.failure();
         } finally {
             try {
                 br.close();
                 bw.close();
             } catch (IOException e) {
-                e.printStackTrace();;
+                e.printStackTrace();
+                ;
                 CommonResultResp.failure();
             }
         }

@@ -51,4 +51,14 @@ public class ImgDAO {
             }
         });
     }
+
+    public String getName(int imgId) {
+        String sql = "select name from img where id=?";
+        return j.queryForObject(sql, new Object[]{imgId}, String.class);
+    }
+
+    public void delete(int imgId) {
+        String sql = "update img set deleted=?,updatetime=now() where id=?";
+        j.update(sql, new Object[]{Constants.DB.DELETED, imgId});
+    }
 }

@@ -3,6 +3,7 @@ package com.j13.ryze.vos;
 public class UserVO {
     private int userId;
     private String nickName;
+    private int avatarImgId;
     private String avatarUrl;
 
     public String getAvatarUrl() {
@@ -11,6 +12,14 @@ public class UserVO {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public int getAvatarImgId() {
+        return avatarImgId;
+    }
+
+    public void setAvatarImgId(int avatarImgId) {
+        this.avatarImgId = avatarImgId;
     }
 
     public String getNickName() {

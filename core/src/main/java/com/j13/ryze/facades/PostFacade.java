@@ -4,9 +4,7 @@ import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
-import com.j13.ryze.api.req.PostDetailReq;
-import com.j13.ryze.api.req.PostDetailResp;
-import com.j13.ryze.api.req.PostListResp;
+import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.AdminPostDetailResp;
 import com.j13.ryze.api.resp.AdminReplyDetailResp;
 import com.j13.ryze.api.resp.PostListReq;
@@ -71,7 +69,39 @@ public class PostFacade {
         return resp;
     }
 
+    @Action(name = "post.recentlyPostList", desc = "用户最近发布的Post")
+    public PostListResp recentlyPostList(CommandContext ctxt, PostRecentlyPostListReq req) {
+        PostListResp resp = new PostListResp();
+        List<PostVO> postList = postDAO.listByUserId(req.getBarId(), req.getUserId(), req.getPageNum(), req.getSize());
+        for (PostVO vo : postList) {
+            PostDetailResp r = new PostDetailResp();
+            BeanUtils.copyProperties(r, vo);
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            r.setUserName(user.getNickName());
+            r.setUserAvatarUrl(user.getAvatarUrl());
+            resp.getList().add(r);
+        }
+        return resp;
+    }
 
+
+    @Action(name = "post.recentlyReplyist", desc = "用户最近回复的Post，包含二三级回复")
+    public PostListResp recentlyReplyist(CommandContext ctxt, PostRecentlyReplyListReq req) {
+        PostListResp resp = new PostListResp();
+        List<Integer> postIdList = replyDAO.recentlyList(req.getBarId(),
+                req.getUserId(), req.getPageNum(), req.getSize());
+
+        for (Integer postId : postIdList) {
+            PostVO vo = postDAO.get(postId);
+            PostDetailResp r = new PostDetailResp();
+            BeanUtils.copyProperties(r, vo);
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            r.setUserName(user.getNickName());
+            r.setUserAvatarUrl(user.getAvatarUrl());
+            resp.getList().add(r);
+        }
+        return resp;
+    }
 
 
 }

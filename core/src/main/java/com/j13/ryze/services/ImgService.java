@@ -34,6 +34,21 @@ public class ImgService {
         return imgId;
     }
 
+    /**
+     * 用于存储来源于wechat的头像
+     *
+     * @param url
+     * @return
+     */
+    public int saveWechatAvatar(String url) {
+        int imgId = insertImg(url, Constants.IMG_TYPE.AVATAR_URL_FROM_WECHAT);
+        return imgId;
+    }
+
+    public void deleteOldWechatAvatar(int imgId) {
+        imgDAO.delete(imgId);
+    }
+
 
     public String getFileUrl(int imgId) {
         ImgVO imgVO = imgDAO.get(imgId);
@@ -46,4 +61,8 @@ public class ImgService {
     }
 
 
+    public String getWechatUrlFromImgId(int imgId) {
+        String name = imgDAO.getName(imgId);
+        return name;
+    }
 }

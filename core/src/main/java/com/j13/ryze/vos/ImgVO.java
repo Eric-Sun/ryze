@@ -4,15 +4,6 @@ public class ImgVO {
     private int id;
     private String name;
     private int type;
-    private String src;
-
-    public String getSrc() {
-        return src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
-    }
 
     public int getId() {
         return id;

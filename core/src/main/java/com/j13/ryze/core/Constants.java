@@ -40,10 +40,6 @@ public class Constants {
     }
 
     public static class Wechat {
-        public static String TOKEN = "aaaa";
-//        public static String APPID = "wx0d07487890a95d68";
-//        public static String AppSecret = "e71556c2f7b94b916451e0fc81b04f02";
-
         public static String APPID = "wx2d015e71c9f5362a";
         public static String AppSecret = "29c0a0547b381b38bd68e7750897c186";
     }
@@ -57,10 +53,12 @@ public class Constants {
 
     public static class IMG_TYPE {
         public static int AVATAR = 0;
+        public static int AVATAR_URL_FROM_WECHAT = 1;
     }
 
+    // 用户表中的用户类型
     public static class USER_SOURCE_TYPE {
-        public static int OWNER = 0;
+        public static int MACHINE = 0;
         public static int WECHAT = 1;
     }
 
@@ -93,11 +91,5 @@ public class Constants {
         public static int FEMALE = 1;     // 女
     }
 
-    public static class USER_IS_MACHINE {
-        // 机器人
-        public static int MACHINE = 1;
-        // 普通用户
-        public static int COMMON = 0;
-    }
 
 }
