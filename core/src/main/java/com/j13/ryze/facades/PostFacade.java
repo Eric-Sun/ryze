@@ -1,6 +1,7 @@
 package com.j13.ryze.facades;
 
 import com.j13.poppy.anno.Action;
+import com.j13.poppy.anno.NeedToken;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
@@ -70,9 +71,10 @@ public class PostFacade {
     }
 
     @Action(name = "post.recentlyPostList", desc = "用户最近发布的Post")
+    @NeedToken
     public PostListResp recentlyPostList(CommandContext ctxt, PostRecentlyPostListReq req) {
         PostListResp resp = new PostListResp();
-        List<PostVO> postList = postDAO.listByUserId(req.getBarId(), req.getUserId(), req.getPageNum(), req.getSize());
+        List<PostVO> postList = postDAO.listByUserId(req.getBarId(), ctxt.getUid(), req.getPageNum(), req.getSize());
         for (PostVO vo : postList) {
             PostDetailResp r = new PostDetailResp();
             BeanUtils.copyProperties(r, vo);
@@ -85,11 +87,12 @@ public class PostFacade {
     }
 
 
-    @Action(name = "post.recentlyReplyist", desc = "用户最近回复的Post，包含二三级回复")
-    public PostListResp recentlyReplyist(CommandContext ctxt, PostRecentlyReplyListReq req) {
+    @Action(name = "post.recentlyReplyList", desc = "用户最近回复的Post，包含二三级回复")
+    @NeedToken
+    public PostListResp recentlyReplyList(CommandContext ctxt, PostRecentlyReplyListReq req) {
         PostListResp resp = new PostListResp();
         List<Integer> postIdList = replyDAO.recentlyList(req.getBarId(),
-                req.getUserId(), req.getPageNum(), req.getSize());
+                ctxt.getUid(), req.getPageNum(), req.getSize());
 
         for (Integer postId : postIdList) {
             PostVO vo = postDAO.get(postId);

@@ -4,8 +4,6 @@ import com.j13.poppy.anno.Parameter;
 
 public class PostListReq {
     @Parameter(desc = "")
-    private int userId;
-    @Parameter(desc = "")
     private int barId;
     @Parameter(desc = "")
     private int pageNum;
@@ -46,11 +44,4 @@ public class PostListReq {
         this.size = size;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }

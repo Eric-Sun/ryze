@@ -35,6 +35,9 @@ alter table user drop column img_path;
 
 // 增加source_type字段，用来区分user的来源
 alter table user add column source_type int(11) default -1 after avatar_img_id;
+// 修改img表name的长度为255
+alter table img change column name name varchar(255) default '' ;
+
 
 
 

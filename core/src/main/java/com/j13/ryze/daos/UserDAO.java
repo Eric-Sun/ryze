@@ -28,13 +28,15 @@ public class UserDAO {
 //    }
 
     public UserVO getUser(int userId) {
-        String sql = "select nickname,avatar_img_id from user where id=? and deleted=?";
+        String sql = "select nickname,avatar_img_id,createtime,anon_nickname from user where id=? and deleted=?";
         return j.queryForObject(sql, new Object[]{userId, Constants.DB.NOT_DELETED}, new RowMapper<UserVO>() {
             @Override
             public UserVO mapRow(ResultSet rs, int rowNum) throws SQLException {
                 UserVO vo = new UserVO();
                 vo.setNickName(rs.getString(1));
                 vo.setAvatarImgId(rs.getInt(2));
+                vo.setCreatetime(rs.getTimestamp(3).getTime());
+                vo.setAnonNickName(rs.getString(4));
                 return vo;
             }
         });
@@ -61,12 +63,12 @@ public class UserDAO {
     }
 
     public void updateFromWechat(int userId, String nickName, int avatarImgId) {
-        String sql = "update user set nick_name=? , avatar_img_id=? where id=? and deleted=?";
+        String sql = "update user set nickname=? , avatar_img_id=? where id=? and deleted=?";
         j.update(sql, new Object[]{nickName, avatarImgId, userId, Constants.DB.NOT_DELETED});
     }
 
     public void updateFromWechat(int userId, String nickName) {
-        String sql = "update user set nick_name=?  where id=? and deleted=?";
+        String sql = "update user set nickname=?  where id=? and deleted=?";
         j.update(sql, new Object[]{nickName, userId, Constants.DB.NOT_DELETED});
     }
 

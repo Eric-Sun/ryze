@@ -4,8 +4,6 @@ import com.j13.poppy.anno.Parameter;
 
 public class PostRecentlyReplyListReq {
     @Parameter(desc = "")
-    private int userId;
-    @Parameter(desc = "")
     private int barId;
     @Parameter(desc = "")
     private int pageNum;
@@ -36,11 +34,4 @@ public class PostRecentlyReplyListReq {
         this.size = size;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }

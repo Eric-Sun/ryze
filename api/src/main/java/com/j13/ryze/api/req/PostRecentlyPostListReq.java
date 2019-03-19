@@ -6,8 +6,6 @@ public class PostRecentlyPostListReq {
     @Parameter(desc = "")
     private int barId;
     @Parameter(desc = "")
-    private int userId;
-    @Parameter(desc = "")
     private int pageNum;
     @Parameter(desc = "")
     private int size;
@@ -36,11 +34,4 @@ public class PostRecentlyPostListReq {
         this.size = size;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }

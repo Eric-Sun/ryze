@@ -1,10 +1,8 @@
-package com.j13.ryze.vos;
+package com.j13.ryze.api.resp;
 
-public class UserVO {
-    private int userId;
+public class UserInfoResp {
     private String nickName;
     private String anonNickName;
-    private int avatarImgId;
     private String avatarUrl;
     private long createtime;
 
@@ -16,14 +14,6 @@ public class UserVO {
         this.anonNickName = anonNickName;
     }
 
-    public long getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(long createtime) {
-        this.createtime = createtime;
-    }
-
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -32,12 +22,12 @@ public class UserVO {
         this.avatarUrl = avatarUrl;
     }
 
-    public int getAvatarImgId() {
-        return avatarImgId;
+    public long getCreatetime() {
+        return createtime;
     }
 
-    public void setAvatarImgId(int avatarImgId) {
-        this.avatarImgId = avatarImgId;
+    public void setCreatetime(long createtime) {
+        this.createtime = createtime;
     }
 
     public String getNickName() {
@@ -46,13 +36,5 @@ public class UserVO {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 }

@@ -4,33 +4,14 @@ import com.j13.poppy.anno.Parameter;
 
 public class WechatLoginResponse {
     @Parameter(desc = "")
-    private int code = 0;
-    @Parameter(desc = "")
-    private String sessionKey;
-    @Parameter(desc = "")
-    private int userId;
+    private String t;
 
-    public int getUserId() {
-        return userId;
+    public String getT() {
+        return t;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setT(String t) {
+        this.t = t;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getSessionKey() {
-        return sessionKey;
-    }
-
-    public void setSessionKey(String sessionKey) {
-        this.sessionKey = sessionKey;
-    }
 }

@@ -40,8 +40,8 @@ public class Constants {
     }
 
     public static class Wechat {
-        public static String APPID = "wx2d015e71c9f5362a";
-        public static String AppSecret = "29c0a0547b381b38bd68e7750897c186";
+        public static String APPID = "wxaa4fd4f99543a61a";
+        public static String AppSecret = "52af06754a9b58a9b6bb14d45f198d4f";
     }
 
 

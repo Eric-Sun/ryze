@@ -1,14 +1,20 @@
 package com.j13.ryze.facades;
 
 import com.alibaba.fastjson.JSON;
+import com.j13.poppy.JedisManager;
+import com.j13.poppy.TokenManager;
 import com.j13.poppy.anno.Action;
+import com.j13.poppy.anno.NeedToken;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
+import com.j13.ryze.api.req.DefaultReq;
 import com.j13.ryze.api.req.WechatLoginRequest;
+import com.j13.ryze.api.resp.UserInfoResp;
 import com.j13.ryze.api.resp.WechatLoginResponse;
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.core.UserTokenValue;
 import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.daos.WechatInfoDAO;
 import com.j13.ryze.services.ImgService;
@@ -35,6 +41,11 @@ public class UserFacade {
     UserService userService;
     @Autowired
     ImgService imgService;
+
+    @Autowired
+    TokenManager tokenManager;
+    @Autowired
+    JedisManager jedisManager;
 
 
     @Action(name = "user.wechatLogin", desc = "通过微信客户端尝试登录，如果没有注册的话会通过加密数据进行注册")
@@ -80,10 +91,36 @@ public class UserFacade {
             userDAO.updateInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
             wechatInfoDAO.updateSessionKey(openId, sessionKey);
         }
+        // 清楚之前user的token信息
+        String oldValueStr = jedisManager.get(userId + ":t");
+        if (oldValueStr != null) {
+            UserTokenValue oldValue = JSON.parseObject(oldValueStr, UserTokenValue.class);
+            String oldT = oldValue.getT();
+            jedisManager.delete(oldT);
+            LOG.debug("clean old t. t={}", oldT);
+        }
+        String t = tokenManager.genT();
+        // 设置token，可以查询到uid
+        tokenManager.setTicket(t, userId);
+        // 设置user:t，可以反查到token和其他信息
+        UserTokenValue value = new UserTokenValue(openId, sessionKey, t);
+        String valueStr = JSON.toJSONString(value);
+        jedisManager.set(userId + ":t", valueStr);
+        LOG.debug("add new t. t={},userId={},:t={}", new Object[]{t, userId, valueStr});
+
 
         WechatLoginResponse resp = new WechatLoginResponse();
-        resp.setSessionKey(sessionKey);
-        resp.setUserId(userId);
+        resp.setT(t);
+        return resp;
+    }
+
+
+    @Action(name = "user.info")
+    @NeedToken
+    public UserInfoResp info(CommandContext ctxt, DefaultReq req) {
+        UserInfoResp resp = new UserInfoResp();
+        UserVO userVO = userService.getUserInfo(ctxt.getUid());
+        BeanUtils.copyProperties(resp, userVO);
         return resp;
     }
 
