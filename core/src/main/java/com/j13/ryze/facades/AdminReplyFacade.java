@@ -33,7 +33,7 @@ public class AdminReplyFacade {
     UserService userService;
 
     @Action(name = "admin.reply.add", desc = "")
-    public AdminReplyAddResp replyAdd(CommandContext ctxt, AdminReplyAddReq req) {
+        public AdminReplyAddResp replyAdd(CommandContext ctxt, AdminReplyAddReq req) {
         AdminReplyAddResp resp = new AdminReplyAddResp();
         int id = replyDAO.add(req.getUserId(), req.getBarId(), req.getPostId(),
                 req.getContent(), req.getAnonymous(),req.getLastReplyId());

@@ -8,12 +8,11 @@ import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.AdminPostDetailResp;
 import com.j13.ryze.api.resp.AdminReplyDetailResp;
+import com.j13.ryze.api.resp.PostAddResp;
 import com.j13.ryze.api.resp.PostListReq;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
-import com.j13.ryze.daos.PostDAO;
-import com.j13.ryze.daos.ReplyDAO;
-import com.j13.ryze.daos.UserDAO;
+import com.j13.ryze.daos.*;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.ReplyVO;
@@ -34,6 +33,10 @@ public class PostFacade {
     UserService userService;
     @Autowired
     ReplyDAO replyDAO;
+    @Autowired
+    BarDAO barDAO;
+    @Autowired
+    BarMemberDAO barMemberDAO;
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
     public PostListResp list(CommandContext ctxt, PostListReq req) {
@@ -107,7 +110,24 @@ public class PostFacade {
     }
 
 
-    public
+    @Action(name = "post.add")
+    @NeedToken
+    public PostAddResp add(CommandContext ctxt, PostAddReq req) {
+        PostAddResp resp = new PostAddResp();
+//        if (!barDAO.exist(req.getBarId())) {
+//            throw new CommonException(ErrorCode.Bar.NOT_EXIST);
+//        }
+
+//        if (!barMemberDAO.hasMember(req.getBarId(), req.getUserId())) {
+//            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
+//        }
+
+        int id = postDAO.add(ctxt.getUid(),
+                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType());
+        barDAO.addPostCount(req.getBarId());
+        resp.setPostId(id);
+        return resp;
+    }
 
 
 }

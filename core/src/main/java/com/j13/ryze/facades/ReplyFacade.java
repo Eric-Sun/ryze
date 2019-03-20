@@ -3,9 +3,14 @@ package com.j13.ryze.facades;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.util.BeanUtils;
+import com.j13.ryze.api.req.AdminReplyAddReq;
+import com.j13.ryze.api.req.ReplyAddReq;
 import com.j13.ryze.api.req.ReplyListReq;
+import com.j13.ryze.api.resp.AdminReplyAddResp;
+import com.j13.ryze.api.resp.ReplyAddResp;
 import com.j13.ryze.api.resp.ReplyDetailResp;
 import com.j13.ryze.api.resp.ReplyListResp;
+import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.ReplyVO;
@@ -22,6 +27,8 @@ public class ReplyFacade {
     ReplyDAO replyDAO;
     @Autowired
     UserService userService;
+    @Autowired
+    PostDAO postDAO;
 
     @Action(name = "reply.list")
     public ReplyListResp list(CommandContext ctxt, ReplyListReq req) {
@@ -55,6 +62,18 @@ public class ReplyFacade {
                 }
             }
         }
+        return resp;
+    }
+
+
+    @Action(name = "reply.add", desc = "")
+    public ReplyAddResp replyAdd(CommandContext ctxt, ReplyAddReq req) {
+        ReplyAddResp resp = new ReplyAddResp();
+        int id = replyDAO.add(ctxt.getUid(), req.getBarId(), req.getPostId(),
+                req.getContent(), req.getAnonymous(), req.getLastReplyId());
+        postDAO.addReplyCount(req.getPostId());
+        postDAO.updateTime(req.getPostId());
+        resp.setReplyId(id);
         return resp;
     }
 
