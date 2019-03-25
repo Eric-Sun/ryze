@@ -48,7 +48,7 @@ public class ReplyDAO {
 
     public List<ReplyVO> list(int postId, int pageName, int size) {
         String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id " +
-                "from reply where deleted=? and post_id=? and last_reply_id=0 limit ?,?";
+                "from reply where deleted=? and post_id=? and last_reply_id=0 order by updatetime desc limit ?,? ";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, postId, pageName * size, size}, new RowMapper<ReplyVO>() {
             @Override
             public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -67,7 +67,8 @@ public class ReplyDAO {
     }
 
     public List<ReplyVO> lastReplylist(int lastReplyId, int pageName, int size) {
-        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id from reply where deleted=? and last_reply_id=? limit ?,?";
+        String sql = "select user_id,bar_id,content,createtime,id," +
+                "post_id,anonymous,last_reply_id from reply where deleted=? and last_reply_id=?  order by updatetime desc limit ?,? ";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, lastReplyId, pageName * size, size}, new RowMapper<ReplyVO>() {
             @Override
             public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {

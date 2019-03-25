@@ -1,6 +1,7 @@
 package com.j13.ryze.facades;
 
 import com.j13.poppy.anno.Action;
+import com.j13.poppy.anno.NeedToken;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.AdminReplyAddReq;
@@ -47,8 +48,8 @@ public class ReplyFacade {
                 ReplyDetailResp r2 = new ReplyDetailResp();
                 BeanUtils.copyProperties(r2, vo2);
                 UserVO user2 = userService.getUserInfo(vo2.getUserId());
-                r.setUserName(user2.getNickName());
-                r.setUserAvatarUrl(user2.getAvatarUrl());
+                r2.setUserName(user2.getNickName());
+                r2.setUserAvatarUrl(user2.getAvatarUrl());
                 r.getReplyList().add(r2);
                 // 尝试找第三级
                 List<ReplyVO> list3 = replyDAO.lastReplylist(r2.getReplyId(), req.getPageNum(), req.getSize());
@@ -56,8 +57,8 @@ public class ReplyFacade {
                     ReplyDetailResp r3 = new ReplyDetailResp();
                     BeanUtils.copyProperties(r3, vo3);
                     UserVO user3 = userService.getUserInfo(vo3.getUserId());
-                    r.setUserName(user3.getNickName());
-                    r.setUserAvatarUrl(user3.getAvatarUrl());
+                    r3.setUserName(user3.getNickName());
+                    r3.setUserAvatarUrl(user3.getAvatarUrl());
                     r2.getReplyList().add(r3);
                 }
             }
@@ -67,6 +68,7 @@ public class ReplyFacade {
 
 
     @Action(name = "reply.add", desc = "")
+    @NeedToken
     public ReplyAddResp replyAdd(CommandContext ctxt, ReplyAddReq req) {
         ReplyAddResp resp = new ReplyAddResp();
         int id = replyDAO.add(ctxt.getUid(), req.getBarId(), req.getPostId(),
