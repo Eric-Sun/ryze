@@ -10,6 +10,7 @@ import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.DefaultReq;
+import com.j13.ryze.api.req.UserCheckTokenReq;
 import com.j13.ryze.api.req.UserOtherUserInfoReq;
 import com.j13.ryze.api.req.WechatLoginRequest;
 import com.j13.ryze.api.resp.UserInfoResp;
@@ -123,6 +124,19 @@ public class UserFacade {
         UserVO userVO = userService.getUserInfo(ctxt.getUid());
         BeanUtils.copyProperties(resp, userVO);
         return resp;
+    }
+
+
+    @Action(name = "user.checkToken")
+    public CommonResultResp checkToken(CommandContext ctxt, UserCheckTokenReq req) {
+        CommonResultResp resp = new CommonResultResp();
+        String t = req.getT();
+        int id = tokenManager.checkTicket(t);
+        if (id == 0) {
+            return CommonResultResp.failure();
+        } else {
+            return CommonResultResp.success();
+        }
     }
 
 
