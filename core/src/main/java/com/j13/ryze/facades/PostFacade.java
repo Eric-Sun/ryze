@@ -13,6 +13,7 @@ import com.j13.ryze.api.resp.PostListReq;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.*;
+import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.ReplyVO;
@@ -37,6 +38,8 @@ public class PostFacade {
     BarDAO barDAO;
     @Autowired
     BarMemberDAO barMemberDAO;
+    @Autowired
+    PostService postService;
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
     public PostListResp list(CommandContext ctxt, PostListReq req) {
@@ -57,6 +60,7 @@ public class PostFacade {
             UserVO user = userService.getUserInfo(vo.getUserId());
             r.setUserName(user.getNickName());
             r.setUserAvatarUrl(user.getAvatarUrl());
+            r.setReplyCount(postService.replyCount(vo.getPostId()));
             resp.getList().add(r);
         }
         return resp;

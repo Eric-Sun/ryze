@@ -4,8 +4,9 @@ import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Parameter;
 
 import java.util.List;
-// 一级评论类
-public class ReplyDetailResp {
+
+// 二级评论类
+public class Level2ReplyDetailResp {
     @Parameter(desc = "")
     private int replyId;
     @Parameter(desc = "")
@@ -24,21 +25,29 @@ public class ReplyDetailResp {
     private int anonymous;
     @Parameter(desc = "")
     private int lastReplyId;
+    @Parameter(desc = "回复的人的用户名")
+    private String lastReplyUserName;
+    @Parameter(desc="被回复人的用户id")
+    private int lastReplyUserId;
     @Parameter(desc = "")
     private int barId;
-    @Parameter(desc="二级评论的列表，包含三级评论")
-    private List<Level2ReplyDetailResp> replyList = Lists.newLinkedList();
     @Parameter(desc = "")
     private String userAvatarUrl;
-    @Parameter(desc = "回复该评论的总数量")
-    private int replySize;
 
-    public int getReplySize() {
-        return replySize;
+    public int getLastReplyUserId() {
+        return lastReplyUserId;
     }
 
-    public void setReplySize(int replySize) {
-        this.replySize = replySize;
+    public void setLastReplyUserId(int lastReplyUserId) {
+        this.lastReplyUserId = lastReplyUserId;
+    }
+
+    public String getLastReplyUserName() {
+        return lastReplyUserName;
+    }
+
+    public void setLastReplyUserName(String lastReplyUserName) {
+        this.lastReplyUserName = lastReplyUserName;
     }
 
     public String getUserAvatarUrl() {
@@ -63,14 +72,6 @@ public class ReplyDetailResp {
 
     public void setLastReplyId(int lastReplyId) {
         this.lastReplyId = lastReplyId;
-    }
-
-    public List<Level2ReplyDetailResp> getReplyList() {
-        return replyList;
-    }
-
-    public void setReplyList(List<Level2ReplyDetailResp> replyList) {
-        this.replyList = replyList;
     }
 
     public int getAnonymous() {

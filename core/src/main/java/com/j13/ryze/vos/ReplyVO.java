@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-public class ReplyVO {
+public class ReplyVO implements Comparable<ReplyVO> {
     private int replyId;
     private int postId;
     private int userId;
@@ -14,6 +14,24 @@ public class ReplyVO {
     private long createtime;
     private int anonymous;
     private int lastReplyId;
+    private String lastReplyUserName = "";
+    private int lastReplyUserId;
+
+    public int getLastReplyUserId() {
+        return lastReplyUserId;
+    }
+
+    public void setLastReplyUserId(int lastReplyUserId) {
+        this.lastReplyUserId = lastReplyUserId;
+    }
+
+    public String getLastReplyUserName() {
+        return lastReplyUserName;
+    }
+
+    public void setLastReplyUserName(String lastReplyUserName) {
+        this.lastReplyUserName = lastReplyUserName;
+    }
 
     public int getLastReplyId() {
         return lastReplyId;
@@ -85,5 +103,10 @@ public class ReplyVO {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public int compareTo(ReplyVO o) {
+        return new Long(o.getCreatetime() - this.getCreatetime()).intValue();
     }
 }

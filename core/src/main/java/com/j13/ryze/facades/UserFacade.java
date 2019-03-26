@@ -10,6 +10,7 @@ import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.DefaultReq;
+import com.j13.ryze.api.req.UserOtherUserInfoReq;
 import com.j13.ryze.api.req.WechatLoginRequest;
 import com.j13.ryze.api.resp.UserInfoResp;
 import com.j13.ryze.api.resp.WechatLoginResponse;
@@ -120,6 +121,16 @@ public class UserFacade {
     public UserInfoResp info(CommandContext ctxt, DefaultReq req) {
         UserInfoResp resp = new UserInfoResp();
         UserVO userVO = userService.getUserInfo(ctxt.getUid());
+        BeanUtils.copyProperties(resp, userVO);
+        return resp;
+    }
+
+
+    @Action(name = "user.otherUserInfo")
+    @NeedToken
+    public UserInfoResp otherUserInfo(CommandContext ctxt, UserOtherUserInfoReq req) {
+        UserInfoResp resp = new UserInfoResp();
+        UserVO userVO = userService.getUserInfo(req.getUserId());
         BeanUtils.copyProperties(resp, userVO);
         return resp;
     }

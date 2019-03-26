@@ -86,6 +86,11 @@ public class ReplyDAO {
         });
     }
 
+    public int lastReplylistSize(int lastReplyId) {
+        String sql = "select count(1) from reply where deleted=? and " +
+                "last_reply_id=?  ";
+        return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, lastReplyId}, Integer.class);
+    }
 
     public void update(int replyId, String content, int anonymous) {
         String sql = "update reply set content=?,anonymous=? where id=? and deleted=?";
@@ -120,5 +125,10 @@ public class ReplyDAO {
         String sql = "select post_id from reply where bar_id=? and user_id=? and deleted=? " +
                 "order by updatetime desc limit ?,?";
         return j.queryForList(sql, new Object[]{barId, userId, Constants.DB.NOT_DELETED, pageNum * size, size}, Integer.class);
+    }
+
+    public int replyCount(int postId) {
+        String sql = "select count(1) from reply where post_id=? and deleted=?";
+        return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, Integer.class);
     }
 }

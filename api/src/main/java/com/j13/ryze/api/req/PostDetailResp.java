@@ -27,6 +27,16 @@ public class PostDetailResp {
     private String createtime;
     @Parameter(desc = "")
     private String userAvatarUrl;
+    @Parameter(desc = "")
+    private int replyCount;
+
+    public int getReplyCount() {
+        return replyCount;
+    }
+
+    public void setReplyCount(int replyCount) {
+        this.replyCount = replyCount;
+    }
 
     private List<AdminReplyDetailResp> replies = Lists.newLinkedList();
 
