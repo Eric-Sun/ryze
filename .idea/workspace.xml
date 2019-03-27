@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="239e95d5-f826-4059-b689-a8ffd3a480cd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/src/main/java/com/j13/ryze/api/req/ReplyDetailReq.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminReplyFacade.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminReplyFacade.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ReplyDAO.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/daos/ReplyDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ReplyFacade.java" afterPath="$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ReplyFacade.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/config/deploy/log4j.properties" afterPath="$PROJECT_DIR$/core/config/deploy/log4j.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="che.iws" />
@@ -95,7 +91,7 @@
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ImgFacade.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="480">
-              <caret line="29" column="30" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
+              <caret line="29" column="9" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -146,8 +142,8 @@
       <file leaf-file-name="AdminReplyFacade.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminReplyFacade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.49086162" vertical-offset="562" max-vertical-offset="1740">
-              <caret line="67" column="37" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.4699739" vertical-offset="1140" max-vertical-offset="1740">
+              <caret line="105" column="18" selection-start-line="105" selection-start-column="18" selection-end-line="105" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -1671,12 +1667,12 @@
       <workItem from="1553570468594" duration="5505000" />
       <workItem from="1553592998299" duration="402000" />
       <workItem from="1553599422787" duration="769000" />
-      <workItem from="1553664963513" duration="3229000" />
+      <workItem from="1553664963513" duration="3693000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="654107000" />
+    <option name="totallyTimeSpent" value="654571000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -2099,7 +2095,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1799" max-vertical-offset="3225">
           <caret line="134" column="22" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2139,7 +2135,7 @@
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/ImgFacade.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="480">
-          <caret line="29" column="30" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
+          <caret line="29" column="9" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -2157,10 +2153,10 @@
         <state vertical-scroll-proportion="0.41666666" vertical-offset="15" max-vertical-offset="630">
           <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
           <folding>
-            <element signature="e#544#545#0" expanded="true" />
-            <element signature="e#574#575#0" expanded="true" />
-            <element signature="e#617#618#0" expanded="true" />
-            <element signature="e#655#656#0" expanded="true" />
+            <element signature="e#544#545#0" expanded="false" />
+            <element signature="e#574#575#0" expanded="false" />
+            <element signature="e#617#618#0" expanded="false" />
+            <element signature="e#655#656#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2250,8 +2246,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/j13/ryze/facades/AdminReplyFacade.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49086162" vertical-offset="562" max-vertical-offset="1740">
-          <caret line="67" column="37" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.4699739" vertical-offset="1140" max-vertical-offset="1740">
+          <caret line="105" column="18" selection-start-line="105" selection-start-column="18" selection-end-line="105" selection-end-column="18" />
           <folding />
         </state>
       </provider>
