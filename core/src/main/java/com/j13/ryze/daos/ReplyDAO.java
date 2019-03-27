@@ -131,4 +131,6 @@ public class ReplyDAO {
         String sql = "select count(1) from reply where post_id=? and deleted=?";
         return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, Integer.class);
     }
+
+
 }

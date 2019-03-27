@@ -61,8 +61,8 @@ public class AdminReplyFacade {
                 AdminReplyDetailResp r2 = new AdminReplyDetailResp();
                 BeanUtils.copyProperties(r2, vo2);
                 UserVO user2 = userService.getUserInfo(vo2.getUserId());
-                r.setUserName(user2.getNickName());
-                r.setUserAvatarUrl(user2.getAvatarUrl());
+                r2.setUserName(user2.getNickName());
+                r2.setUserAvatarUrl(user2.getAvatarUrl());
                 r.getReplyList().add(r2);
                 // 尝试找第三级
                 List<ReplyVO> list3 = replyDAO.lastReplylist(r2.getReplyId(), req.getPageNum(), req.getSize());
@@ -70,8 +70,8 @@ public class AdminReplyFacade {
                     AdminReplyDetailResp r3 = new AdminReplyDetailResp();
                     BeanUtils.copyProperties(r3, vo3);
                     UserVO user3 = userService.getUserInfo(vo3.getUserId());
-                    r.setUserName(user3.getNickName());
-                    r.setUserAvatarUrl(user3.getAvatarUrl());
+                    r3.setUserName(user3.getNickName());
+                    r3.setUserAvatarUrl(user3.getAvatarUrl());
                     r2.getReplyList().add(r3);
                 }
             }
