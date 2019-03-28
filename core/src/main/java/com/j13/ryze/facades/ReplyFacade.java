@@ -44,29 +44,15 @@ public class ReplyFacade {
             r.setUserAvatarUrl(user.getAvatarUrl());
             resp.getData().add(r);
 
-            int replySize = 0;
+            SizeObject replySize = new SizeObject();
+            replySize.setSize(0);
             // 二级评论默认显示2个，其余显示一个总数，搜索的时候用这个参数作为size，
             // 组成集合之后通过updatetime排序之后按照这个参数取值
             int level2DefaultSize = 2;
             List<ReplyVO> tmpLevel2ReplyList = Lists.newLinkedList();
 
-            // 尝试找二级回复
-            List<ReplyVO> list2 = replyDAO.lastReplylist(r.getReplyId(), 0, level2DefaultSize);
-            int list2Size = replyDAO.lastReplylistSize(r.getReplyId());
-            replySize = replySize + list2Size;
-            for (ReplyVO vo2 : list2) {
-                tmpLevel2ReplyList.add(vo2);
-                // 尝试找第三级
-                List<ReplyVO> list3 = replyDAO.lastReplylist(vo2.getReplyId(), 0, level2DefaultSize);
-                int list3Size = replyDAO.lastReplylistSize(vo2.getReplyId());
-                replySize = replySize + list3Size;
-                for (ReplyVO vo3 : list3) {
-                    UserVO replyUser = userService.getUserInfo(vo2.getUserId());
-                    vo3.setLastReplyUserName(replyUser.getNickName());
-                    vo3.setLastReplyUserId(vo2.getUserId());
-                    tmpLevel2ReplyList.add(vo3);
-                }
-            }
+            findAllChildReply(vo.getReplyId(), level2DefaultSize, replySize, tmpLevel2ReplyList);
+
 
             Collections.sort(tmpLevel2ReplyList);
             List<ReplyVO> tmpFinalList = null;
@@ -86,9 +72,37 @@ public class ReplyFacade {
                 r.getReplyList().add(level2Resp);
             }
 
-            r.setReplySize(replySize);
+            r.setReplySize(replySize.getSize());
         }
         return resp;
+    }
+
+    private void findAllChildReply(int replyId, int level2DefaultSize,
+                                   SizeObject replySize, List<ReplyVO> tmpLevel2ReplyList) {
+        List<ReplyVO> list = replyDAO.lastReplylist(replyId, 0, level2DefaultSize);
+        int listSize = replyDAO.lastReplylistSize(replyId);
+        replySize.setSize(replySize.getSize() + listSize);
+        for (ReplyVO vo : list) {
+            tmpLevel2ReplyList.add(vo);
+            UserVO replyUser = userService.getUserInfo(vo.getUserId());
+            vo.setLastReplyUserName(replyUser.getNickName());
+            vo.setLastReplyUserId(vo.getUserId());
+
+            findAllChildReply(vo.getReplyId(), level2DefaultSize, replySize, tmpLevel2ReplyList);
+
+        }
+    }
+
+    class SizeObject {
+        private int size;
+
+        public int getSize() {
+            return size;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
     }
 
 
@@ -114,29 +128,14 @@ public class ReplyFacade {
         r.setUserName(user.getNickName());
         r.setUserAvatarUrl(user.getAvatarUrl());
 
-        int replySize = 0;
+        SizeObject replySize = new SizeObject();
+        replySize.setSize(0);
         // 二级评论默认显示2个，其余显示一个总数，搜索的时候用这个参数作为size，
         // 组成集合之后通过updatetime排序之后按照这个参数取值
         int level2DefaultSize = 5;
         List<ReplyVO> tmpLevel2ReplyList = Lists.newLinkedList();
 
-        // 尝试找二级回复
-        List<ReplyVO> list2 = replyDAO.lastReplylist(r.getReplyId(), 0, level2DefaultSize);
-        int list2Size = replyDAO.lastReplylistSize(r.getReplyId());
-        replySize = replySize + list2Size;
-        for (ReplyVO vo2 : list2) {
-            tmpLevel2ReplyList.add(vo2);
-            // 尝试找第三级
-            List<ReplyVO> list3 = replyDAO.lastReplylist(vo2.getReplyId(), 0, level2DefaultSize);
-            int list3Size = replyDAO.lastReplylistSize(vo2.getReplyId());
-            replySize = replySize + list3Size;
-            for (ReplyVO vo3 : list3) {
-                UserVO replyUser = userService.getUserInfo(vo2.getUserId());
-                vo3.setLastReplyUserName(replyUser.getNickName());
-                vo3.setLastReplyUserId(vo2.getUserId());
-                tmpLevel2ReplyList.add(vo3);
-            }
-        }
+        findAllChildReply(vo.getReplyId(), level2DefaultSize, replySize, tmpLevel2ReplyList);
 
         Collections.sort(tmpLevel2ReplyList);
 
@@ -148,7 +147,7 @@ public class ReplyFacade {
             level2Resp.setUserAvatarUrl(replyUser.getAvatarUrl());
             r.getReplyList().add(level2Resp);
         }
-        r.setReplySize(replySize);
+        r.setReplySize(replySize.getSize());
 
         return r;
     }
