@@ -48,7 +48,7 @@ public class ReplyDAO {
 
     public List<ReplyVO> list(int postId, int pageName, int size) {
         String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id " +
-                "from reply where deleted=? and post_id=? and last_reply_id=0 order by updatetime desc limit ?,? ";
+                "from reply where deleted=? and post_id=? and last_reply_id=0 order by createtime ASC limit ?,? ";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, postId, pageName * size, size}, new RowMapper<ReplyVO>() {
             @Override
             public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {

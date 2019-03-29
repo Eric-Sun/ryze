@@ -67,6 +67,7 @@ public class UserFacade {
 
         // 检查这个openId有没有对应的记录
         int userId = wechatInfoDAO.getUserId(openId);
+        LOG.info("userId={},openId={},sessionKey={}", new Object[]{userId, openId, sessionKey});
         if (userId == -1) {
             // 需要注册
             // 随机一个anonNickName
