@@ -133,4 +133,23 @@ public class ReplyDAO {
     }
 
 
+    public List<ReplyVO> listByBarId(int barId, int pageNum, int size) {
+        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id " +
+                "from reply where deleted=? and bar_id=? order by createtime DESC limit ?,? ";
+        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new RowMapper<ReplyVO>() {
+            @Override
+            public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                ReplyVO vo = new ReplyVO();
+                vo.setUserId(rs.getInt(1));
+                vo.setBarId(rs.getInt(2));
+                vo.setContent(rs.getString(3));
+                vo.setCreatetime(rs.getTimestamp(4).getTime());
+                vo.setReplyId(rs.getInt(5));
+                vo.setPostId(rs.getInt(6));
+                vo.setAnonymous(rs.getInt(7));
+                vo.setLastReplyId(rs.getInt(8));
+                return vo;
+            }
+        });
+    }
 }
