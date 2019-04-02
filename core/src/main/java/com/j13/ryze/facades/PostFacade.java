@@ -6,13 +6,11 @@ import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
-import com.j13.ryze.api.resp.AdminPostDetailResp;
-import com.j13.ryze.api.resp.AdminReplyDetailResp;
-import com.j13.ryze.api.resp.PostAddResp;
-import com.j13.ryze.api.resp.PostListReq;
+import com.j13.ryze.api.resp.*;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.*;
+import com.j13.ryze.services.AdminLevelInfoService;
 import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.PostVO;
@@ -40,6 +38,8 @@ public class PostFacade {
     BarMemberDAO barMemberDAO;
     @Autowired
     PostService postService;
+    @Autowired
+    AdminLevelInfoService adminLevelInfoService;
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
     public PostListResp list(CommandContext ctxt, PostListReq req) {
@@ -74,6 +74,9 @@ public class PostFacade {
         UserVO user = userService.getUserInfo(vo.getUserId());
         resp.setUserName(user.getNickName());
         resp.setUserAvatarUrl(user.getAvatarUrl());
+
+        List<AdminLevelInfoResp> levelInfoList = adminLevelInfoService.findLevelInfo(req.getPostId(), 1);
+        resp.setLevelInfo(levelInfoList);
         return resp;
     }
 

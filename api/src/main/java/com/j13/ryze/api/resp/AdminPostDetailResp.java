@@ -1,6 +1,9 @@
 package com.j13.ryze.api.resp;
 
+import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Parameter;
+
+import java.util.List;
 
 public class AdminPostDetailResp {
 
@@ -28,6 +31,15 @@ public class AdminPostDetailResp {
     private int type;
     @Parameter(desc = "")
     private String userAvatarUrl;
+    private List<AdminLevelInfoResp> levelInfo = Lists.newLinkedList();
+
+    public List<AdminLevelInfoResp> getLevelInfo() {
+        return levelInfo;
+    }
+
+    public void setLevelInfo(List<AdminLevelInfoResp> levelInfo) {
+        this.levelInfo = levelInfo;
+    }
 
     public String getUserAvatarUrl() {
         return userAvatarUrl;

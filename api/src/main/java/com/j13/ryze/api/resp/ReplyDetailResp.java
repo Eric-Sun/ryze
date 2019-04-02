@@ -32,7 +32,6 @@ public class ReplyDetailResp {
     private String userAvatarUrl;
     @Parameter(desc = "回复该评论的总数量")
     private int replySize;
-
     public int getReplySize() {
         return replySize;
     }

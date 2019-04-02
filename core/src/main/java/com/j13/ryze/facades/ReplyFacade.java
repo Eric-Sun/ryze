@@ -12,6 +12,7 @@ import com.j13.ryze.api.req.ReplyListReq;
 import com.j13.ryze.api.resp.*;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
+import com.j13.ryze.services.AdminLevelInfoService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.ReplyVO;
 import com.j13.ryze.vos.UserVO;
@@ -30,6 +31,8 @@ public class ReplyFacade {
     UserService userService;
     @Autowired
     PostDAO postDAO;
+    @Autowired
+    AdminLevelInfoService adminLevelInfoService;
 
     @Action(name = "reply.list")
     public ReplyListResp list(CommandContext ctxt, ReplyListReq req) {
@@ -148,6 +151,8 @@ public class ReplyFacade {
             r.getReplyList().add(level2Resp);
         }
         r.setReplySize(replySize.getSize());
+
+
 
         return r;
     }

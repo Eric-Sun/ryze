@@ -5,12 +5,14 @@ import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
+import com.j13.ryze.api.resp.AdminLevelInfoResp;
 import com.j13.ryze.api.resp.AdminReplyAddResp;
 import com.j13.ryze.api.resp.AdminReplyDetailResp;
 import com.j13.ryze.api.resp.AdminReplyListResp;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.daos.UserDAO;
+import com.j13.ryze.services.AdminLevelInfoService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.ReplyVO;
 import com.j13.ryze.vos.UserVO;
@@ -32,6 +34,8 @@ public class AdminReplyFacade {
     @Autowired
     UserService userService;
 
+    @Autowired
+    AdminLevelInfoService adminLevelInfoService;
     @Action(name = "admin.reply.add", desc = "")
         public AdminReplyAddResp replyAdd(CommandContext ctxt, AdminReplyAddReq req) {
         AdminReplyAddResp resp = new AdminReplyAddResp();
@@ -107,6 +111,9 @@ public class AdminReplyFacade {
                 r2.getReplyList().add(r3);
             }
         }
+
+        List<AdminLevelInfoResp> levelInfoList = adminLevelInfoService.findLevelInfo(vo.getReplyId(), 2);
+        r.setLevelInfo(levelInfoList);
         return r;
     }
 

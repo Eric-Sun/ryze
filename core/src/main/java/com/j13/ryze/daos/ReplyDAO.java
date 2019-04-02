@@ -104,7 +104,7 @@ public class ReplyDAO {
 
 
     public ReplyVO get(int replyId) {
-        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous from reply where deleted=? and id=?";
+        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id from reply where deleted=? and id=?";
         return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, replyId}, new RowMapper<ReplyVO>() {
             @Override
             public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -116,6 +116,7 @@ public class ReplyDAO {
                 vo.setReplyId(rs.getInt(5));
                 vo.setPostId(rs.getInt(6));
                 vo.setAnonymous(rs.getInt(7));
+                vo.setLastReplyId(rs.getInt(8));
                 return vo;
             }
         });

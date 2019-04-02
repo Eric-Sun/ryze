@@ -29,6 +29,16 @@ public class AdminReplyDetailResp {
     private List<AdminReplyDetailResp> replyList = Lists.newLinkedList();
     @Parameter(desc = "")
     private String userAvatarUrl;
+    @Parameter(desc = "")
+    private List<AdminLevelInfoResp> levelInfo = Lists.newLinkedList();
+
+    public List<AdminLevelInfoResp> getLevelInfo() {
+        return levelInfo;
+    }
+
+    public void setLevelInfo(List<AdminLevelInfoResp> levelInfo) {
+        this.levelInfo = levelInfo;
+    }
 
     public String getUserAvatarUrl() {
         return userAvatarUrl;

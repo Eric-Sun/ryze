@@ -10,6 +10,7 @@ import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.BarMemberDAO;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.UserDAO;
+import com.j13.ryze.services.AdminLevelInfoService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.UserVO;
@@ -33,6 +34,8 @@ public class AdminPostFacade {
 
     @Autowired
     UserService userService;
+    @Autowired
+    AdminLevelInfoService adminLevelInfoService;
 
     @Action(name = "admin.post.add", desc = "")
     public AdminPostAddResp add(CommandContext ctxt, AdminPostAddReq req) {
@@ -99,6 +102,10 @@ public class AdminPostFacade {
         UserVO user = userService.getUserInfo(vo.getUserId());
         resp.setUserName(user.getNickName());
         resp.setUserAvatarUrl(user.getAvatarUrl());
+
+        List<AdminLevelInfoResp> levelInfoList = adminLevelInfoService.findLevelInfo(vo.getPostId(), 1);
+        resp.setLevelInfo(levelInfoList);
+
         return resp;
     }
 
