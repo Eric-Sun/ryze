@@ -4,6 +4,8 @@ package com.j13.ryze.core;
 public class Constants {
 
     public static String USER_DEFAULT_AVATAR_FILENAME = "1552208882018.jpeg";
+    public static String ANON_LOU = "anon_lou.jpeg";
+    public static String ANON_XIA = "anon_xia.jpeg";
 
 
     public static class ResponseStatus {

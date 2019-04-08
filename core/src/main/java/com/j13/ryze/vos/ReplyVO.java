@@ -16,6 +16,15 @@ public class ReplyVO implements Comparable<ReplyVO> {
     private int lastReplyId;
     private String lastReplyUserName = "";
     private int lastReplyUserId;
+    private String lastReplyAnonUserName;
+
+    public String getLastReplyAnonUserName() {
+        return lastReplyAnonUserName;
+    }
+
+    public void setLastReplyAnonUserName(String lastReplyAnonUserName) {
+        this.lastReplyAnonUserName = lastReplyAnonUserName;
+    }
 
     public int getLastReplyUserId() {
         return lastReplyUserId;

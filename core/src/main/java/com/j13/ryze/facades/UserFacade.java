@@ -113,6 +113,7 @@ public class UserFacade {
 
 
         WechatLoginResponse resp = new WechatLoginResponse();
+        resp.setUserId(userId);
         resp.setT(t);
         return resp;
     }

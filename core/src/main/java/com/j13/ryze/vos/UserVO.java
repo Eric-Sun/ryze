@@ -7,6 +7,24 @@ public class UserVO {
     private int avatarImgId;
     private String avatarUrl;
     private long createtime;
+    private String anonLouUrl;
+    private String anonXiaUrl;
+
+    public String getAnonLouUrl() {
+        return anonLouUrl;
+    }
+
+    public void setAnonLouUrl(String anonLouUrl) {
+        this.anonLouUrl = anonLouUrl;
+    }
+
+    public String getAnonXiaUrl() {
+        return anonXiaUrl;
+    }
+
+    public void setAnonXiaUrl(String anonXiaUrl) {
+        this.anonXiaUrl = anonXiaUrl;
+    }
 
     public String getAnonNickName() {
         return anonNickName;

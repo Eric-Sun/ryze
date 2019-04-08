@@ -30,16 +30,6 @@ public class PostDetailResp {
     private String userAvatarUrl;
     @Parameter(desc = "")
     private int replyCount;
-    @Parameter(desc = "")
-    private List<AdminLevelInfoResp> levelInfo = Lists.newLinkedList();
-
-    public List<AdminLevelInfoResp> getLevelInfo() {
-        return levelInfo;
-    }
-
-    public void setLevelInfo(List<AdminLevelInfoResp> levelInfo) {
-        this.levelInfo = levelInfo;
-    }
 
     public int getReplyCount() {
         return replyCount;

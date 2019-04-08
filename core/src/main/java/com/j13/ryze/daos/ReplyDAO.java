@@ -153,4 +153,9 @@ public class ReplyDAO {
             }
         });
     }
+
+    public void delete(int userId, int replyId) {
+        String sql = "update reply set deleted=? where id=? and user_id=?";
+        j.update(sql, new Object[]{Constants.DB.DELETED, replyId, userId});
+    }
 }

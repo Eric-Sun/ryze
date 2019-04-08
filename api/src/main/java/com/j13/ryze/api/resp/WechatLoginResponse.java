@@ -5,6 +5,16 @@ import com.j13.poppy.anno.Parameter;
 public class WechatLoginResponse {
     @Parameter(desc = "")
     private String t;
+    @Parameter(desc = "")
+    private int userId;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getT() {
         return t;

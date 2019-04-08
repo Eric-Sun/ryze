@@ -27,12 +27,19 @@ public class Level2ReplyDetailResp {
     private int lastReplyId;
     @Parameter(desc = "回复的人的用户名")
     private String lastReplyUserName;
-    @Parameter(desc="被回复人的用户id")
+    @Parameter(desc = "")
+    private String lastReplyAnonUserName;
+    @Parameter(desc = "被回复人的用户id")
     private int lastReplyUserId;
     @Parameter(desc = "")
     private int barId;
     @Parameter(desc = "")
     private String userAvatarUrl;
+
+    public void setLastReplyAnonUserName(String lastReplyAnonUserName) {
+        this.lastReplyAnonUserName = lastReplyAnonUserName;
+    }
+
 
     public int getLastReplyUserId() {
         return lastReplyUserId;

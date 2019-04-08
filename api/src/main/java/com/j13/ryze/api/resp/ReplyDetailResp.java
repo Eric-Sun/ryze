@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Parameter;
 
 import java.util.List;
+
 // 一级评论类
 public class ReplyDetailResp {
     @Parameter(desc = "")
@@ -26,12 +27,13 @@ public class ReplyDetailResp {
     private int lastReplyId;
     @Parameter(desc = "")
     private int barId;
-    @Parameter(desc="二级评论的列表，包含三级评论")
+    @Parameter(desc = "二级评论的列表，包含三级评论")
     private List<Level2ReplyDetailResp> replyList = Lists.newLinkedList();
     @Parameter(desc = "")
     private String userAvatarUrl;
     @Parameter(desc = "回复该评论的总数量")
     private int replySize;
+
     public int getReplySize() {
         return replySize;
     }
