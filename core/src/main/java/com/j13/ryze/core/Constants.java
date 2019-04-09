@@ -94,4 +94,17 @@ public class Constants {
     }
 
 
+    public static class NOTICE {
+        public static class TYPE {
+            public static int REPLY_NOTICE = 1;
+            public static int POST_NOTICE = 0;
+        }
+
+        public static class STATUS {
+            public static int NOT_READ = 0;
+            public static int READED = 1;
+
+        }
+    }
+
 }

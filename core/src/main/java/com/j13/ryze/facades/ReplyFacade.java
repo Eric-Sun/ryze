@@ -11,8 +11,7 @@ import com.j13.ryze.api.resp.*;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
-import com.j13.ryze.services.AdminLevelInfoService;
-import com.j13.ryze.services.UserService;
+import com.j13.ryze.services.*;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.ReplyVO;
 import com.j13.ryze.vos.UserVO;
@@ -37,6 +36,12 @@ public class ReplyFacade {
     PostDAO postDAO;
     @Autowired
     AdminLevelInfoService adminLevelInfoService;
+    @Autowired
+    ReplyService replyService;
+    @Autowired
+    PostService postService;
+    @Autowired
+    NoticeService noticeService;
 
     @Action(name = "reply.list")
     public ReplyListResp list(CommandContext ctxt, ReplyListReq req) {
@@ -122,6 +127,14 @@ public class ReplyFacade {
                 req.getContent(), req.getAnonymous(), req.getLastReplyId());
         postDAO.addReplyCount(req.getPostId());
         postDAO.updateTime(req.getPostId());
+        // 添加对应的notice通知
+        if (req.getLastReplyId() == 0) {
+            PostVO postVO = postService.getSimplePost(req.getPostId());
+            noticeService.addPostNotice(ctxt.getUid(), postVO.getUserId(), postVO.getPostId(), id);
+        } else {
+            ReplyVO replyVO = replyService.getSimpleReply(req.getLastReplyId());
+            noticeService.addReplyNotice(ctxt.getUid(), replyVO.getUserId(), replyVO.getReplyId(), id);
+        }
         resp.setReplyId(id);
         return resp;
     }
