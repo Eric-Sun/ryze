@@ -1,58 +1,13 @@
-v1.6
-alter table user add column avatar_url varchar(255) default '' not null after sex;
-alter table user drop column avatar_url;
-alter table user add column avatar_img_id int(11) default -1 after sex;
-
-CREATE TABLE `user_info` (
+CREATE TABLE `reply_notice` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `city` varchar(10) DEFAULT NULL,
-  `country` varchar(10) DEFAULT NULL,
-  `province` varchar(11) DEFAULT NULL,
-  `gender` int(11) DEFAULT NULL,
-  `language` varchar(11) DEFAULT NULL,
-  `createtime` timestamp NULL DEFAULT NULL,
-  `updatetime` timestamp NULL DEFAULT NULL,
-  `deleted` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-CREATE TABLE `wechat_info` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `open_id` varchar(50) DEFAULT NULL,
-  `session_key` varchar(50) DEFAULT NULL,
-  `createtime` timestamp NULL DEFAULT NULL,
-  `updatetime` timestamp NULL DEFAULT NULL,
-  `deleted` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-// 去掉user表中的sex、is_machine img_path字段
-alter table user drop column sex;
-alter table user drop column is_machine;
-alter table user drop column img_path;
-
-// 增加source_type字段，用来区分user的来源
-alter table user add column source_type int(11) default -1 after avatar_img_id;
-
-CREATE TABLE `img` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT '',
+  `from_user_id` int(11) DEFAULT NULL,
+  `to_user_id` int(11) DEFAULT NULL,
+  `target_resource_id` int(11) DEFAULT NULL,
+  `reply_id` int(11) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   `createtime` timestamp NULL DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL,
   `deleted` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-
-
-// 修改img表name的长度为255
-alter table img change column name name varchar(255) default '' ;
-
-
-
-
-
-
-
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;

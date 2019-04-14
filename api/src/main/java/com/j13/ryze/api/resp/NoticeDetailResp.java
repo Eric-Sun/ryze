@@ -16,11 +16,21 @@ public class NoticeDetailResp {
     @Parameter(desc = "")
     private Object content;
     @Parameter(desc = "")
+    private String replyContent;
+    @Parameter(desc = "")
     private long createtime;
     @Parameter(desc = "")
     private int type;
     @Parameter(desc = "")
     private int status;
+
+    public String getReplyContent() {
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
+    }
 
     public String getFromUserAvatarImgUrl() {
         return fromUserAvatarImgUrl;

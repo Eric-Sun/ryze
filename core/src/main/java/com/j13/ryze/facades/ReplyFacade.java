@@ -62,7 +62,7 @@ public class ReplyFacade {
             int level2DefaultSize = 2;
             List<ReplyVO> tmpLevel2ReplyList = Lists.newLinkedList();
 
-            findAllChildReply(post.getAnonymous(), vo.getReplyId(), level2DefaultSize, replySize, tmpLevel2ReplyList);
+            findAllChildReply(post.getAnonymous(), vo, level2DefaultSize, replySize, tmpLevel2ReplyList);
 
 
             Collections.sort(tmpLevel2ReplyList);
@@ -86,14 +86,14 @@ public class ReplyFacade {
         return resp;
     }
 
-    private void findAllChildReply(int postAnonymous, int replyId, int level2DefaultSize,
+    private void findAllChildReply(int postAnonymous, ReplyVO replyVO, int level2DefaultSize,
                                    SizeObject replySize, List<ReplyVO> tmpLevel2ReplyList) {
-        List<ReplyVO> list = replyDAO.lastReplylist(replyId, 0, level2DefaultSize);
-        int listSize = replyDAO.lastReplylistSize(replyId);
+        List<ReplyVO> list = replyDAO.lastReplylist(replyVO.getReplyId(), 0, level2DefaultSize);
+        int listSize = replyDAO.lastReplylistSize(replyVO.getReplyId());
         replySize.setSize(replySize.getSize() + listSize);
         for (ReplyVO vo : list) {
             tmpLevel2ReplyList.add(vo);
-            UserVO replyUser = userService.getUserInfo(vo.getUserId());
+            UserVO replyUser = userService.getUserInfo(replyVO.getUserId());
             vo.setLastReplyUserName(replyUser.getNickName());
             vo.setLastReplyUserId(vo.getUserId());
             if (vo.getAnonymous() == Constants.REPLY_ANONYMOUS.ANONYMOUS ||
@@ -101,7 +101,7 @@ public class ReplyFacade {
                 vo.setLastReplyUserName(replyUser.getAnonNickName());
             }
 
-            findAllChildReply(postAnonymous, vo.getReplyId(), level2DefaultSize, replySize, tmpLevel2ReplyList);
+            findAllChildReply(postAnonymous, vo, level2DefaultSize, replySize, tmpLevel2ReplyList);
 
         }
     }
@@ -164,7 +164,7 @@ public class ReplyFacade {
         int level2DefaultSize = 5;
         List<ReplyVO> tmpLevel2ReplyList = Lists.newLinkedList();
 
-        findAllChildReply(post.getAnonymous(), vo.getReplyId(), level2DefaultSize, replySize, tmpLevel2ReplyList);
+        findAllChildReply(post.getAnonymous(), vo, level2DefaultSize, replySize, tmpLevel2ReplyList);
 
         Collections.sort(tmpLevel2ReplyList);
 
