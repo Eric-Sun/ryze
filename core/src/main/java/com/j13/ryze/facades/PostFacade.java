@@ -12,6 +12,7 @@ import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.*;
 import com.j13.ryze.services.AdminLevelInfoService;
+import com.j13.ryze.services.NoticeService;
 import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.PostVO;
@@ -44,8 +45,11 @@ public class PostFacade {
     PostService postService;
     @Autowired
     AdminLevelInfoService adminLevelInfoService;
+    @Autowired
+    NoticeService noticeService;
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
+    @NeedToken
     public PostListResp list(CommandContext ctxt, PostListReq req) {
         PostListResp resp = new PostListResp();
         List<PostVO> list = null;
@@ -65,6 +69,13 @@ public class PostFacade {
             r.setReplyCount(postService.replyCount(vo.getPostId()));
             resp.getList().add(r);
         }
+
+        // 查看notice数量，给tabbar红点
+        if (ctxt.getUid() != 0) {
+            int noticeSize = noticeService.listNotReadSize(ctxt.getUid());
+            resp.setNoticeSize(noticeSize);
+        }
+
         return resp;
     }
 

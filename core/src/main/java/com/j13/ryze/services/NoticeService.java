@@ -64,5 +64,13 @@ public class NoticeService {
     }
 
 
+    public int listNotReadSize(int userId) {
+        return noticeDAO.listNotReadSize(userId);
+    }
+
+    public void readAll(int uid) {
+        noticeDAO.readAll(uid);
+        LOG.info("read all notices. userId={}", uid);
+    }
 }
 

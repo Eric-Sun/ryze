@@ -4,8 +4,10 @@ import com.j13.poppy.anno.Action;
 import com.j13.poppy.anno.NeedTicket;
 import com.j13.poppy.anno.NeedToken;
 import com.j13.poppy.core.CommandContext;
+import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.NoticeListReq;
+import com.j13.ryze.api.req.NoticeReadAllReq;
 import com.j13.ryze.api.resp.NoticeDetailResp;
 import com.j13.ryze.api.resp.NoticeListResp;
 import com.j13.ryze.api.resp.NoticePostContentResp;
@@ -150,5 +152,13 @@ public class NoticeFacade {
             resp.getList().add(detailResp);
         }
         return resp;
+    }
+
+
+    @Action(name = "notice.readAll")
+    @NeedToken
+    public CommonResultResp readAll(CommandContext ctxt, NoticeReadAllReq req) {
+        noticeService.readAll(ctxt.getUid());
+        return CommonResultResp.success();
     }
 }

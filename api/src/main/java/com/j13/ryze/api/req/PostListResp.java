@@ -9,6 +9,16 @@ public class PostListResp {
 
     @Parameter(desc = "")
     private List<PostDetailResp> list = Lists.newLinkedList();
+    @Parameter(desc = "")
+    private int noticeSize;
+
+    public int getNoticeSize() {
+        return noticeSize;
+    }
+
+    public void setNoticeSize(int noticeSize) {
+        this.noticeSize = noticeSize;
+    }
 
     public List<PostDetailResp> getList() {
         return list;

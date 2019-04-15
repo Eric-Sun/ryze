@@ -48,6 +48,17 @@ public class ReplyFacade {
         ReplyListResp resp = new ReplyListResp();
         PostVO post = postDAO.get(req.getPostId());
         List<ReplyVO> list = replyDAO.list(req.getPostId(), req.getPageNum(), req.getSize());
+        handleReplyList(post, list, resp);
+        return resp;
+    }
+
+    /**
+     * 处理reply.list和reply.reverseList接口中的共用方法
+     * @param post
+     * @param list
+     * @param resp
+     */
+    private void handleReplyList(PostVO post, List<ReplyVO> list, ReplyListResp resp) {
         for (ReplyVO vo : list) {
             // 获得一级评论的数据
             ReplyDetailResp r = new ReplyDetailResp();
@@ -83,6 +94,15 @@ public class ReplyFacade {
 
             r.setReplySize(replySize.getSize());
         }
+    }
+
+
+    @Action(name = "reply.reverseList")
+    public ReplyListResp reverseList(CommandContext ctxt, ReplyListReq req) {
+        ReplyListResp resp = new ReplyListResp();
+        PostVO post = postDAO.get(req.getPostId());
+        List<ReplyVO> list = replyDAO.reverselist(req.getPostId(), req.getPageNum(), req.getSize());
+        handleReplyList(post, list, resp);
         return resp;
     }
 

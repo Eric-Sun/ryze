@@ -85,4 +85,15 @@ public class NoticeDAO {
         });
     }
 
+    public int listNotReadSize(int userId) {
+        String sql = "select count(1)" +
+                " from reply_notice " +
+                "where deleted=? and to_user_id=? and status=? ";
+        return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, userId,Constants.NOTICE.STATUS.NOT_READ}, Integer.class);
+    }
+
+    public void readAll(int uid) {
+        String sql = "update reply_notice set status=? where to_user_id=? and deleted=?";
+        j.update(sql, new Object[]{Constants.NOTICE.STATUS.READED, uid, Constants.DB.NOT_DELETED});
+    }
 }
