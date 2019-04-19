@@ -112,6 +112,22 @@ public class PostFacade {
     }
 
 
+    @Action(name = "post.recentlyOtherUserPostList", desc = "用户最近发布的Post")
+    @NeedToken
+    public PostListResp recentlyOtherUserPostList(CommandContext ctxt, PostRecentlyOtherUserPostListReq req) {
+        PostListResp resp = new PostListResp();
+        List<PostVO> postList = postDAO.recentlyOtherUserPostList(req.getOtherUserId(), req.getBarId()
+                , req.getPageNum(), req.getSize());
+        for (PostVO vo : postList) {
+            PostDetailResp r = new PostDetailResp();
+            BeanUtils.copyProperties(r, vo);
+            userService.setUserInfoForPost(r, vo.getUserId());
+            resp.getList().add(r);
+        }
+        return resp;
+    }
+
+
     @Action(name = "post.recentlyReplyList", desc = "用户最近回复的Post，包含二三级回复")
     @NeedToken
     public PostListResp recentlyReplyList(CommandContext ctxt, PostRecentlyReplyListReq req) {

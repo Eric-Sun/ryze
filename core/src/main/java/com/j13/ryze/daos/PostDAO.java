@@ -233,4 +233,29 @@ public class PostDAO {
         j.update(sql, new Object[]{Constants.DB.DELETED, postId, userId});
 
     }
+
+    public List<PostVO> recentlyOtherUserPostList(int otherUserId, int barId, int pageNum, int size) {
+        String sql = "select user_id,bar_id,content,createtime,id," +
+                "reply_count,updatetime,title,status,anonymous,`type` " +
+                "from post where user_id=? and deleted=? and bar_id=? and anonymous=? order by updatetime desc limit ?,?";
+        return j.query(sql, new Object[]{otherUserId, Constants.DB.NOT_DELETED, barId,
+                Constants.POST_ANONYMOUS.COMMON,pageNum * size, size}, new RowMapper<PostVO>() {
+            @Override
+            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                PostVO vo = new PostVO();
+                vo.setUserId(rs.getInt(1));
+                vo.setBarId(rs.getInt(2));
+                vo.setContent(rs.getString(3));
+                vo.setCreatetime(rs.getTimestamp(4).getTime());
+                vo.setPostId(rs.getInt(5));
+                vo.setReplyCount(rs.getInt(6));
+                vo.setUpdatetime(rs.getTimestamp(7).getTime());
+                vo.setTitle(rs.getString(8));
+                vo.setStatus(rs.getInt(9));
+                vo.setAnonymous(rs.getInt(10));
+                vo.setType(rs.getInt(11));
+                return vo;
+            }
+        });
+    }
 }
