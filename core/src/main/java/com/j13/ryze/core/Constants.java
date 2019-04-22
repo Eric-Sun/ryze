@@ -107,4 +107,7 @@ public class Constants {
         }
     }
 
+    public static class UER_MEMBER{
+    }
+
 }
