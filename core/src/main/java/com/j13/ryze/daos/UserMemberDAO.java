@@ -71,8 +71,8 @@ public class UserMemberDAO {
     public void updateUserMember(int userId, int level, long expiretime) {
         String sql = "update user_member set level=? and expiretime=? and createtime=now() where user_id=?";
         j.update(sql, new Object[]{level, expiretime, userId});
-
-
     }
+
+
 
 }
