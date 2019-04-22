@@ -1,7 +1,6 @@
 package com.j13.ryze.facades;
 
 import com.j13.poppy.anno.Action;
-import com.j13.poppy.anno.NeedTicket;
 import com.j13.poppy.anno.NeedToken;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;

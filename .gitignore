@@ -1,4 +1,6 @@
 /tmp/
+.DS_Store
+.idea/
 /target/
 /api/target/
 /core/target/
