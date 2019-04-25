@@ -47,4 +47,8 @@ public class ErrorCode {
 
     }
 
+    public static class MemberAction{
+        public static int NOT_MEMBER=40001;
+    }
+
 }
