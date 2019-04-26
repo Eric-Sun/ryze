@@ -4,16 +4,28 @@ import com.alibaba.fastjson.JSON;
 import com.j13.poppy.JedisManager;
 import com.j13.poppy.config.PropertiesConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
+import javax.annotation.PostConstruct;
+
 @Component
+@Lazy
 public class CommonJedisManager {
     private static String PREFIX = "v10:";
-    private static int OBJECT_EXPIRE_S = PropertiesConfiguration.getInstance().getIntValue("object.expire.s");
+    private static int OBJECT_EXPIRE_S = 0;
 
     @Autowired
     JedisManager jedisManager;
+
+    @Autowired
+    PropertiesConfiguration propertiesConfiguration;
+
+    @PostConstruct
+    public void init(){
+        OBJECT_EXPIRE_S = propertiesConfiguration.getIntValue("object.expire.s");
+    }
 
     public <T> T get(String catalog, Object key, Class<T> clazz) {
         String value = jedisManager.get(PREFIX + catalog + ":" + key.toString());

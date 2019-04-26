@@ -9,6 +9,8 @@ import com.j13.ryze.core.ErrorCode;
 import org.apache.commons.fileupload.FileItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +21,7 @@ import java.util.Date;
 import java.util.Random;
 
 @Service
+@Lazy
 public class OSSClientService {
 
     private static Logger LOG = LoggerFactory.getLogger(OSSClientService.class);
@@ -31,12 +34,14 @@ public class OSSClientService {
 
     private static long EXPIRE_TIME = 3600l * 1000;
 
+    @Autowired
+    PropertiesConfiguration propertiesConfiguration;
     @PostConstruct
     public void init() {
-        endpoint = PropertiesConfiguration.getInstance().getStringValue("ossclient.endpoint");
-        accessKeyId = PropertiesConfiguration.getInstance().getStringValue("ossclient.accessKeyId");
-        accessKeySecret = PropertiesConfiguration.getInstance().getStringValue("ossclient.accessKeySecret");
-        bucketName = PropertiesConfiguration.getInstance().getStringValue("ossclient.bucketName");
+        endpoint = propertiesConfiguration.getStringValue("ossclient.endpoint");
+        accessKeyId = propertiesConfiguration.getStringValue("ossclient.accessKeyId");
+        accessKeySecret = propertiesConfiguration.getStringValue("ossclient.accessKeySecret");
+        bucketName = propertiesConfiguration.getStringValue("ossclient.bucketName");
         ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
         LOG.info("ossclient init successfully.");
     }

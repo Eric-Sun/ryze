@@ -40,4 +40,11 @@ public class PostService {
         return vo;
 
     }
+
+
+    public void offline(int postId) {
+        postDAO.offline(postId);
+        LOG.info("post offline done. postId={}", postId);
+
+    }
 }

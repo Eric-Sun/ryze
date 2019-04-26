@@ -11,10 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 @Repository
@@ -23,12 +20,12 @@ public class VoteDAO {
     @Autowired
     JdbcTemplate j;
 
-    public int add(final int userId, final int resourceId, final int type, final String evidence) {
+    public int add(final int userId, final int resourceId, final int type, final String evidence, final long triggerTime) {
         KeyHolder holder = new GeneratedKeyHolder();
         final String sql = "insert into vote " +
-                "(user_id,resource_id,type,evidence,createtime,updatetime) " +
+                "(user_id,resource_id,type,evidence,createtime,updatetime,triggertime) " +
                 "values" +
-                "(?,?,?,?,now(),now())";
+                "(?,?,?,?,now(),now(),?)";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -37,6 +34,7 @@ public class VoteDAO {
                 pstmt.setInt(2, resourceId);
                 pstmt.setInt(3, type);
                 pstmt.setString(4, evidence);
+                pstmt.setTimestamp(5, new Timestamp(triggerTime));
                 return pstmt;
             }
         }, holder);
@@ -81,7 +79,7 @@ public class VoteDAO {
 
     public List<VoteVO> list(int pageNum, int size) {
         String sql = "select id,user_id,resource_id,type,evidence,createtime,status from vote where deleted=? order by createtime desc limit ?,?";
-        return j.query(sql, new Object[]{}, new RowMapper<VoteVO>() {
+        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<VoteVO>() {
             @Override
             public VoteVO mapRow(ResultSet resultSet, int i) throws SQLException {
                 VoteVO vo = new VoteVO();
@@ -92,6 +90,23 @@ public class VoteDAO {
                 vo.setEvidence(resultSet.getString(5));
                 vo.setCreatetime(resultSet.getTimestamp(6).getTime());
                 vo.setStatus(resultSet.getInt(7));
+                return vo;
+            }
+        });
+    }
+
+    public List<VoteVO> getDeadJobs() {
+        String sql = "select id,user_id,resource_id,type,status,triggertime from vote where status=? and deleted=?";
+        return j.query(sql, new Object[]{DestinyConstants.Vote.Status.START, Constants.DB.NOT_DELETED}, new RowMapper<VoteVO>() {
+            @Override
+            public VoteVO mapRow(ResultSet resultSet, int i) throws SQLException {
+                VoteVO vo = new VoteVO();
+                vo.setId(resultSet.getInt(1));
+                vo.setUserId(resultSet.getInt(2));
+                vo.setResourceId(resultSet.getInt(3));
+                vo.setType(resultSet.getInt(4));
+                vo.setStatus(resultSet.getInt(5));
+                vo.setTriggertime(resultSet.getTimestamp(6).getTime());
                 return vo;
             }
         });

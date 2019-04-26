@@ -9,20 +9,19 @@ import com.j13.ryze.utils.QuartzManager;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.UserVO;
 import com.j13.ryze.vos.VoteVO;
-import org.quartz.DateBuilder;
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.SimpleTrigger;
+import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.quartz.DateBuilder.futureDate;
 import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 @Service
@@ -37,34 +36,6 @@ public class VoteService {
     PostService postService;
     @Autowired
     QuartzManager quartzManager;
-
-    /**
-     * 提交帖子下线的投票
-     *
-     * @param userId
-     * @param postId
-     * @return 投票id
-     */
-    public int createPostOfflineVote(int userId, int postId, PostOfflineVoteEvidence evidence) {
-        String evidenceStr = JSON.toJSONString(evidence);
-        int voteId = voteDAO.add(userId, postId, DestinyConstants.Vote.Type.POST_OFFLINE_VOTE, evidenceStr);
-        LOG.info("add post offline vote. voteId={}", voteId);
-
-        Scheduler scheduler = quartzManager.getScheduler();
-
-        JobDetail job = newJob(PostOfflineVoteJob.class)
-                .withIdentity("myJob", "group1")
-                .build();
-
-
-        SimpleTrigger trigger = (SimpleTrigger) newTrigger()
-                .withIdentity("trigger5", "group1")
-                .startAt(futureDate(5, DateBuilder.IntervalUnit.MINUTE)) // use DateBuilder to create a date in the future
-                .forJob(job) // identify job with its JobKey
-                .build();
-
-        return voteId;
-    }
 
 
     /**
@@ -95,14 +66,16 @@ public class VoteService {
      *
      * @param voteId
      */
-    public void generateResult(int voteId) {
+    public int generateResult(int voteId) {
         VoteVO voteVO = voteDAO.getCount(voteId);
         if (voteVO.getAgreeCount() > voteVO.getDisagreeCount()) {
             voteDAO.setResult(voteId, DestinyConstants.Vote.Result.AGREE_WIN);
             LOG.info("generate result. voteId={},result={}", voteId, "AGREE_WIN");
+            return DestinyConstants.Vote.Result.AGREE_WIN;
         } else {
             voteDAO.setResult(voteId, DestinyConstants.Vote.Result.DISAGREE_WIN);
             LOG.info("generate result. voteId={},result={}", voteId, "DISAGREE_WIN");
+            return DestinyConstants.Vote.Result.DISAGREE_WIN;
         }
     }
 
@@ -164,11 +137,82 @@ public class VoteService {
             PostOfflineVoteEvidence evidence = new PostOfflineVoteEvidence();
             evidence.setReason(reason);
             String evidenceStr = JSON.toJSONString(evidence);
-            int voteId = voteDAO.add(userId, resourceId, type, evidenceStr);
+            Date triggerDate = futureDate(1, DateBuilder.IntervalUnit.MINUTE);
+            long triggerTime = triggerDate.getTime();
+            int voteId = voteDAO.add(userId, resourceId, type, evidenceStr, triggerTime);
+
+            Scheduler scheduler = quartzManager.getScheduler();
+
+            JobDetail job = newJob(PostOfflineVoteJob.class)
+                    .withIdentity("job_" + voteId, "group1")
+                    .usingJobData("voteId", voteId)
+                    .usingJobData("postId", resourceId)
+                    .build();
+
+
+            SimpleTrigger trigger = (SimpleTrigger) newTrigger()
+                    .withIdentity("trigger_" + voteId, "group1")
+                    .startAt(triggerDate) // use DateBuilder to create a date in the future
+                    .forJob(job) // identify job with its JobKey
+                    .build();
+            try {
+                scheduler.scheduleJob(job, trigger);
+            } catch (SchedulerException e) {
+                LOG.error(e.getMessage());
+            }
+            LOG.info("post offline vote quartz scheduled. voteId={}", voteId);
+
             return voteId;
         }
         return 0;
     }
 
 
+    /**
+     * 在系统重启的时候唤醒所有未完成的job，如果已经过期的话需要马上判定
+     */
+    public void awakeDeadJob() throws SchedulerException {
+
+        List<VoteVO> list = voteDAO.getDeadJobs();
+        LOG.info("dead job size = {}", list.size());
+        for (VoteVO vo : list) {
+            long triggertime = vo.getTriggertime();
+            long currenttime = System.currentTimeMillis();
+            if (currenttime > triggertime) {
+                // 需要现在就触发
+                Scheduler scheduler = quartzManager.getScheduler();
+                JobDetail job = newJob(PostOfflineVoteJob.class)
+                        .withIdentity("job_" + vo.getId(), "group1")
+                        .usingJobData("voteId", vo.getId())
+                        .usingJobData("postId", vo.getResourceId())
+                        .build();
+
+
+                SimpleTrigger trigger = (SimpleTrigger) newTrigger()
+                        .withIdentity("trigger_" + vo.getId(), "group1")
+                        .withSchedule(simpleSchedule())
+                        .forJob(job) // identify job with its JobKey
+                        .build();
+                scheduler.scheduleJob(job, trigger);
+            } else {
+                // 需要设置未来的触发时间
+                Scheduler scheduler = quartzManager.getScheduler();
+                JobDetail job = newJob(PostOfflineVoteJob.class)
+                        .withIdentity("job_" + vo.getId(), "group1")
+                        .usingJobData("voteId", vo.getId())
+                        .usingJobData("postId", vo.getResourceId())
+                        .build();
+
+
+                SimpleTrigger trigger = (SimpleTrigger) newTrigger()
+                        .withIdentity("trigger_" + vo.getId(), "group1")
+                        .startAt(new Date(triggertime)) // use DateBuilder to create a date in the future
+                        .forJob(job) // identify job with its JobKey
+                        .build();
+                scheduler.scheduleJob(job, trigger);
+            }
+        }
+
+
+    }
 }

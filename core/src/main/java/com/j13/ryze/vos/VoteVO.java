@@ -16,6 +16,15 @@ public class VoteVO {
     private long createtime;
     private int status;
     private VoteEvidence evidenceObject;
+    private long triggertime;
+
+    public long getTriggertime() {
+        return triggertime;
+    }
+
+    public void setTriggertime(long triggertime) {
+        this.triggertime = triggertime;
+    }
 
     public int getStatus() {
         return status;
