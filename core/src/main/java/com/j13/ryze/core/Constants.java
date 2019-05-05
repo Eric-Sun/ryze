@@ -24,6 +24,13 @@ public class Constants {
         public static int ORDER_CREATED = 0;
     }
 
+    public static class User {
+        public static class Lock {
+            public static int NO_LOCK = 0;
+            public static int IS_LOCK = 1;
+        }
+    }
+
     public static class OrderRecordActionType {
         // 创建order
         public static int ADD = 0;
@@ -107,7 +114,52 @@ public class Constants {
         }
     }
 
-    public static class UER_MEMBER{
+    public static class UER_MEMBER {
     }
 
+
+    public static class UserLock {
+
+        /**
+         * 封号的原因类型
+         */
+        public static class LockReasonType {
+            public static int RUMA = 1;
+        }
+
+        /**
+         * 封号的操作者类型
+         */
+        public static class LockOperatorType {
+            public static int MEMBER = 1;  // 会员
+            public static int ADMIN = 2; // 管理员
+
+        }
+
+        /**
+         * 解封的原因类型
+         */
+        public static class UnlockReasonType {
+            public static int LOCKING = 0;  // 现在处于封号状态，默认状态
+            public static int TIME_IS_OVER = 1; // 封号时间已到，自动解封状态
+            public static int VOTE = 2; // 会员投票决定的
+            public static int ADMIN_FORCE = 3; // admin强制解封
+        }
+
+        /**
+         * 解封操作的操作者类型
+         */
+        public static class UnlockOperatorType {
+            public static int MEMBER = 1;
+            public static int ADMIN = 2;
+            public static int SYSTEM = 3;
+            public static int NOT_SET = 0;
+        }
+
+        public static class UnlockReason {
+            public static String DEFAULT_TIMEOUT_REASON = "timeout";
+            public static String DEFAULT_ADMIN_FORCE_REASON = "";
+        }
+
+    }
 }

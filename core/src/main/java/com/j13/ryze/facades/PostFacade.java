@@ -16,8 +16,6 @@ import com.j13.ryze.services.NoticeService;
 import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.PostVO;
-import com.j13.ryze.vos.ReplyVO;
-import com.j13.ryze.vos.UserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +49,10 @@ public class PostFacade {
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
     @NeedToken
     public PostListResp list(CommandContext ctxt, PostListReq req) {
+        // 因为这个是首页，尝试判断用户是否是被锁用户，如果是的话尝试解锁
+        int requestUserId = ctxt.getUid();
+        userService.tryToUnlockForTimeout(requestUserId);
+
         PostListResp resp = new PostListResp();
         List<PostVO> list = null;
         if (req.getType() == Constants.POST_TYPE.ALL_TYPE) {

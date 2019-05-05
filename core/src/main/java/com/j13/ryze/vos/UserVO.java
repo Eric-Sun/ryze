@@ -9,6 +9,15 @@ public class UserVO {
     private long createtime;
     private String anonLouUrl;
     private String anonXiaUrl;
+    private int isLock;
+
+    public int getIsLock() {
+        return isLock;
+    }
+
+    public void setIsLock(int isLock) {
+        this.isLock = isLock;
+    }
 
     public String getAnonLouUrl() {
         return anonLouUrl;

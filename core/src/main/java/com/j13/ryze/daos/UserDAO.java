@@ -28,7 +28,7 @@ public class UserDAO {
 //    }
 
     public UserVO getUser(int userId) {
-        String sql = "select nickname,avatar_img_id,createtime,anon_nickname from user where id=? and deleted=?";
+        String sql = "select nickname,avatar_img_id,createtime,anon_nickname,is_lock from user where id=? and deleted=?";
         return j.queryForObject(sql, new Object[]{userId, Constants.DB.NOT_DELETED}, new RowMapper<UserVO>() {
             @Override
             public UserVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -37,6 +37,7 @@ public class UserDAO {
                 vo.setAvatarImgId(rs.getInt(2));
                 vo.setCreatetime(rs.getTimestamp(3).getTime());
                 vo.setAnonNickName(rs.getString(4));
+                vo.setIsLock(rs.getInt(5));
                 return vo;
             }
         });
@@ -98,6 +99,17 @@ public class UserDAO {
             }
         }, holder);
         return holder.getKey().longValue();
+    }
+
+
+    public void unlockUser(int userId) {
+        String sql = "update user set is_lock=? where user_id=? and deleted=?";
+        j.update(sql, new Object[]{Constants.User.Lock.NO_LOCK, Constants.DB.NOT_DELETED});
+    }
+
+    public void lockUser(int userId) {
+        String sql = "update user set is_lock=? where user_id=? and deleted=?";
+        j.update(sql, new Object[]{Constants.User.Lock.IS_LOCK, Constants.DB.NOT_DELETED});
     }
 
 }

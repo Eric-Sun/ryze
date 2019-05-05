@@ -9,3 +9,38 @@ CREATE TABLE `user_member` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+CREATE TABLE `vote` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `resource_id` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `evidence` varchar(2555) DEFAULT NULL,
+  `agree_count` int(11) DEFAULT '0',
+  `disagree_count` int(11) DEFAULT '0',
+  `result` int(11) DEFAULT '-1',
+  `status` int(1) DEFAULT '0',
+  `triggertime` timestamp NULL DEFAULT NULL,
+  `createtime` timestamp NULL DEFAULT NULL,
+  `updatetime` timestamp NULL DEFAULT NULL,
+  `deleted` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+alter table user add column is_lock int(11) default 0 after source_type
+
+CREATE TABLE `user_lock` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `lock_type` int(11) DEFAULT '0',
+  `lock_reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `unlock_type` int(11) DEFAULT '0',
+  `unlock_reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `locktime` timestamp NULL DEFAULT NULL,
+  `unlocktime` timestamp NULL DEFAULT NULL,
+  `final_unlocktime` timestamp NULL DEFAULT NULL,
+  `type` int(255) DEFAULT NULL,
+  `deleted` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
