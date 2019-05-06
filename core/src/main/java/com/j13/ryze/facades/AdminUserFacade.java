@@ -4,21 +4,24 @@ import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.exceptions.CommonException;
-import com.j13.ryze.api.req.AdminBarQueryReq;
-import com.j13.ryze.api.req.AdminUserLockReq;
-import com.j13.ryze.api.req.AdminUserTxtLoadReq;
-import com.j13.ryze.api.req.AdminUserUnlockReq;
+import com.j13.poppy.util.BeanUtils;
+import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.AdminBarQueryResp;
+import com.j13.ryze.api.resp.AdminUserDetailResp;
+import com.j13.ryze.api.resp.AdminUserListResp;
+import com.j13.ryze.api.resp.AdminUserSearchResp;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.services.UserService;
+import com.j13.ryze.vos.UserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.util.List;
 import java.util.Random;
 
 @Component
@@ -90,11 +93,37 @@ public class AdminUserFacade {
         if (userService.checkLocked(req.getUnlockUserId())) {
             userService.forceUnlockByAdmin(req.getUnlockUserId(), req.getUnlockReason());
             LOG.info("user unlock successfully. userId={}", req.getUnlockUserId());
-        }else{
+        } else {
             LOG.info("user has been unlocked. userId={}", req.getUnlockUserId());
             throw new CommonException(ErrorCode.User.USER_HAS_BEEN_UNLOCKED);
         }
         return CommonResultResp.success();
+    }
+
+
+    @Action(name = "admin.user.list", desc = "用户列表")
+    public AdminUserListResp list(CommandContext ctxt, AdminUserListReq req) {
+        AdminUserListResp resp = new AdminUserListResp();
+        List<UserVO> userList = userService.list(req.getPageNum(), req.getSize());
+        for (UserVO user : userList) {
+            AdminUserDetailResp detail = new AdminUserDetailResp();
+            BeanUtils.copyProperties(detail, user);
+            resp.getList().add(detail);
+        }
+        return resp;
+    }
+
+
+    @Action(name = "admin.user.search", desc = "模糊查询用户信息")
+    public AdminUserSearchResp list(CommandContext ctxt, AdminUserSearchReq req) {
+        AdminUserSearchResp resp = new AdminUserSearchResp();
+        List<UserVO> userList = userService.search(req.getText(),req.getPageNum(),req.getSize());
+        for (UserVO user : userList) {
+            AdminUserDetailResp detail = new AdminUserDetailResp();
+            BeanUtils.copyProperties(detail, user);
+            resp.getList().add(detail);
+        }
+        return resp;
     }
 
 }

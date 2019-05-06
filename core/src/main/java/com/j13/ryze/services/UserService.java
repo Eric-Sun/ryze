@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -124,7 +125,6 @@ public class UserService {
     }
 
     /**
-     *
      * 查看封号时间是否到了，尝试解封
      *
      * @param userId
@@ -139,8 +139,8 @@ public class UserService {
                         Constants.UserLock.UnlockReason.DEFAULT_TIMEOUT_REASON);
                 userDAO.unlockUser(userId);
                 LOG.info("unlock user successfully. userId={}", userId);
-            }else{
-                LOG.info("user locked. userId={}",userId);
+            } else {
+                LOG.info("user locked. userId={}", userId);
             }
         }
     }
@@ -184,5 +184,35 @@ public class UserService {
             return false;
         }
 
+    }
+
+    public List<UserVO> list(int pageNum, int size) {
+        List<UserVO> list = userDAO.list(pageNum, size);
+
+        for (UserVO user : list) {
+            String url = "";
+            if (user.getAvatarImgId() == -1) {
+                // 没有头像，用默认头像
+                url = ossClientService.getFileUrl(Constants.USER_DEFAULT_AVATAR_FILENAME, Constants.IMG_TYPE.AVATAR);
+            } else {
+                ImgVO img = imgDAO.get(user.getAvatarImgId());
+                if (img.getType() == Constants.IMG_TYPE.AVATAR) {
+                    url = ossClientService.getFileUrl(img.getName(), Constants.IMG_TYPE.AVATAR);
+                } else {
+                    // 微信传过来的头像url，直接使用就可以了
+                    url = img.getName();
+                }
+            }
+            user.setAvatarUrl(url);
+        }
+        return list;
+    }
+
+    /**
+     * 通过nickname模糊查询
+     */
+    public List<UserVO> search(String text, int pageNum, int size) {
+        List<UserVO> list = userDAO.search(text, pageNum, size);
+        return list;
     }
 }

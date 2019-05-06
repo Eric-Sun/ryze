@@ -10,6 +10,15 @@ public class UserVO {
     private String anonLouUrl;
     private String anonXiaUrl;
     private int isLock;
+    private int sourceType;
+
+    public int getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(int sourceType) {
+        this.sourceType = sourceType;
+    }
 
     public int getIsLock() {
         return isLock;
