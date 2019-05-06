@@ -8,6 +8,7 @@ import com.j13.ryze.daos.ImgDAO;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.daos.UserLockDAO;
+import com.j13.ryze.utils.DateUtil;
 import com.j13.ryze.vos.ImgVO;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.UserLockVO;
@@ -19,6 +20,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
+/**
+ * 封号逻辑：
+ * 封号的字段为user表中的is_lock字段，如果这个字段是封号状态，则会在user_lock表中存在一条deleted=0的记录（可能会有其他的deleted=1的之前的封号但是已经解封的记录）
+ * 当解除封号的时候，会把user_lock中的记录deleted=1，并且user表中的is_locK改为未封号状态
+ */
 @Service
 public class UserService {
 
@@ -118,6 +124,7 @@ public class UserService {
     }
 
     /**
+     *
      * 查看封号时间是否到了，尝试解封
      *
      * @param userId
@@ -131,7 +138,9 @@ public class UserService {
                         Constants.UserLock.UnlockOperatorType.SYSTEM,
                         Constants.UserLock.UnlockReason.DEFAULT_TIMEOUT_REASON);
                 userDAO.unlockUser(userId);
-                LOG.info("unlock user. userId={}", userId);
+                LOG.info("unlock user successfully. userId={}", userId);
+            }else{
+                LOG.info("user locked. userId={}",userId);
             }
         }
     }
@@ -157,6 +166,23 @@ public class UserService {
     public void lock(int userId, int lockReasonType, int lockOperatorType, String lockReason, long unlockTime) {
         long time = System.currentTimeMillis();
         userLockDAO.lock(userId, lockOperatorType, lockReasonType, lockReason, time, unlockTime);
-        LOG.info("lock user. userId={},time={},unlocktime={}", userId, time, unlockTime);
+        userDAO.lockUser(userId);
+        LOG.info("lock user. userId={},time={},unlockTime={}", userId, DateUtil.format(time), DateUtil.format(unlockTime));
+    }
+
+    /**
+     * 检测用户是否是封号状态
+     *
+     * @param userId
+     * @return
+     */
+    public boolean checkLocked(int userId) {
+        UserVO user = getUserInfo(userId);
+        if (user.getIsLock() == Constants.User.Lock.IS_LOCK) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

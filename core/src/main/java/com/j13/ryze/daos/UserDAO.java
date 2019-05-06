@@ -103,13 +103,13 @@ public class UserDAO {
 
 
     public void unlockUser(int userId) {
-        String sql = "update user set is_lock=? where user_id=? and deleted=?";
-        j.update(sql, new Object[]{Constants.User.Lock.NO_LOCK, Constants.DB.NOT_DELETED});
+        String sql = "update user set is_lock=? where id=? and deleted=?";
+        j.update(sql, new Object[]{Constants.User.Lock.NO_LOCK, userId, Constants.DB.NOT_DELETED});
     }
 
     public void lockUser(int userId) {
-        String sql = "update user set is_lock=? where user_id=? and deleted=?";
-        j.update(sql, new Object[]{Constants.User.Lock.IS_LOCK, Constants.DB.NOT_DELETED});
+        String sql = "update user set is_lock=? where id=? and deleted=?";
+        j.update(sql, new Object[]{Constants.User.Lock.IS_LOCK, userId, Constants.DB.NOT_DELETED});
     }
 
 }

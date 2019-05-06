@@ -3,11 +3,16 @@ package com.j13.ryze.facades;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
+import com.j13.poppy.exceptions.CommonException;
 import com.j13.ryze.api.req.AdminBarQueryReq;
+import com.j13.ryze.api.req.AdminUserLockReq;
 import com.j13.ryze.api.req.AdminUserTxtLoadReq;
+import com.j13.ryze.api.req.AdminUserUnlockReq;
 import com.j13.ryze.api.resp.AdminBarQueryResp;
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.UserDAO;
+import com.j13.ryze.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +29,11 @@ public class AdminUserFacade {
     @Autowired
     UserDAO userDAO;
     private Random random = new Random();
+    @Autowired
+    UserService userService;
 
-    @Action(name = "admin.user.txtLoad", desc = "")
+
+    @Action(name = "admin.user.txtLoad", desc = "通过txt文件添加用户")
     public CommonResultResp txtLoad(CommandContext ctxt, AdminUserTxtLoadReq req) {
         BufferedReader br = null;
         BufferedWriter bw = null;
@@ -60,7 +68,33 @@ public class AdminUserFacade {
                 CommonResultResp.failure();
             }
         }
-
         return CommonResultResp.success();
     }
+
+
+    @Action(name = "admin.user.lock", desc = "提供给admin系统封号")
+    public CommonResultResp lock(CommandContext ctxt, AdminUserLockReq req) {
+        if (!userService.checkLocked(req.getLockUserId())) {
+            userService.lock(req.getLockUserId(), req.getLockReasonType(), Constants.UserLock.LockOperatorType.ADMIN, req.getLockReason(), req.getUnlockTime());
+            LOG.info("user lock successfully. userId={}", req.getLockUserId());
+        } else {
+            LOG.info("user has been locked. userId={}", req.getLockUserId());
+            throw new CommonException(ErrorCode.User.USER_HAS_BEEN_LOCKED);
+        }
+        return CommonResultResp.success();
+    }
+
+
+    @Action(name = "admin.user.unlock", desc = "提供给admin系统解封账号")
+    public CommonResultResp unlock(CommandContext ctxt, AdminUserUnlockReq req) {
+        if (userService.checkLocked(req.getUnlockUserId())) {
+            userService.forceUnlockByAdmin(req.getUnlockUserId(), req.getUnlockReason());
+            LOG.info("user unlock successfully. userId={}", req.getUnlockUserId());
+        }else{
+            LOG.info("user has been unlocked. userId={}", req.getUnlockUserId());
+            throw new CommonException(ErrorCode.User.USER_HAS_BEEN_UNLOCKED);
+        }
+        return CommonResultResp.success();
+    }
+
 }

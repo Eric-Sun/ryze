@@ -33,14 +33,15 @@ alter table user add column is_lock int(11) default 0 after source_type
 CREATE TABLE `user_lock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
-  `lock_type` int(11) DEFAULT '0',
+  `lock_operator_type` int(11) DEFAULT NULL,
+  `lock_reason_type` int(11) DEFAULT '0',
   `lock_reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `unlock_type` int(11) DEFAULT '0',
+  `unlock_operator_type` int(11) DEFAULT '0',
+  `unlock_reason_type` int(11) DEFAULT '0',
   `unlock_reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `locktime` timestamp NULL DEFAULT NULL,
   `unlocktime` timestamp NULL DEFAULT NULL,
   `final_unlocktime` timestamp NULL DEFAULT NULL,
-  `type` int(255) DEFAULT NULL,
-  `deleted` int(11) DEFAULT NULL,
+  `deleted` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

@@ -22,7 +22,7 @@ public class UserLockDAO {
             unlocktime) {
         KeyHolder holder = new GeneratedKeyHolder();
         final String sql = "insert into user_lock (user_id,lock_reason,locktime,unlocktime,final_unlocktime,lock_operator_type,lock_reason_type) " +
-                "values(?,?,?,?,now())";
+                "values(?,?,?,?,now(),?,?)";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -31,9 +31,8 @@ public class UserLockDAO {
                 pstmt.setString(2, lockReason);
                 pstmt.setTimestamp(3, new Timestamp(locktime));
                 pstmt.setTimestamp(4, new Timestamp(unlocktime));
-                pstmt.setTimestamp(5, new Timestamp(unlocktime));
-                pstmt.setInt(6, lockOperatorType);
-                pstmt.setInt(7, lockReasonType);
+                pstmt.setInt(5, lockOperatorType);
+                pstmt.setInt(6, lockReasonType);
                 return pstmt;
             }
         }, holder);
@@ -63,7 +62,7 @@ public class UserLockDAO {
     }
 
     public void unlock(int userId, int unlockReasonType, int unlockOperatorType, String unlockReason) {
-        String sql = "update user_lock set unlock_reason=?,final_unlocktime=now(),unlock_reason_type=?,unlock_operator_type=? where user_id=? and deleted=?";
-        j.update(sql, new Object[]{unlockReason, unlockReasonType, unlockOperatorType, userId, Constants.DB.NOT_DELETED});
+        String sql = "update user_lock set unlock_reason=?,final_unlocktime=now(),unlock_reason_type=?,unlock_operator_type=?,deleted=? where user_id=? and deleted=?";
+        j.update(sql, new Object[]{unlockReason, unlockReasonType, unlockOperatorType, Constants.DB.DELETED, userId, Constants.DB.NOT_DELETED});
     }
 }
