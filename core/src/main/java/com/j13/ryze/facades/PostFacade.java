@@ -160,8 +160,12 @@ public class PostFacade {
 //            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
 //        }
 
+        if (req.getImgListStr() == null || req.getImgListStr().equals("")) {
+            req.setImgListStr("[]");
+        }
+
         int id = postDAO.add(ctxt.getUid(),
-                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType());
+                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgListStr());
         barDAO.addPostCount(req.getBarId());
         resp.setPostId(id);
         return resp;

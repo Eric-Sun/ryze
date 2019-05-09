@@ -13,6 +13,16 @@ public class PostAddReq {
     private int anonymous;
     @Parameter(desc = "")
     private int type;
+    @Parameter(desc="")
+    private String imgListStr;
+
+    public String getImgListStr() {
+        return imgListStr;
+    }
+
+    public void setImgListStr(String imgListStr) {
+        this.imgListStr = imgListStr;
+    }
 
     public int getType() {
         return type;

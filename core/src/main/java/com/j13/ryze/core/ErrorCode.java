@@ -5,6 +5,7 @@ public class ErrorCode {
     public static class Common {
         public static int INPUT_PARAMETER_ERROR = 4;
         public static int NEED_T = 5;
+        public static int CONTENT_ILLEGAL = 6;
     }
 
     public static class User {

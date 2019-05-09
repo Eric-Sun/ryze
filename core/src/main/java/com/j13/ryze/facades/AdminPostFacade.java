@@ -49,7 +49,7 @@ public class AdminPostFacade {
 //        }
 
         int id = postDAO.add(req.getUserId(),
-                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType());
+                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgListStr());
         barDAO.addPostCount(req.getBarId());
         resp.setPostId(id);
         return resp;

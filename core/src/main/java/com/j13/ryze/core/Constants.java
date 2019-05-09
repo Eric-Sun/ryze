@@ -63,6 +63,7 @@ public class Constants {
     public static class IMG_TYPE {
         public static int AVATAR = 0;
         public static int AVATAR_URL_FROM_WECHAT = 1;
+        public static int POST_IMG=2;
     }
 
     // 用户表中的用户类型

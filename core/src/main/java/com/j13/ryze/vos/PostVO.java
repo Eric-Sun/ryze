@@ -1,5 +1,7 @@
 package com.j13.ryze.vos;
 
+import java.util.List;
+
 public class PostVO {
     private int postId;
     private int userId;
@@ -12,6 +14,24 @@ public class PostVO {
     private int status;
     private int anonymous;
     private int type;
+    private String imgListStr;
+    private List<String> imgList;
+
+    public String getImgListStr() {
+        return imgListStr;
+    }
+
+    public void setImgListStr(String imgListStr) {
+        this.imgListStr = imgListStr;
+    }
+
+    public List<String> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<String> imgList) {
+        this.imgList = imgList;
+    }
 
     public int getType() {
         return type;

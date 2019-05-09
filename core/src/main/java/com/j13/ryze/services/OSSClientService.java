@@ -36,6 +36,7 @@ public class OSSClientService {
 
     @Autowired
     PropertiesConfiguration propertiesConfiguration;
+
     @PostConstruct
     public void init() {
         endpoint = propertiesConfiguration.getStringValue("ossclient.endpoint");
@@ -81,6 +82,8 @@ public class OSSClientService {
     private String findDir(int type) {
         if (type == Constants.IMG_TYPE.AVATAR) {
             return "avatar";
+        } else if (type == Constants.IMG_TYPE.POST_IMG) {
+            return "post";
         } else {
             throw new CommonException(ErrorCode.Img.TYPE_IS_WRONG, "type is " + type);
         }
@@ -88,6 +91,7 @@ public class OSSClientService {
 
     /**
      * 获得外网的URL
+     *
      * @param name
      * @param type
      * @return

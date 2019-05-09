@@ -7,7 +7,7 @@ CREATE TABLE `user_member` (
   `updatetime` timestamp NULL DEFAULT NULL,
   `deleted` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `vote` (
@@ -25,7 +25,7 @@ CREATE TABLE `vote` (
   `updatetime` timestamp NULL DEFAULT NULL,
   `deleted` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 
 alter table user add column is_lock int(11) default 0 after source_type
@@ -35,13 +35,16 @@ CREATE TABLE `user_lock` (
   `user_id` int(11) DEFAULT NULL,
   `lock_operator_type` int(11) DEFAULT NULL,
   `lock_reason_type` int(11) DEFAULT '0',
-  `lock_reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `lock_reason` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
   `unlock_operator_type` int(11) DEFAULT '0',
   `unlock_reason_type` int(11) DEFAULT '0',
-  `unlock_reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `unlock_reason` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
   `locktime` timestamp NULL DEFAULT NULL,
   `unlocktime` timestamp NULL DEFAULT NULL,
   `final_unlocktime` timestamp NULL DEFAULT NULL,
   `deleted` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+#post添加img_list字段
+alter table post add column img_list varchar(100) default '[]' after content

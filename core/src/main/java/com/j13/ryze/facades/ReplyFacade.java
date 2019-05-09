@@ -5,10 +5,12 @@ import com.j13.poppy.anno.Action;
 import com.j13.poppy.anno.NeedToken;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
+import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.*;
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.services.*;
@@ -42,6 +44,8 @@ public class ReplyFacade {
     PostService postService;
     @Autowired
     NoticeService noticeService;
+    @Autowired
+    IAcsClientService iAcsClientService;
 
     @Action(name = "reply.list")
     public ReplyListResp list(CommandContext ctxt, ReplyListReq req) {
@@ -54,6 +58,7 @@ public class ReplyFacade {
 
     /**
      * 处理reply.list和reply.reverseList接口中的共用方法
+     *
      * @param post
      * @param list
      * @param resp
@@ -142,6 +147,12 @@ public class ReplyFacade {
     @Action(name = "reply.add", desc = "")
     @NeedToken
     public ReplyAddResp replyAdd(CommandContext ctxt, ReplyAddReq req) {
+
+        boolean b = iAcsClientService.scan(req.getContent());
+        if (b == false) {
+            throw new CommonException(ErrorCode.Common.CONTENT_ILLEGAL);
+        }
+
         ReplyAddResp resp = new ReplyAddResp();
         int id = replyDAO.add(ctxt.getUid(), req.getBarId(), req.getPostId(),
                 req.getContent(), req.getAnonymous(), req.getLastReplyId());

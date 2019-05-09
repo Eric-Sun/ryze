@@ -24,12 +24,12 @@ public class PostDAO {
     JdbcTemplate j;
 
     public int add(final int userId, final int barId, final String title, final String content,
-                   final int anonymous, final int type) {
+                   final int anonymous, final int type, final String imgListStr) {
         KeyHolder holder = new GeneratedKeyHolder();
         final String sql = "insert into post " +
-                "(user_id,bar_id,content,reply_count,createtime,updatetime,title,status,anonymous,`type`) " +
+                "(user_id,bar_id,content,reply_count,createtime,updatetime,title,status,anonymous,`type`,img_list) " +
                 "values" +
-                "(?,?,?,0,now(),now(),?,?,?,?)";
+                "(?,?,?,0,now(),now(),?,?,?,?,?)";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -41,6 +41,7 @@ public class PostDAO {
                 pstmt.setInt(5, Constants.POST_STATUS.ONLINE);
                 pstmt.setInt(6, anonymous);
                 pstmt.setInt(7, type);
+                pstmt.setString(8, imgListStr);
                 return pstmt;
             }
         }, holder);
@@ -52,24 +53,7 @@ public class PostDAO {
         String sql = "select user_id,bar_id,content,createtime,id," +
                 "reply_count,updatetime,title,status,anonymous,`type` " +
                 "from post where deleted=? and bar_id=? order by updatetime desc limit ?,?";
-        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new RowMapper<PostVO>() {
-            @Override
-            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                PostVO vo = new PostVO();
-                vo.setUserId(rs.getInt(1));
-                vo.setBarId(rs.getInt(2));
-                vo.setContent(rs.getString(3));
-                vo.setCreatetime(rs.getTimestamp(4).getTime());
-                vo.setPostId(rs.getInt(5));
-                vo.setReplyCount(rs.getInt(6));
-                vo.setUpdatetime(rs.getTimestamp(7).getTime());
-                vo.setTitle(rs.getString(8));
-                vo.setStatus(rs.getInt(9));
-                vo.setAnonymous(rs.getInt(10));
-                vo.setType(rs.getInt(11));
-                return vo;
-            }
-        });
+        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new PostRowMapper());
     }
 
     public List<PostVO> listByType(int barId, int type, int pageNum, int size) {
@@ -77,24 +61,7 @@ public class PostDAO {
                 "reply_count,updatetime,title,status,anonymous,`type` " +
                 "from post where deleted=? and bar_id=? and `type`=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, type,
-                pageNum * size, size}, new RowMapper<PostVO>() {
-            @Override
-            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                PostVO vo = new PostVO();
-                vo.setUserId(rs.getInt(1));
-                vo.setBarId(rs.getInt(2));
-                vo.setContent(rs.getString(3));
-                vo.setCreatetime(rs.getTimestamp(4).getTime());
-                vo.setPostId(rs.getInt(5));
-                vo.setReplyCount(rs.getInt(6));
-                vo.setUpdatetime(rs.getTimestamp(7).getTime());
-                vo.setTitle(rs.getString(8));
-                vo.setStatus(rs.getInt(9));
-                vo.setAnonymous(rs.getInt(10));
-                vo.setType(rs.getInt(11));
-                return vo;
-            }
-        });
+                pageNum * size, size}, new PostRowMapper());
     }
 
 
@@ -110,26 +77,9 @@ public class PostDAO {
 
 
     public PostVO get(int postId) {
-        String sql = "select id,createtime,user_id,bar_id,content,reply_count,updatetime," +
-                "title,status,anonymous,`type` from post where id=? and deleted=?";
-        return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, new RowMapper<PostVO>() {
-            @Override
-            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                PostVO vo = new PostVO();
-                vo.setPostId(rs.getInt(1));
-                vo.setCreatetime(rs.getTimestamp(2).getTime());
-                vo.setUserId(rs.getInt(3));
-                vo.setBarId(rs.getInt(4));
-                vo.setContent(rs.getString(5));
-                vo.setReplyCount(rs.getInt(6));
-                vo.setUpdatetime(rs.getTimestamp(7).getTime());
-                vo.setTitle(rs.getString(8));
-                vo.setStatus(rs.getInt(9));
-                vo.setAnonymous(rs.getInt(10));
-                vo.setType(rs.getInt(11));
-                return vo;
-            }
-        });
+        String sql = "select user_id,bar_id,content,createtime,id," +
+                "reply_count,updatetime,title,status,anonymous,`type`  from post where id=? and deleted=?";
+        return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, new PostRowMapper());
     }
 
     public void addReplyCount(int postId) {
@@ -158,74 +108,25 @@ public class PostDAO {
     }
 
     public List<PostVO> queryByTtile(int barId, String name, int pageNum, int size) {
-        String sql = "select id,createtime,user_id,bar_id,content,reply_count,title," +
-                "updatetime,status,anonymous,`type` " +
+        String sql = "select user_id,bar_id,content,createtime,id," +
+                "reply_count,updatetime,title,status,anonymous,`type` " +
                 "from post where title like ? and bar_id = ? and deleted=?  order by updatetime desc  limit ?,?";
-        return j.query(sql, new Object[]{"%" + name + "%", barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<PostVO>() {
-            @Override
-            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                PostVO vo = new PostVO();
-                vo.setPostId(rs.getInt(1));
-                vo.setCreatetime(rs.getTimestamp(2).getTime());
-                vo.setUserId(rs.getInt(3));
-                vo.setBarId(rs.getInt(4));
-                vo.setContent(rs.getString(5));
-                vo.setReplyCount(rs.getInt(6));
-                vo.setTitle(rs.getString(7));
-                vo.setUpdatetime(rs.getTimestamp(8).getTime());
-                vo.setStatus(rs.getInt(9));
-                vo.setAnonymous(rs.getInt(10));
-                return vo;
-            }
-        });
+        return j.query(sql, new Object[]{"%" + name + "%", barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new PostRowMapper());
     }
 
 
     public List<PostVO> queryByUserId(int barId, int userId, int pageNum, int size) {
-        String sql = "select id,createtime,user_id,bar_id,content,reply_count,title,updatetime,status,anonymous,`type` " +
+        String sql = "select iuser_id,bar_id,content,createtime,id," +
+                "reply_count,updatetime,title,status,anonymous,`type` " +
                 "from post where user_id=? and bar_id = ? and deleted=? order by updatetime desc limit ?,?";
-        return j.query(sql, new Object[]{userId, barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<PostVO>() {
-            @Override
-            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                PostVO vo = new PostVO();
-                vo.setPostId(rs.getInt(1));
-                vo.setCreatetime(rs.getTimestamp(2).getTime());
-                vo.setUserId(rs.getInt(3));
-                vo.setBarId(rs.getInt(4));
-                vo.setContent(rs.getString(5));
-                vo.setReplyCount(rs.getInt(6));
-                vo.setTitle(rs.getString(7));
-                vo.setUpdatetime(rs.getTimestamp(8).getTime());
-                vo.setStatus(rs.getInt(9));
-                vo.setAnonymous(rs.getInt(10));
-                vo.setType(rs.getInt(11));
-                return vo;
-            }
-        });
+        return j.query(sql, new Object[]{userId, barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new PostRowMapper());
     }
 
     public List<PostVO> listByUserId(int barId, int userId, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
                 "reply_count,updatetime,title,status,anonymous,`type` " +
                 "from post where user_id=? and deleted=? and bar_id=? order by updatetime desc limit ?,?";
-        return j.query(sql, new Object[]{userId, Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new RowMapper<PostVO>() {
-            @Override
-            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                PostVO vo = new PostVO();
-                vo.setUserId(rs.getInt(1));
-                vo.setBarId(rs.getInt(2));
-                vo.setContent(rs.getString(3));
-                vo.setCreatetime(rs.getTimestamp(4).getTime());
-                vo.setPostId(rs.getInt(5));
-                vo.setReplyCount(rs.getInt(6));
-                vo.setUpdatetime(rs.getTimestamp(7).getTime());
-                vo.setTitle(rs.getString(8));
-                vo.setStatus(rs.getInt(9));
-                vo.setAnonymous(rs.getInt(10));
-                vo.setType(rs.getInt(11));
-                return vo;
-            }
-        });
+        return j.query(sql, new Object[]{userId, Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new PostRowMapper());
     }
 
     public void delete(int postId, int userId) {
@@ -239,23 +140,26 @@ public class PostDAO {
                 "reply_count,updatetime,title,status,anonymous,`type` " +
                 "from post where user_id=? and deleted=? and bar_id=? and anonymous=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{otherUserId, Constants.DB.NOT_DELETED, barId,
-                Constants.POST_ANONYMOUS.COMMON,pageNum * size, size}, new RowMapper<PostVO>() {
-            @Override
-            public PostVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                PostVO vo = new PostVO();
-                vo.setUserId(rs.getInt(1));
-                vo.setBarId(rs.getInt(2));
-                vo.setContent(rs.getString(3));
-                vo.setCreatetime(rs.getTimestamp(4).getTime());
-                vo.setPostId(rs.getInt(5));
-                vo.setReplyCount(rs.getInt(6));
-                vo.setUpdatetime(rs.getTimestamp(7).getTime());
-                vo.setTitle(rs.getString(8));
-                vo.setStatus(rs.getInt(9));
-                vo.setAnonymous(rs.getInt(10));
-                vo.setType(rs.getInt(11));
-                return vo;
-            }
-        });
+                Constants.POST_ANONYMOUS.COMMON, pageNum * size, size}, new PostRowMapper());
+    }
+
+
+    class PostRowMapper implements RowMapper<PostVO> {
+        @Override
+        public PostVO mapRow(ResultSet rs, int i) throws SQLException {
+            PostVO vo = new PostVO();
+            vo.setUserId(rs.getInt(1));
+            vo.setBarId(rs.getInt(2));
+            vo.setContent(rs.getString(3));
+            vo.setCreatetime(rs.getTimestamp(4).getTime());
+            vo.setPostId(rs.getInt(5));
+            vo.setReplyCount(rs.getInt(6));
+            vo.setUpdatetime(rs.getTimestamp(7).getTime());
+            vo.setTitle(rs.getString(8));
+            vo.setStatus(rs.getInt(9));
+            vo.setAnonymous(rs.getInt(10));
+            vo.setType(rs.getInt(11));
+            return vo;
+        }
     }
 }
