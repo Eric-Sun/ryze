@@ -14,22 +14,13 @@ public class PostVO {
     private int status;
     private int anonymous;
     private int type;
-    private String imgListStr;
-    private List<String> imgList;
+    private String imgList;
 
-    public String getImgListStr() {
-        return imgListStr;
-    }
-
-    public void setImgListStr(String imgListStr) {
-        this.imgListStr = imgListStr;
-    }
-
-    public List<String> getImgList() {
+    public String getImgList() {
         return imgList;
     }
 
-    public void setImgList(List<String> imgList) {
+    public void setImgList(String imgList) {
         this.imgList = imgList;
     }
 

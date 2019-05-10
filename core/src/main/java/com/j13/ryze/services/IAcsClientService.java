@@ -24,7 +24,7 @@ import java.util.*;
 
 @Service
 public class IAcsClientService {
-    private static Logger LOG = LoggerFactory.getLogger(OSSClientService.class);
+    private static Logger LOG = LoggerFactory.getLogger(IAcsClientService.class);
     private IAcsClient client = null;
     private String accessKeyId = null;
     private String accessKeySecret = null;
@@ -73,7 +73,7 @@ public class IAcsClientService {
          **/
         data.put("scenes", Arrays.asList("antispam"));
         data.put("tasks", tasks);
-        System.out.println(JSON.toJSONString(data, true));
+        LOG.debug(JSON.toJSONString(data, true));
         try {
             textScanRequest.setHttpContent(data.toJSONString().getBytes("UTF-8"), "UTF-8", FormatType.JSON);
             // 请务必设置超时时间
@@ -82,7 +82,7 @@ public class IAcsClientService {
             HttpResponse httpResponse = client.doAction(textScanRequest);
             if (httpResponse.isSuccess()) {
                 JSONObject scrResponse = JSON.parseObject(new String(httpResponse.getHttpContent(), "UTF-8"));
-                System.out.println(JSON.toJSONString(scrResponse, true));
+                LOG.debug(JSON.toJSONString(scrResponse, true));
                 if (200 == scrResponse.getInteger("code")) {
                     JSONArray taskResults = scrResponse.getJSONArray("data");
                     for (Object taskResult : taskResults) {
@@ -93,8 +93,8 @@ public class IAcsClientService {
                                 String suggestion = ((JSONObject) sceneResult).getString("suggestion");
                                 //根据scene和suggetion做相关处理
                                 //suggestion == pass 未命中垃圾  suggestion == block 命中了垃圾，可以通过label字段查看命中的垃圾分类
-                                System.out.println("args = [" + scene + "]");
-                                System.out.println("args = [" + suggestion + "]");
+                                LOG.debug("args = [" + scene + "]");
+                                LOG.debug("args = [" + suggestion + "]");
                                 if (suggestion.equals("block")) {
                                     return false;
                                 } else {
@@ -102,21 +102,21 @@ public class IAcsClientService {
                                 }
                             }
                         } else {
-                            System.out.println("task process fail:" + ((JSONObject) taskResult).getInteger("code"));
+                            LOG.debug("task process fail:" + ((JSONObject) taskResult).getInteger("code"));
                         }
                     }
                 } else {
-                    System.out.println("detect not success. code:" + scrResponse.getInteger("code"));
+                    LOG.debug("detect not success. code:" + scrResponse.getInteger("code"));
                 }
             } else {
-                System.out.println("response not success. status:" + httpResponse.getStatus());
+                LOG.debug("response not success. status:" + httpResponse.getStatus());
             }
         } catch (ServerException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         } catch (ClientException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
         return true;
     }

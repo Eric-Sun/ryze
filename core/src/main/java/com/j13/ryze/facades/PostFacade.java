@@ -11,10 +11,7 @@ import com.j13.ryze.api.resp.*;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.*;
-import com.j13.ryze.services.AdminLevelInfoService;
-import com.j13.ryze.services.NoticeService;
-import com.j13.ryze.services.PostService;
-import com.j13.ryze.services.UserService;
+import com.j13.ryze.services.*;
 import com.j13.ryze.vos.PostVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +42,8 @@ public class PostFacade {
     AdminLevelInfoService adminLevelInfoService;
     @Autowired
     NoticeService noticeService;
+    @Autowired
+    IAcsClientService iAcsClientService;
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
     @NeedToken
@@ -151,6 +150,12 @@ public class PostFacade {
     @Action(name = "post.add")
     @NeedToken
     public PostAddResp add(CommandContext ctxt, PostAddReq req) {
+
+        boolean b = iAcsClientService.scan(req.getContent());
+        if (b == false) {
+            throw new CommonException(ErrorCode.Common.CONTENT_ILLEGAL);
+        }
+
         PostAddResp resp = new PostAddResp();
 //        if (!barDAO.exist(req.getBarId())) {
 //            throw new CommonException(ErrorCode.Bar.NOT_EXIST);
@@ -160,12 +165,12 @@ public class PostFacade {
 //            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
 //        }
 
-        if (req.getImgListStr() == null || req.getImgListStr().equals("")) {
-            req.setImgListStr("[]");
+        if (req.getImgList() == null || req.getImgList().equals("")) {
+            req.setImgList("[]");
         }
 
         int id = postDAO.add(ctxt.getUid(),
-                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgListStr());
+                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgList());
         barDAO.addPostCount(req.getBarId());
         resp.setPostId(id);
         return resp;

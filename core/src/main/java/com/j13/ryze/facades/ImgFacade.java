@@ -7,6 +7,7 @@ import com.j13.ryze.api.req.ImgUploadReq;
 import com.j13.ryze.api.resp.ImgUploadResp;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.services.ImgService;
+import com.j13.ryze.vos.ImgVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +24,15 @@ public class ImgFacade {
     @Action(name = "img.upload", desc = "")
     public ImgUploadResp upload(CommandContext ctxt, ImgUploadReq req) {
         ImgUploadResp resp = new ImgUploadResp();
-        int imgId = 0;
-        if (req.getType() == Constants.IMG_TYPE.AVATAR) {
-            imgId = imgService.saveFile(req.getFile(), req.getType());
-            LOG.info("save avatar img. imgId={}", imgId);
-        }
-        resp.setImgId(imgId);
+        ImgVO imgVO = null;
+//        if (req.getType() == Constants.IMG_TYPE.AVATAR) {
+        imgVO = imgService.saveFile(req.getFile(), req.getType());
+        LOG.info("save img. imgId={},type={}", imgVO.getId(), req.getType());
+//        }
+        resp.setImgId(imgVO.getId());
+        resp.setUrl(imgVO.getUrl());
         return resp;
     }
-
-
 
 
 }

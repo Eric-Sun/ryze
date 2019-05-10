@@ -14,14 +14,14 @@ public class PostAddReq {
     @Parameter(desc = "")
     private int type;
     @Parameter(desc="")
-    private String imgListStr;
+    private String imgList;
 
-    public String getImgListStr() {
-        return imgListStr;
+    public String getImgList() {
+        return imgList;
     }
 
-    public void setImgListStr(String imgListStr) {
-        this.imgListStr = imgListStr;
+    public void setImgList(String imgList) {
+        this.imgList = imgList;
     }
 
     public int getType() {

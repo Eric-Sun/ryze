@@ -28,10 +28,16 @@ public class ImgService {
 
     Random ran = new Random();
 
-    public int saveFile(FileItem item, int type) {
+    public ImgVO saveFile(FileItem item, int type) {
         String fileName = ossClientService.saveFile(item, type);
+        ImgVO img = new ImgVO();
         int imgId = insertImg(fileName, type);
-        return imgId;
+        img.setId(imgId);
+        img.setName(fileName);
+        img.setType(type);
+        String url = ossClientService.getFileUrl(img.getName(), img.getType());
+        img.setUrl(url);
+        return img;
     }
 
     /**

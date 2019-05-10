@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -63,13 +64,17 @@ public class OSSClientService {
             String fileName = random.nextInt(10000) + System.currentTimeMillis() + substring;
             String fullFileName = findDir(type) + "/" + fileName;
             ossClient.putObject(bucketName, fullFileName, in);
-            ossClient.shutdown();
             in.close();
             item.delete();
             return fileName;
         } catch (IOException e) {
             throw new CommonException(ErrorCode.Img.UPLOAD_IMG_ERROR, e);
         }
+    }
+
+    @PreDestroy
+    public void destroy(){
+        ossClient.shutdown();
     }
 
 
