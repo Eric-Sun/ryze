@@ -1,14 +1,21 @@
 package com.j13.ryze.services;
 
+import com.alibaba.fastjson.JSON;
+import com.j13.poppy.util.BeanUtils;
+import com.j13.ryze.api.resp.AdminPostDetailResp;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.utils.CommonJedisManager;
+import com.j13.ryze.vos.ImgVO;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.ReplyVO;
+import com.j13.ryze.vos.UserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PostService {
@@ -21,6 +28,10 @@ public class PostService {
     CommonJedisManager commonJedisManager;
     @Autowired
     PostDAO postDAO;
+    @Autowired
+    UserService userService;
+    @Autowired
+    ImgService imgService;
 
     public int replyCount(int postId) {
         int count = replyDAO.replyCount(postId);
@@ -37,6 +48,21 @@ public class PostService {
         } else {
             LOG.debug("simplePost exist. catalog={},postId={}", SIMPLE_POST_CATALOG, postId);
         }
+
+
+        // imgList info
+        String imgListStr = vo.getImgListStr();
+        List<String> imgIdList = JSON.parseArray(imgListStr, String.class);
+
+        for (String imgIdStr : imgIdList) {
+            ImgVO imgVO = new ImgVO();
+            int imgId = new Integer(imgIdStr);
+            String url = imgService.getFileUrl(imgId);
+            imgVO.setUrl(url);
+            imgVO.setId(imgId);
+            vo.getImgVOList().add(imgVO);
+        }
+
         return vo;
 
     }
@@ -45,6 +71,40 @@ public class PostService {
     public void offline(int postId) {
         postDAO.offline(postId);
         LOG.info("post offline done. postId={}", postId);
+    }
 
+
+    public List<PostVO> list(int barId, int pageNum, int size) {
+        List<PostVO> list = postDAO.list(barId, pageNum, size);
+
+        for (PostVO vo : list) {
+            // user info
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            vo.setUserName(user.getNickName());
+            vo.setUserAvatarUrl(user.getAvatarUrl());
+
+            // imgList info
+            String imgListStr = vo.getImgListStr();
+            List<String> imgIdList = JSON.parseArray(imgListStr, String.class);
+
+            for (String imgIdStr : imgIdList) {
+                ImgVO imgVO = new ImgVO();
+                int imgId = new Integer(imgIdStr);
+                String url = imgService.getFileUrl(imgId);
+                imgVO.setUrl(url);
+                imgVO.setId(imgId);
+                vo.getImgVOList().add(imgVO);
+            }
+        }
+        return list;
+    }
+
+
+    public void update(int postId, String content, String title, int anonymous, int type, String imgListStr) {
+        postDAO.update(postId, content, title, anonymous, type, imgListStr);
+        // update cache
+        PostVO vo = postDAO.get(postId);
+        commonJedisManager.set(SIMPLE_POST_CATALOG, postId, vo);
+        LOG.info("update the post object cache. postId={}", postId);
     }
 }

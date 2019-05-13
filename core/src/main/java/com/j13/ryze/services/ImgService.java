@@ -56,6 +56,11 @@ public class ImgService {
     }
 
 
+    /**
+     * 通过imgId获得播放url
+     * @param imgId
+     * @return
+     */
     public String getFileUrl(int imgId) {
         ImgVO imgVO = imgDAO.get(imgId);
         String url = ossClientService.getFileUrl(imgVO.getName(), imgVO.getType());

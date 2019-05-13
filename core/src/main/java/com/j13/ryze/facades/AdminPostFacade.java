@@ -11,7 +11,9 @@ import com.j13.ryze.daos.BarMemberDAO;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.services.AdminLevelInfoService;
+import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.UserService;
+import com.j13.ryze.vos.ImgVO;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class AdminPostFacade {
     UserService userService;
     @Autowired
     AdminLevelInfoService adminLevelInfoService;
+    @Autowired
+    PostService postService;
 
     @Action(name = "admin.post.add", desc = "")
     public AdminPostAddResp add(CommandContext ctxt, AdminPostAddReq req) {
@@ -67,22 +71,26 @@ public class AdminPostFacade {
 
         String barName = barDAO.getBarName(req.getBarId());
         resp.setBarName(barName);
-        List<PostVO> list = postDAO.list(req.getBarId(), req.getPageNum(), req.getSize());
+        List<PostVO> postVOList = postService.list(req.getBarId(), req.getPageNum(), req.getSize());
 
-        for (PostVO vo : list) {
-            AdminPostDetailResp r = new AdminPostDetailResp();
-            BeanUtils.copyProperties(r, vo);
-            UserVO user = userService.getUserInfo(vo.getUserId());
-            r.setUserName(user.getNickName());
-            r.setUserAvatarUrl(user.getAvatarUrl());
-            resp.getList().add(r);
+        for (PostVO postVO : postVOList) {
+            AdminPostDetailResp detailResp = new AdminPostDetailResp();
+            BeanUtils.copyProperties(detailResp, postVO);
+
+            for (ImgVO imgVO : postVO.getImgVOList()) {
+                ImgDetailResp imgResp = new ImgDetailResp();
+                imgResp.setImgId(imgVO.getId());
+                imgResp.setUrl(imgVO.getUrl());
+                detailResp.getImgList().add(imgResp);
+            }
+            resp.getList().add(detailResp);
         }
         return resp;
     }
 
     @Action(name = "admin.post.update")
     public CommonResultResp updateContentAndTitle(CommandContext ctxt, AdminPostUpdateContentReq req) {
-        postDAO.update(req.getPostId(), req.getContent(), req.getTitle(), req.getAnonymous(), req.getType());
+        postService.update(req.getPostId(), req.getContent(), req.getTitle(), req.getAnonymous(), req.getType(),req.getImgListStr());
         return CommonResultResp.success();
     }
 
@@ -97,11 +105,17 @@ public class AdminPostFacade {
     @Action(name = "admin.post.detail")
     public AdminPostDetailResp detail(CommandContext ctxt, AdminPostDetailReq req) {
         AdminPostDetailResp resp = new AdminPostDetailResp();
-        PostVO vo = postDAO.get(req.getPostId());
+        PostVO vo = postService.getSimplePost(req.getPostId());
         BeanUtils.copyProperties(resp, vo);
         UserVO user = userService.getUserInfo(vo.getUserId());
         resp.setUserName(user.getNickName());
         resp.setUserAvatarUrl(user.getAvatarUrl());
+        for (ImgVO imgVO : vo.getImgVOList()) {
+            ImgDetailResp imgResp = new ImgDetailResp();
+            imgResp.setImgId(imgVO.getId());
+            imgResp.setUrl(imgVO.getUrl());
+            resp.getImgList().add(imgResp);
+        }
 
         List<AdminLevelInfoResp> levelInfoList = adminLevelInfoService.findLevelInfo(vo.getPostId(), 1);
         resp.setLevelInfo(levelInfoList);

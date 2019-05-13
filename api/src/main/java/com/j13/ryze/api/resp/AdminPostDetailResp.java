@@ -10,6 +10,10 @@ public class AdminPostDetailResp {
     @Parameter(desc = "")
     private int userId;
     @Parameter(desc = "")
+    private String userName;
+    @Parameter(desc = "")
+    private String userAvatarUrl;
+    @Parameter(desc = "")
     private int barId;
     @Parameter(desc = "")
     private String content;
@@ -17,8 +21,6 @@ public class AdminPostDetailResp {
     private long createtime;
     @Parameter(desc = "")
     private int postId;
-    @Parameter(desc = "")
-    private String userName;
     @Parameter(desc = "")
     private long updatetime;
     @Parameter(desc = "")
@@ -30,8 +32,17 @@ public class AdminPostDetailResp {
     @Parameter(desc = "")
     private int type;
     @Parameter(desc = "")
-    private String userAvatarUrl;
+    List<ImgDetailResp> imgList = Lists.newLinkedList();
     private List<AdminLevelInfoResp> levelInfo = Lists.newLinkedList();
+
+
+    public List<ImgDetailResp> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<ImgDetailResp> imgList) {
+        this.imgList = imgList;
+    }
 
     public List<AdminLevelInfoResp> getLevelInfo() {
         return levelInfo;

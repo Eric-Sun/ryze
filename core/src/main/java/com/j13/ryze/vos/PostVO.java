@@ -1,10 +1,14 @@
 package com.j13.ryze.vos;
 
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
 public class PostVO {
     private int postId;
     private int userId;
+    private String userName;
+    private String userAvatarUrl;
     private int barId;
     private String content;
     private long createtime;
@@ -14,14 +18,39 @@ public class PostVO {
     private int status;
     private int anonymous;
     private int type;
-    private String imgList;
+    private String imgListStr;
+    private List<ImgVO> imgVOList = Lists.newLinkedList();
 
-    public String getImgList() {
-        return imgList;
+    public String getUserAvatarUrl() {
+        return userAvatarUrl;
     }
 
-    public void setImgList(String imgList) {
-        this.imgList = imgList;
+    public void setUserAvatarUrl(String userAvatarUrl) {
+        this.userAvatarUrl = userAvatarUrl;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public List<ImgVO> getImgVOList() {
+        return imgVOList;
+    }
+
+    public void setImgVOList(List<ImgVO> imgVOList) {
+        this.imgVOList = imgVOList;
+    }
+
+    public String getImgListStr() {
+        return imgListStr;
+    }
+
+    public void setImgListStr(String imgListStr) {
+        this.imgListStr = imgListStr;
     }
 
     public int getType() {
