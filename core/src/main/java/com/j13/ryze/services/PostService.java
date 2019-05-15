@@ -3,6 +3,7 @@ package com.j13.ryze.services;
 import com.alibaba.fastjson.JSON;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.resp.AdminPostDetailResp;
+import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.utils.CommonJedisManager;
@@ -32,6 +33,8 @@ public class PostService {
     UserService userService;
     @Autowired
     ImgService imgService;
+    @Autowired
+    BarDAO barDAO;
 
     public int replyCount(int postId) {
         int count = replyDAO.replyCount(postId);
@@ -106,5 +109,11 @@ public class PostService {
         PostVO vo = postDAO.get(postId);
         commonJedisManager.set(SIMPLE_POST_CATALOG, postId, vo);
         LOG.info("update the post object cache. postId={}", postId);
+    }
+
+    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList) {
+        int postId = postDAO.add(uid, barId, title, content, anonymous, type, imgList);
+        barDAO.addPostCount(barId);
+        return postId;
     }
 }

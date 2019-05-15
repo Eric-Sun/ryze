@@ -169,10 +169,9 @@ public class PostFacade {
             req.setImgList("[]");
         }
 
-        int id = postDAO.add(ctxt.getUid(),
+        int postId = postService.add(ctxt.getUid(),
                 req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgList());
-        barDAO.addPostCount(req.getBarId());
-        resp.setPostId(id);
+        resp.setPostId(postId);
         return resp;
     }
 

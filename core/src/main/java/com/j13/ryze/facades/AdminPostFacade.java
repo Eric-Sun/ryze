@@ -52,10 +52,9 @@ public class AdminPostFacade {
 //            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
 //        }
 
-        int id = postDAO.add(req.getUserId(),
+        int postId = postService.add(ctxt.getUid(),
                 req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgList());
-        barDAO.addPostCount(req.getBarId());
-        resp.setPostId(id);
+        resp.setPostId(postId);
         return resp;
     }
 
