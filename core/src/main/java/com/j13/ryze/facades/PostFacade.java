@@ -12,6 +12,7 @@ import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.*;
 import com.j13.ryze.services.*;
+import com.j13.ryze.vos.ImgVO;
 import com.j13.ryze.vos.PostVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,21 +55,21 @@ public class PostFacade {
 
         PostListResp resp = new PostListResp();
         List<PostVO> list = null;
-        if (req.getType() == Constants.POST_TYPE.ALL_TYPE) {
-            list = postDAO.list(req.getBarId(), req.getPageNum(), req.getSize());
-        } else if (req.getType() == Constants.POST_TYPE.STORE) {
-            list = postDAO.listByType(req.getBarId(), req.getType(), req.getPageNum(), req.getSize());
-        } else if (req.getType() == Constants.POST_TYPE.DIARY) {
-            list = postDAO.listByType(req.getBarId(), req.getType(), req.getPageNum(), req.getSize());
-        } else {
-            throw new CommonException(ErrorCode.POST.QUERY_POST_TYPE_ERROR, "type=" + req.getType());
-        }
+        list = postService.list(req.getBarId(), req.getType(), req.getPageNum(), req.getSize());
         for (PostVO vo : list) {
             PostDetailResp r = new PostDetailResp();
             BeanUtils.copyProperties(r, vo);
             userService.setUserInfoForPost(r, vo.getUserId());
             r.setReplyCount(postService.replyCount(vo.getPostId()));
             resp.getList().add(r);
+
+            for (ImgVO imgVO : vo.getImgVOList()) {
+                ImgDetailResp imgResp = new ImgDetailResp();
+                imgResp.setImgId(imgVO.getId());
+                imgResp.setUrl(imgVO.getUrl());
+                r.getImgList().add(imgResp);
+            }
+
         }
 
         // 查看notice数量，给tabbar红点
@@ -83,9 +84,17 @@ public class PostFacade {
     @Action(name = "post.detail", desc = "post detail and replies")
     public PostDetailResp detail(CommandContext ctxt, PostDetailReq req) {
         PostDetailResp resp = new PostDetailResp();
-        PostVO vo = postDAO.get(req.getPostId());
+        PostVO vo = postService.getSimplePost(req.getPostId());
         BeanUtils.copyProperties(resp, vo);
         userService.setUserInfoForPost(resp, vo.getUserId());
+
+        for (ImgVO imgVO : vo.getImgVOList()) {
+            ImgDetailResp imgResp = new ImgDetailResp();
+            imgResp.setImgId(imgVO.getId());
+            imgResp.setUrl(imgVO.getUrl());
+            resp.getImgList().add(imgResp);
+        }
+
         return resp;
     }
 

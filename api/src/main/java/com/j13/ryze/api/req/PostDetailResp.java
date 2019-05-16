@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Parameter;
 import com.j13.ryze.api.resp.AdminLevelInfoResp;
 import com.j13.ryze.api.resp.AdminReplyDetailResp;
+import com.j13.ryze.api.resp.ImgDetailResp;
 
 import java.util.List;
 
@@ -30,6 +31,16 @@ public class PostDetailResp {
     private String userAvatarUrl;
     @Parameter(desc = "")
     private int replyCount;
+    @Parameter(desc = "")
+    private List<ImgDetailResp> imgList = Lists.newLinkedList();
+
+    public List<ImgDetailResp> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<ImgDetailResp> imgList) {
+        this.imgList = imgList;
+    }
 
     public int getReplyCount() {
         return replyCount;

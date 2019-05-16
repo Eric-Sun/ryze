@@ -3,6 +3,7 @@ package com.j13.ryze.services;
 import com.alibaba.fastjson.JSON;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.resp.AdminPostDetailResp;
+import com.j13.ryze.core.Constants;
 import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
@@ -78,8 +79,30 @@ public class PostService {
 
 
     public List<PostVO> list(int barId, int pageNum, int size) {
-        List<PostVO> list = postDAO.list(barId, pageNum, size);
+        return list(barId, Constants.POST_TYPE.ALL_TYPE, pageNum, size);
+    }
 
+
+    public void update(int postId, String content, String title, int anonymous, int type, String imgListStr) {
+        postDAO.update(postId, content, title, anonymous, type, imgListStr);
+        // update cache
+        PostVO vo = postDAO.get(postId);
+        commonJedisManager.set(SIMPLE_POST_CATALOG, postId, vo);
+        LOG.info("update the post object cache. postId={}", postId);
+    }
+
+    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList) {
+        int postId = postDAO.add(uid, barId, title, content, anonymous, type, imgList);
+        barDAO.addPostCount(barId);
+        return postId;
+    }
+
+    public List<PostVO> list(int barId, int type, int pageNum, int size) {
+        List<PostVO> list = null;
+        if (type == Constants.POST_TYPE.ALL_TYPE)
+            list = postDAO.list(barId, pageNum, size);
+        else
+            list = postDAO.listByType(barId, type, pageNum, size);
         for (PostVO vo : list) {
             // user info
             UserVO user = userService.getUserInfo(vo.getUserId());
@@ -100,20 +123,5 @@ public class PostService {
             }
         }
         return list;
-    }
-
-
-    public void update(int postId, String content, String title, int anonymous, int type, String imgListStr) {
-        postDAO.update(postId, content, title, anonymous, type, imgListStr);
-        // update cache
-        PostVO vo = postDAO.get(postId);
-        commonJedisManager.set(SIMPLE_POST_CATALOG, postId, vo);
-        LOG.info("update the post object cache. postId={}", postId);
-    }
-
-    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList) {
-        int postId = postDAO.add(uid, barId, title, content, anonymous, type, imgList);
-        barDAO.addPostCount(barId);
-        return postId;
     }
 }
