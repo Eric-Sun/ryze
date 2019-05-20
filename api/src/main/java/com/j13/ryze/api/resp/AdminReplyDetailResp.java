@@ -26,11 +26,40 @@ public class AdminReplyDetailResp {
     private int lastReplyId;
     @Parameter(desc = "")
     private int barId;
+    // replyList 只有在调用detail类接口的时候才会有数据
     private List<AdminReplyDetailResp> replyList = Lists.newLinkedList();
+    @Parameter(desc="")
+    private int replyListSize;
     @Parameter(desc = "")
     private String userAvatarUrl;
     @Parameter(desc = "")
     private List<AdminLevelInfoResp> levelInfo = Lists.newLinkedList();
+    @Parameter(desc = "")
+    private List<ImgDetailResp> imgList = Lists.newLinkedList();
+
+    public List<AdminReplyDetailResp> getReplyList() {
+        return replyList;
+    }
+
+    public void setReplyList(List<AdminReplyDetailResp> replyList) {
+        this.replyList = replyList;
+    }
+
+    public int getReplyListSize() {
+        return replyListSize;
+    }
+
+    public void setReplyListSize(int replyListSize) {
+        this.replyListSize = replyListSize;
+    }
+
+    public List<ImgDetailResp> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<ImgDetailResp> imgList) {
+        this.imgList = imgList;
+    }
 
     public List<AdminLevelInfoResp> getLevelInfo() {
         return levelInfo;
@@ -62,14 +91,6 @@ public class AdminReplyDetailResp {
 
     public void setLastReplyId(int lastReplyId) {
         this.lastReplyId = lastReplyId;
-    }
-
-    public List<AdminReplyDetailResp> getReplyList() {
-        return replyList;
-    }
-
-    public void setReplyList(List<AdminReplyDetailResp> replyList) {
-        this.replyList = replyList;
     }
 
     public int getAnonymous() {

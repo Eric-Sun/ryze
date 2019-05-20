@@ -17,6 +17,24 @@ public class ReplyVO implements Comparable<ReplyVO> {
     private String lastReplyUserName = "";
     private int lastReplyUserId;
     private String lastReplyAnonUserName;
+    private String imgListStr;
+    private List<ImgVO> imgList = Lists.newLinkedList();
+
+    public List<ImgVO> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<ImgVO> imgList) {
+        this.imgList = imgList;
+    }
+
+    public String getImgListStr() {
+        return imgListStr;
+    }
+
+    public void setImgListStr(String imgListStr) {
+        this.imgListStr = imgListStr;
+    }
 
     public String getLastReplyAnonUserName() {
         return lastReplyAnonUserName;

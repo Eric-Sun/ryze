@@ -33,6 +33,16 @@ public class ReplyDetailResp {
     private String userAvatarUrl;
     @Parameter(desc = "回复该评论的总数量")
     private int replySize;
+    @Parameter(desc = "")
+    private List<ImgDetailResp> imgList= Lists.newLinkedList();
+
+    public List<ImgDetailResp> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<ImgDetailResp> imgList) {
+        this.imgList = imgList;
+    }
 
     public int getReplySize() {
         return replySize;

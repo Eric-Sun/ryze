@@ -215,4 +215,5 @@ public class UserService {
         List<UserVO> list = userDAO.search(text, pageNum, size);
         return list;
     }
+
 }

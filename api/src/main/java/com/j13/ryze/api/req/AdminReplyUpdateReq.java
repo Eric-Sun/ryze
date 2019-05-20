@@ -11,6 +11,16 @@ public class AdminReplyUpdateReq {
     private String content;
     @Parameter(desc = "")
     private int anonymous;
+    @Parameter(desc="")
+    private String imgListStr;
+
+    public String getImgListStr() {
+        return imgListStr;
+    }
+
+    public void setImgListStr(String imgListStr) {
+        this.imgListStr = imgListStr;
+    }
 
     public int getAnonymous() {
         return anonymous;

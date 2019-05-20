@@ -52,6 +52,9 @@ public class NoticeFacade {
 
             if (vo.getType() == Constants.NOTICE.TYPE.POST_NOTICE) {
                 ReplyVO triggerReplyVO = replyService.getSimpleReply(vo.getReplyId());
+                if (triggerReplyVO == null) {
+                    continue;
+                }
                 detailResp.setReplyContent(triggerReplyVO.getContent());
                 // post notice
                 PostVO postVO = postService.getSimplePost(vo.getTargetResourceId());
@@ -86,9 +89,15 @@ public class NoticeFacade {
                 BeanUtils.copyProperties(detailResp, vo);
                 // 获取notice的fromUser信息
                 ReplyVO triggerReplyVO = replyService.getSimpleReply(vo.getReplyId());
+                if (triggerReplyVO == null) {
+                    continue;
+                }
                 detailResp.setReplyContent(triggerReplyVO.getContent());
                 UserVO fromUserVO = userService.getUserInfo(vo.getFromUserId());
                 ReplyVO targetReplyVO = replyService.getSimpleReply(vo.getTargetResourceId());
+                if (triggerReplyVO == null) {
+                    continue;
+                }
                 PostVO postVO = postService.getSimplePost(targetReplyVO.getPostId());
 
                 if (triggerReplyVO.getAnonymous() == Constants.REPLY_ANONYMOUS.ANONYMOUS ||
@@ -134,6 +143,9 @@ public class NoticeFacade {
                 replyContent.setTargetReplyContent(targetReplyVO.getContent());
                 if (targetReplyVO.getLastReplyId() != 0) {
                     ReplyVO level2ReplyVO = replyService.getSimpleReply(targetReplyVO.getLastReplyId());
+                    if (level2ReplyVO == null) {
+                        continue;
+                    }
                     UserVO level2ReplyUserVO = userService.getUserInfo(level2ReplyVO.getUserId());
                     replyContent.setTargetReplyRepliedUserId(level2ReplyVO.getUserId());
                     if (postVO.getAnonymous() != Constants.POST_ANONYMOUS.ANONYMOUS

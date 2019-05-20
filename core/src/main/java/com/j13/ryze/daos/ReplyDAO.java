@@ -5,6 +5,7 @@ import com.j13.ryze.vos.BarVO;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.ReplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,12 +25,12 @@ public class ReplyDAO {
     JdbcTemplate j;
 
     public int add(final int userId, final int barId, final int postId,
-                   final String content, final int anonymous, final int lastReplyId) {
+                   final String content, final int anonymous, final int lastReplyId, final String imgListStr) {
         KeyHolder holder = new GeneratedKeyHolder();
         final String sql = "insert into reply " +
-                "(user_id,bar_id,content,createtime,updatetime,post_id,anonymous,last_reply_id) " +
+                "(user_id,bar_id,content,createtime,updatetime,post_id,anonymous,last_reply_id,img_list) " +
                 "values" +
-                "(?,?,?,now(),now(),?,?,?)";
+                "(?,?,?,now(),now(),?,?,?,?)";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -40,6 +41,7 @@ public class ReplyDAO {
                 pstmt.setInt(4, postId);
                 pstmt.setInt(5, anonymous);
                 pstmt.setInt(6, lastReplyId);
+                pstmt.setString(7, imgListStr);
                 return pstmt;
             }
         }, holder);
@@ -47,43 +49,15 @@ public class ReplyDAO {
     }
 
     public List<ReplyVO> list(int postId, int pageName, int size) {
-        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id " +
+        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id,img_list " +
                 "from reply where deleted=? and post_id=? and last_reply_id=0 order by createtime ASC limit ?,? ";
-        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, postId, pageName * size, size}, new RowMapper<ReplyVO>() {
-            @Override
-            public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                ReplyVO vo = new ReplyVO();
-                vo.setUserId(rs.getInt(1));
-                vo.setBarId(rs.getInt(2));
-                vo.setContent(rs.getString(3));
-                vo.setCreatetime(rs.getTimestamp(4).getTime());
-                vo.setReplyId(rs.getInt(5));
-                vo.setPostId(rs.getInt(6));
-                vo.setAnonymous(rs.getInt(7));
-                vo.setLastReplyId(rs.getInt(8));
-                return vo;
-            }
-        });
+        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, postId, pageName * size, size}, new ReplyRowMapper());
     }
 
     public List<ReplyVO> lastReplylist(int lastReplyId, int pageName, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
-                "post_id,anonymous,last_reply_id from reply where deleted=? and last_reply_id=?  order by updatetime desc limit ?,? ";
-        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, lastReplyId, pageName * size, size}, new RowMapper<ReplyVO>() {
-            @Override
-            public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                ReplyVO vo = new ReplyVO();
-                vo.setUserId(rs.getInt(1));
-                vo.setBarId(rs.getInt(2));
-                vo.setContent(rs.getString(3));
-                vo.setCreatetime(rs.getTimestamp(4).getTime());
-                vo.setReplyId(rs.getInt(5));
-                vo.setPostId(rs.getInt(6));
-                vo.setAnonymous(rs.getInt(7));
-                vo.setLastReplyId(rs.getInt(8));
-                return vo;
-            }
-        });
+                "post_id,anonymous,last_reply_id,img_list from reply where deleted=? and last_reply_id=?  order by updatetime desc limit ?,? ";
+        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, lastReplyId, pageName * size, size}, new ReplyRowMapper());
     }
 
     public int lastReplylistSize(int lastReplyId) {
@@ -92,9 +66,9 @@ public class ReplyDAO {
         return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, lastReplyId}, Integer.class);
     }
 
-    public void update(int replyId, String content, int anonymous) {
-        String sql = "update reply set content=?,anonymous=? where id=? and deleted=?";
-        j.update(sql, new Object[]{content, anonymous, replyId, Constants.DB.NOT_DELETED});
+    public void update(int replyId, String content, int anonymous, String imgListStr) {
+        String sql = "update reply set content=?,anonymous=?,img_list=? where id=? and deleted=?";
+        j.update(sql, new Object[]{content, anonymous, imgListStr, replyId, Constants.DB.NOT_DELETED});
     }
 
     public void delete(int replyId) {
@@ -104,22 +78,13 @@ public class ReplyDAO {
 
 
     public ReplyVO get(int replyId) {
-        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id from reply where deleted=? and id=?";
-        return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, replyId}, new RowMapper<ReplyVO>() {
-            @Override
-            public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                ReplyVO vo = new ReplyVO();
-                vo.setUserId(rs.getInt(1));
-                vo.setBarId(rs.getInt(2));
-                vo.setContent(rs.getString(3));
-                vo.setCreatetime(rs.getTimestamp(4).getTime());
-                vo.setReplyId(rs.getInt(5));
-                vo.setPostId(rs.getInt(6));
-                vo.setAnonymous(rs.getInt(7));
-                vo.setLastReplyId(rs.getInt(8));
-                return vo;
-            }
-        });
+        try {
+            String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id,img_list" +
+                    " from reply where deleted=? and id=?";
+            return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, replyId}, new ReplyRowMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public List<Integer> recentlyList(int barId, int userId, int pageNum, int size) {
@@ -135,23 +100,9 @@ public class ReplyDAO {
 
 
     public List<ReplyVO> listByBarId(int barId, int pageNum, int size) {
-        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id " +
+        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id,img_list " +
                 "from reply where deleted=? and bar_id=? order by createtime DESC limit ?,? ";
-        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new RowMapper<ReplyVO>() {
-            @Override
-            public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                ReplyVO vo = new ReplyVO();
-                vo.setUserId(rs.getInt(1));
-                vo.setBarId(rs.getInt(2));
-                vo.setContent(rs.getString(3));
-                vo.setCreatetime(rs.getTimestamp(4).getTime());
-                vo.setReplyId(rs.getInt(5));
-                vo.setPostId(rs.getInt(6));
-                vo.setAnonymous(rs.getInt(7));
-                vo.setLastReplyId(rs.getInt(8));
-                return vo;
-            }
-        });
+        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new ReplyRowMapper());
     }
 
     public void delete(int userId, int replyId) {
@@ -160,22 +111,27 @@ public class ReplyDAO {
     }
 
     public List<ReplyVO> reverselist(int postId, int pageName, int size) {
-        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id " +
+        String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id,img_list " +
                 "from reply where deleted=? and post_id=? and last_reply_id=0 order by createtime desc limit ?,? ";
-        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, postId, pageName * size, size}, new RowMapper<ReplyVO>() {
-            @Override
-            public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                ReplyVO vo = new ReplyVO();
-                vo.setUserId(rs.getInt(1));
-                vo.setBarId(rs.getInt(2));
-                vo.setContent(rs.getString(3));
-                vo.setCreatetime(rs.getTimestamp(4).getTime());
-                vo.setReplyId(rs.getInt(5));
-                vo.setPostId(rs.getInt(6));
-                vo.setAnonymous(rs.getInt(7));
-                vo.setLastReplyId(rs.getInt(8));
-                return vo;
-            }
-        });
+        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, postId, pageName * size, size}, new ReplyRowMapper());
+    }
+
+    class ReplyRowMapper implements RowMapper<ReplyVO> {
+
+        @Override
+        public ReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+            ReplyVO vo = new ReplyVO();
+            vo.setUserId(rs.getInt(1));
+            vo.setBarId(rs.getInt(2));
+            vo.setContent(rs.getString(3));
+            vo.setCreatetime(rs.getTimestamp(4).getTime());
+            vo.setReplyId(rs.getInt(5));
+            vo.setPostId(rs.getInt(6));
+            vo.setAnonymous(rs.getInt(7));
+            vo.setLastReplyId(rs.getInt(8));
+            vo.setImgListStr(rs.getString(9));
+            return vo;
+        }
     }
 }
+

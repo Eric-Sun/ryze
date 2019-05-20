@@ -15,6 +15,16 @@ public class AdminReplyAddReq {
     private int anonymous;
     @Parameter(desc = "")
     private int lastReplyId;
+    @Parameter(desc = "")
+    private String imgListStr;
+
+    public String getImgListStr() {
+        return imgListStr;
+    }
+
+    public void setImgListStr(String imgListStr) {
+        this.imgListStr = imgListStr;
+    }
 
     public int getLastReplyId() {
         return lastReplyId;
