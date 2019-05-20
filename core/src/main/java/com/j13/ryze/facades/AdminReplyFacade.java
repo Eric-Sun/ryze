@@ -57,7 +57,7 @@ public class AdminReplyFacade {
             AdminReplyDetailResp r = new AdminReplyDetailResp();
             BeanUtils.copyProperties(r, vo);
             // parse imgList
-            replyService.parseImgList(r, vo);
+            replyService.parseImgList(vo);
             UserVO user = userService.getUserInfo(vo.getUserId());
             r.setUserName(user.getNickName());
             r.setUserAvatarUrl(user.getAvatarUrl());
@@ -79,13 +79,13 @@ public class AdminReplyFacade {
         UserVO user1 = userService.getUserInfo(vo.getUserId());
         r.setUserName(user1.getNickName());
         r.setUserAvatarUrl(user1.getAvatarUrl());
-        replyService.parseImgList(r, vo);
+        replyService.parseImgList( vo);
 
         List<ReplyVO> replyList = replyDAO.lastReplylist(req.getReplyId(), 0, 500);
         for (ReplyVO replyVO : replyList) {
             AdminReplyDetailResp r2 = new AdminReplyDetailResp();
             BeanUtils.copyProperties(r2, replyVO);
-            replyService.parseImgList(r2, replyVO);
+            replyService.parseImgList(replyVO);
 
             int replyListSize = replyDAO.lastReplylistSize(r2.getReplyId());
             r2.setReplyListSize(replyListSize);

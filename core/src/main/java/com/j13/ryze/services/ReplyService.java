@@ -65,10 +65,9 @@ public class ReplyService {
     /**
      * 解析VO中的imgList，赋值到Resp对象中
      *
-     * @param r
      * @param vo
      */
-    public void parseImgList(AdminReplyDetailResp r, ReplyVO vo) {
+    public void parseImgList(ReplyVO vo) {
         // imgList info
         String imgListStr = vo.getImgListStr();
         List<String> imgIdList = JSON.parseArray(imgListStr, String.class);
@@ -96,6 +95,7 @@ public class ReplyService {
             // 获得一级评论的数据
             ReplyDetailResp r = new ReplyDetailResp();
             BeanUtils.copyProperties(r, vo);
+            parseImgList(vo);
             userService.setUserInfoForReply(post.getAnonymous(), r, vo.getUserId());
             resp.getData().add(r);
 
@@ -170,6 +170,7 @@ public class ReplyService {
         Collections.sort(tmpLevel2ReplyList);
 
         for (ReplyVO finalVO : tmpLevel2ReplyList) {
+            parseImgList(finalVO);
             Level2ReplyDetailResp level2Resp = new Level2ReplyDetailResp();
             BeanUtils.copyProperties(level2Resp, finalVO);
             userService.setUserInfoForReply(post.getAnonymous(), level2Resp, level2Resp.getUserId());

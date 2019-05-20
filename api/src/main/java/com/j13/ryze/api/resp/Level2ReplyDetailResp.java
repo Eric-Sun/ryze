@@ -35,6 +35,20 @@ public class Level2ReplyDetailResp {
     private int barId;
     @Parameter(desc = "")
     private String userAvatarUrl;
+    @Parameter(desc = "")
+    private List<ImgDetailResp> imgList = Lists.newLinkedList();
+
+    public String getLastReplyAnonUserName() {
+        return lastReplyAnonUserName;
+    }
+
+    public List<ImgDetailResp> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<ImgDetailResp> imgList) {
+        this.imgList = imgList;
+    }
 
     public void setLastReplyAnonUserName(String lastReplyAnonUserName) {
         this.lastReplyAnonUserName = lastReplyAnonUserName;
