@@ -52,7 +52,7 @@ public class AdminPostFacade {
 //            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
 //        }
 
-        int postId = postService.add(ctxt.getUid(),
+        int postId = postService.add(req.getUserId(),
                 req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgList());
         resp.setPostId(postId);
         return resp;
@@ -89,7 +89,7 @@ public class AdminPostFacade {
 
     @Action(name = "admin.post.update")
     public CommonResultResp updateContentAndTitle(CommandContext ctxt, AdminPostUpdateContentReq req) {
-        postService.update(req.getPostId(), req.getContent(), req.getTitle(), req.getAnonymous(), req.getType(),req.getImgListStr());
+        postService.update(req.getPostId(), req.getContent(), req.getTitle(), req.getAnonymous(), req.getType(), req.getImgListStr());
         return CommonResultResp.success();
     }
 
