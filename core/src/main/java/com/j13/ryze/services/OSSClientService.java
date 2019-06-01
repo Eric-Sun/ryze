@@ -72,8 +72,21 @@ public class OSSClientService {
         }
     }
 
+    /**
+     * 存储图片，只能存储jpg格式的
+     * @param is
+     * @param type
+     * @return
+     */
+    public String saveFile(InputStream is, int type) {
+        String fileName = random.nextInt(10000) + System.currentTimeMillis() + ".jpg";
+        String fullFileName = findDir(type) + "/" + fileName;
+        ossClient.putObject(bucketName, fullFileName, is);
+        return fileName;
+    }
+
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         ossClient.shutdown();
     }
 

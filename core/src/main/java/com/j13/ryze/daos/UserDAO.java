@@ -148,4 +148,20 @@ public class UserDAO {
             }
         });
     }
+
+
+    /**
+     * 查询nickname是否有重复情况
+     *
+     * @param nickName
+     * @return
+     */
+    public boolean checkNickNameExisted(String nickName) {
+        String sql = "select count(1) from user where nickname=? ";
+        int count = j.queryForObject(sql, new Object[]{nickName}, Integer.class);
+        if (count == 0)
+            return false;
+        else
+            return true;
+    }
 }

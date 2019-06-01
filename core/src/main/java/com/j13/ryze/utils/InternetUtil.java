@@ -32,6 +32,11 @@ public class InternetUtil {
         CloseableHttpResponse response = null;
         try {
             HttpGet httpGet = new HttpGet(url);
+            httpGet.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3\n" +
+                    "Accept-Encoding: gzip, deflate, br");
+            httpGet.setHeader("Cookie","_qqq_uuid_=\"2|1:0|10:1558581654|10:_qqq_uuid_|56:Y2I5ZTQ0NDMwMmRjZDg1Yzc3MzBmM2IzYjlhNzA5OTZiZGNhZWE0Zg==|f8d1d14f8b70e5d63d1645e07a86bd38865aa4a2c625b52df69804f0d8ac94a7\"; _ga=GA1.2.1642137361.1558581655; __cur_art_index=3100; Hm_lvt_18a964a3eb14176db6e70f1dd0a3e557=1558598327; _xsrf=2|eadcd414|757fe4c54ae33b07786b9c7fbeb3a8a7|1558931221; Hm_lvt_2670efbdd59c7e3ed3749b458cafaa37=1558581655,1558595632,1558931224; Hm_lpvt_2670efbdd59c7e3ed3749b458cafaa37=1558940281");
+            httpGet.setHeader("If-None-Match:","da9de8206a798ade7c1979cec436380c26e210d4");
+            httpGet.setHeader("User-Agent"," Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
             response = httpclient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             String rawResponse = EntityUtils.toString(entity);
