@@ -1,5 +1,6 @@
 package com.j13.ryze.services;
 
+import com.google.common.collect.Lists;
 import com.j13.ryze.api.req.PostDetailResp;
 import com.j13.ryze.api.resp.Level2ReplyDetailResp;
 import com.j13.ryze.api.resp.ReplyDetailResp;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Random;
 
@@ -42,6 +44,13 @@ public class UserService {
     @Autowired
     UserLockDAO userLockDAO;
 
+    private List<Integer> machineUserList = Lists.newLinkedList();
+
+    @PostConstruct
+    public void init(){
+        // load all machine userId in memory
+        machineUserList = userDAO.getAllMachineUser();
+    }
 
     public UserVO getUserInfo(int userId) {
         UserVO user = userDAO.getUser(userId);
@@ -216,4 +225,10 @@ public class UserService {
         return list;
     }
 
+    public void randomMachineUser() {
+
+
+
+
+    }
 }

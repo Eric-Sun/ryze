@@ -63,7 +63,7 @@ public class Constants {
     public static class IMG_TYPE {
         public static int AVATAR = 0;
         public static int AVATAR_URL_FROM_WECHAT = 1;
-        public static int POST_IMG=2;
+        public static int POST_IMG = 2;
     }
 
     // 用户表中的用户类型
@@ -162,5 +162,17 @@ public class Constants {
             public static String DEFAULT_ADMIN_FORCE_REASON = "";
         }
 
+    }
+
+    public static class Fetcher {
+        public static class SourceType {
+            public static int TIANYA = 0;
+        }
+
+        public static class Status {
+            // 未推送到库中
+            public static int NOT_PUSH = 0;
+            public static int PUSHED = 1;
+        }
     }
 }

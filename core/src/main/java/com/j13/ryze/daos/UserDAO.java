@@ -164,4 +164,19 @@ public class UserDAO {
         else
             return true;
     }
+
+    /**
+     * 获取所有机器人用户
+     * @return
+     */
+    public List<Integer> getAllMachineUser() {
+        String sql = "select id from user where status=?";
+        return j.query(sql, new Object[]{Constants.USER_SOURCE_TYPE.MACHINE}, new RowMapper<Integer>() {
+            @Override
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                Integer userId = resultSet.getInt(1);
+                return userId;
+            }
+        });
+    }
 }
