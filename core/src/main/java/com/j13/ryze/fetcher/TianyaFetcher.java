@@ -5,14 +5,19 @@ import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.Logger;
 import com.j13.ryze.daos.FPostDAO;
 import com.j13.ryze.daos.FReplyDAO;
+import com.j13.ryze.daos.UserDAO;
+import com.j13.ryze.services.ImgService;
 import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.ReplyService;
 import com.j13.ryze.utils.InternetUtil;
+import com.j13.ryze.vos.ImgVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
+import java.util.Random;
 import java.util.regex.Pattern;
+
 
 @Service
 public class TianyaFetcher {
@@ -21,6 +26,11 @@ public class TianyaFetcher {
     FPostDAO fPostDAO;
     @Autowired
     FReplyDAO fReplyDAO;
+    @Autowired
+    UserDAO userDAO;
+    @Autowired
+    ImgService imgService;
+    private Random random = new Random();
 
     private Pattern p = Pattern.compile("\\s*|\t|\r");
 
@@ -74,12 +84,23 @@ public class TianyaFetcher {
 
         while (true) {
             String rawString = InternetUtil.get("http://bbs.tianya.cn/post-feeling-" + postId + "-" + pageNum + ".shtml");
+
+
             if (rawString == null) {
                 Logger.FETCHER.info("页面到底了 PageNum={}", pageNum);
                 return;
             } else {
                 Logger.FETCHER.info("开始抓取页面 pageNum={}", pageNum);
             }
+
+
+            // capture author
+            int authorIndexStart = rawString.indexOf("<meta name=\"author\" content=\"") + "<meta name=\"author\" content=\"".length();
+            int authorIndexEnd = rawString.indexOf("\">", authorIndexStart);
+            String author = rawString.substring(authorIndexStart, authorIndexEnd);
+            Logger.FETCHER.info("author : {}", author);
+
+
             Iterator<String> i1 = null;
             if (pageNum == 1) {
                 int contentBeginIndex = rawString.indexOf("<div class=\"bbs-content clearfix\">") + "<div class=\"bbs-content clearfix\">".length();
@@ -99,19 +120,18 @@ public class TianyaFetcher {
                 try {
                     // 判断是否已经插入过了，插入过了就放弃
                     if (!fPostDAO.checkExist(postId)) {
-
-
-
                         fPostDAO.add(Constants.Fetcher.SourceType.TIANYA, postId, title, content);
+                        Logger.FETCHER.info("postId={},content={}", postId, content);
+                    } else {
+                        Logger.FETCHER.info("post existed postId={}", postId);
                     }
                 } catch (Exception e) {
                     Logger.FETCHER.error("", e);
                 }
-                Logger.FETCHER.info("content={}", content);
-                i1 = Splitter.on("<div class=\"bbs-content\">").split(rawString2).iterator();
+                i1 = Splitter.on("<div class=\"atl-item\" _host=\"").split(rawString2).iterator();
 
             } else {
-                i1 = Splitter.on("<div class=\"bbs-content\">").split(rawString).iterator();
+                i1 = Splitter.on("<div class=\"atl-item\" _host=\"").split(rawString).iterator();
 
             }
 
@@ -119,6 +139,22 @@ public class TianyaFetcher {
             i1.next();
             while (i1.hasNext()) {
                 String replyRawString = i1.next();
+
+                // 找到author
+                int replyAuthorIndexEnd = replyRawString.indexOf("\" id=\"");
+                String replyAuthor = replyRawString.substring(0, replyAuthorIndexEnd);
+
+                // 找到authorId
+                int replyAuthroIdIndexStart = replyRawString.indexOf("_hostid=\"") + "_hostid=\"".length();
+                int replyAuthroIdIndexEnd = replyRawString.indexOf("\"", replyAuthroIdIndexStart);
+                String authorId = replyRawString.substring(replyAuthroIdIndexStart, replyAuthroIdIndexEnd);
+
+
+
+                // 截取到内容的位置
+                int replyContentStartIndex = replyRawString.indexOf("<div class=\"bbs-content\">") + "<div class=\"bbs-content\">".length();
+                replyRawString = replyRawString.substring(replyContentStartIndex);
+
                 int replyContentEndIndex = replyRawString.indexOf("</div>");
                 String replyContent = replyRawString.substring(0, replyContentEndIndex).trim();
 
@@ -126,11 +162,7 @@ public class TianyaFetcher {
                 int replyIdStartIndex = replyRawString.indexOf("<div class=\"atl-reply\" id=\"rid_") + "<div class=\"atl-reply\" id=\"rid_".length();
                 int replyIdEndIndex = replyRawString.indexOf("\">", replyIdStartIndex);
                 String replyId = replyRawString.substring(replyIdStartIndex, replyIdEndIndex);
-//            replyContent = formatString(replyContent);
-//            if (replyContent.indexOf("<img src=") > 0) {
-//                Logger.FETCHER.info("reply have img ignore. content={}", replyContent);
-//                continue;
-//            }
+
 
                 replyContent = replyContent.replaceAll("<br>", "\n").replaceAll("<img[^>]*>", "").replaceAll("评论.*：", "");
 
@@ -139,13 +171,20 @@ public class TianyaFetcher {
                     replyContent = replyContent.substring(prefixUserInfoIndex + "<br>".length()).replaceAll("<br>", "\n");
                 }
 
-                Logger.FETCHER.info("-LEVEL1-[{}]{}", replyId, replyContent);
+                //丢弃掉发红包相关的评论
+                if (replyContent.indexOf("<div class=\"red-pkt-v2 red-pkt-3\" title=") > 0)
+                    continue;
+
+
                 int fReplyId = 0;
                 if (!fReplyDAO.checkExist(new Integer(replyId))) {
-                    fReplyId = fReplyDAO.add(postId, 0, replyContent, new Integer(replyId));
+                    fReplyId = fReplyDAO.add(postId, 0, replyContent, new Integer(replyId),
+                            replyAuthor.equals(author) ? 1 : 0);
+                    Logger.FETCHER.info("-LEVEL1-- author:{} [{}]{}", replyAuthor.equals(author) ? 1 : 0, replyId, replyContent);
+                    saveUser(replyAuthor, new Integer(authorId));
                 } else {
                     fReplyId = fReplyDAO.findFReplyId(new Integer(replyId));
-
+                    Logger.FETCHER.info("-LEVEL1-- replyId={} existed", replyId);
                 }
 
 
@@ -155,23 +194,37 @@ public class TianyaFetcher {
                     String replyReplyRawString = i3.next();
                     int replyReplyIdEndIndex = replyReplyRawString.indexOf("\"");
                     String replyReplyId = replyReplyRawString.substring(0, replyReplyIdEndIndex);
+
+                    // 找到authorId
+                    int replyReplyAuthorIdIndexStart = replyReplyRawString.indexOf("_userid=\"") + "_userid=\"".length();
+                    int replyReplyAuthorIdIndexEnd = replyReplyRawString.indexOf("\" _username=\"");
+                    int replyReplyAuthorId = new Integer(replyReplyRawString.substring(replyReplyAuthorIdIndexStart, replyReplyAuthorIdIndexEnd));
+
+                    // 找到author
+                    int replyReplyAuthorIndexStart = replyReplyRawString.indexOf("_username=\"") + "_username=\"".length();
+                    int replyReplyAuthorIndexEnd = replyReplyRawString.indexOf("\"", replyReplyAuthorIndexStart);
+                    String replyReplyAuthor = replyReplyRawString.substring(replyReplyAuthorIndexStart, replyReplyAuthorIndexEnd);
+
+
                     int replyReplyContentStartIndex = replyReplyRawString.indexOf("<span class=\"ir-content\">") + "<span class=\"ir-content\">".length();
                     replyReplyRawString = replyReplyRawString.substring(replyReplyContentStartIndex);
                     int replyReplyContentEndIndex = replyReplyRawString.indexOf("</span>");
                     String replyReplyRawContent = replyReplyRawString.substring(0, replyReplyContentEndIndex);
                     String replyReplyContent = null;
+
                     if (replyReplyRawContent.indexOf("</a>") > 0) {
                         // 有评论两个字，需要去掉
-                        int aEndIndex = replyReplyRawContent.indexOf("</a>：") + "</a>：".length();
+                        int aEndIndex = replyReplyRawContent.indexOf("：") + "：".length();
                         replyReplyContent = replyReplyRawContent.substring(aEndIndex).
-                                replaceAll("<img[^>]*>", "").replaceAll("<br>", "\n")
-                                .replaceAll("评论.*：", "");
-                        ;
+                                replaceAll("<img[^>]*>", "").replaceAll("<br>", "\n");
                     } else {
-                        replyReplyContent = replyReplyRawContent.replaceAll("<img[^>]*>", "").replaceAll("<br>", "\n")
-                                .replaceAll("评论.*：", "");
-                        ;
+                        replyReplyContent = replyReplyRawContent.replaceAll("<img[^>]*>", "").replaceAll("<br>", "\n");
                     }
+
+
+                    //丢弃掉发红包相关的评论
+                    if (replyReplyContent.indexOf("<div class=\"red-pkt-v2 red-pkt-3\" title=") > 0)
+                        continue;
 
 //                if (replyReplyContent.indexOf("<img src=") > 0) {
 //                    Logger.FETCHER.info("reply have img ignore. content={}", replyReplyContent);
@@ -183,12 +236,16 @@ public class TianyaFetcher {
                         int prefixUserInfoIndex2 = replyReplyContent.indexOf("<br>");
                         replyReplyContent = replyReplyContent.substring(prefixUserInfoIndex2 + "<br>".length()).replaceAll("<br>", "\n");
                     }
-                    Logger.FETCHER.info("--LEVEL2--[{}]{}", replyReplyId, replyReplyContent);
 
-                    try {
-                        fReplyDAO.add(postId, new Integer(fReplyId), replyReplyContent, new Integer(replyReplyId));
-                    } catch (Exception e) {
-                        Logger.FETCHER.error("", e);
+
+                    if (!fReplyDAO.checkExist(new Integer(replyReplyId))) {
+                        fReplyDAO.add(postId, new Integer(fReplyId), replyReplyContent, new Integer(replyReplyId),
+                                replyReplyAuthor.equals(author) ? 1 : 0);
+                        Logger.FETCHER.info("--LEVEL2- author:{} -[{}]{}", replyReplyAuthor.equals(author) ? 1 : 0, replyReplyId, replyReplyContent);
+                        saveUser(replyReplyAuthor, replyReplyAuthorId);
+
+                    } else {
+                        Logger.FETCHER.info("--LEVEL2- replyId={} existed", replyReplyId);
                     }
 
                 }
@@ -197,6 +254,30 @@ public class TianyaFetcher {
         }
 
 
+    }
+
+    public void saveUser(String nickName, int userId) {
+//        boolean exist = userDAO.checkNickNameExisted(nickName);
+//        if (exist) {
+//            Logger.FETCHER.info("userName={},existed. so continue. currentId={}", nickName, userId);
+//            try {
+//                Thread.sleep(1000L);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            return;
+//        }
+//
+//        String userImgUrl = "http://tx.tianyaui.com/logo/" + userId;
+//
+//        ImgVO imgVO = imgService.saveFile(userImgUrl, Constants.IMG_TYPE.AVATAR);
+//
+//        String anonNickName = "匿名侠" + random.nextInt(1000000);
+//        // 插入到user_info表中
+//        int savedUserId = userDAO.register(nickName, anonNickName, imgVO.getId(), Constants.USER_SOURCE_TYPE.MACHINE);
+//
+//        userDAO.registerUserInfoFromWechat(savedUserId, "Chaoyang", "China", "Beijing", Constants.User.Gender.NO, "zh_CN");
+//        Logger.FETCHER.info("get userName={}  currentId={}", nickName, userId);
     }
 
 

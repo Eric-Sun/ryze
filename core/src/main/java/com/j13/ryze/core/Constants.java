@@ -29,6 +29,12 @@ public class Constants {
             public static int NO_LOCK = 0;
             public static int IS_LOCK = 1;
         }
+
+        public static class Gender {
+            public static int MAN = 1;
+            public static int WOMAN = 2;
+            public static int NO = 0;
+        }
     }
 
     public static class OrderRecordActionType {

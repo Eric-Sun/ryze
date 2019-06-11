@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class FPostDAO {
@@ -42,9 +43,9 @@ public class FPostDAO {
     }
 
 
-    public void updateStatus(int fPostId, int status) {
-        String sql = "update f_post set status=? where id=?";
-        j.update(sql, new Object[]{status, fPostId});
+    public void updateStatusAndPostId(int fPostId, int status, int postId, int userId) {
+        String sql = "update f_post set status=?,post_id=?,post_user_id=? where id=?";
+        j.update(sql, new Object[]{status, postId, userId, fPostId});
     }
 
     /**
@@ -60,6 +61,11 @@ public class FPostDAO {
     }
 
 
+    /**
+     * 查找一个未插入到正式环境的Post
+     *
+     * @return
+     */
     public FPostVO selectOneUninsertedPost() {
         String sql = "select id,source_post_id,title,content from f_post where status=? limit 1";
         return j.queryForObject(sql, new Object[]{Constants.Fetcher.Status.NOT_PUSH}, new RowMapper<FPostVO>() {
@@ -72,6 +78,26 @@ public class FPostDAO {
                 vo.setContent(resultSet.getString(4));
                 return vo;
             }
-        })
+        });
+    }
+
+    /**
+     * 获取已经插入到Post表中的所有的抓取id
+     *
+     * @return
+     */
+    public List<FPostVO> selectInsertedPostList() {
+
+        String sql = "select post_id,post_user_id,source_post_id from f_post where status=?";
+        return j.query(sql, new Object[]{Constants.Fetcher.Status.PUSHED}, new RowMapper<FPostVO>() {
+            @Override
+            public FPostVO mapRow(ResultSet resultSet, int i) throws SQLException {
+                FPostVO vo = new FPostVO();
+                vo.setPostId(resultSet.getInt(1));
+                vo.setPostUserId(resultSet.getInt(2));
+                vo.setSourcePostId(resultSet.getInt(3));
+                return vo;
+            }
+        });
     }
 }

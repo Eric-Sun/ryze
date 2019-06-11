@@ -1,23 +1,35 @@
 package com.j13.ryze.fetcher;
 
+import com.j13.poppy.config.PropertiesConfiguration;
 import com.j13.ryze.core.Logger;
 import com.j13.ryze.destiny.VoteService;
 import org.quartz.*;
 import org.springframework.context.ApplicationContext;
 
-public class TianyaFetcherJob implements Job {
-    @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        SchedulerContext schCtx = null;
-        try {
-            schCtx = jobExecutionContext.getScheduler().getContext();
-        } catch (SchedulerException e) {
-            Logger.FETCHER.error(e.getMessage());
-        }
-        ApplicationContext applicationContext = (ApplicationContext) schCtx.get("applicationContext");
+public class TianyaFetcherJob extends BaseJob{
 
-        TianyaFetcher fetcher = applicationContext.getBean(TianyaFetcher.class);
-        fetcher.doFetch();
-        Logger.FETCHER.info("tianya fetcher started.");
+    private int intervalMin = 60;
+
+    @Override
+    public void init(PropertiesConfiguration configuration ) {
+        intervalMin = configuration.getIntValue("job.fetch.next.min");
+        Logger.FETCHER.info("set job.fetch.next.min = {}", intervalMin);
     }
+
+    @Override
+    public void doExcute(ApplicationContext applicationContext) {
+        TianyaFetcher fetcher = applicationContext.getBean(TianyaFetcher.class);
+        while (true) {
+            Logger.FETCHER.info("tianya fetcher start.");
+            fetcher.doFetch();
+            Logger.FETCHER.info("tianya fetcher end.");
+            try {
+                Logger.FETCHER.info("tianya fetcher will start in {} min.", intervalMin);
+                Thread.sleep(intervalMin * 60 * 1000);
+            } catch (InterruptedException e) {
+                Logger.INSERTER.error("", e);
+            }
+        }
+    }
+
 }

@@ -170,7 +170,7 @@ public class UserDAO {
      * @return
      */
     public List<Integer> getAllMachineUser() {
-        String sql = "select id from user where status=?";
+        String sql = "select id from user where source_type=?";
         return j.query(sql, new Object[]{Constants.USER_SOURCE_TYPE.MACHINE}, new RowMapper<Integer>() {
             @Override
             public Integer mapRow(ResultSet resultSet, int i) throws SQLException {

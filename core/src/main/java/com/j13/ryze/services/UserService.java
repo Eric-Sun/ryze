@@ -5,6 +5,7 @@ import com.j13.ryze.api.req.PostDetailResp;
 import com.j13.ryze.api.resp.Level2ReplyDetailResp;
 import com.j13.ryze.api.resp.ReplyDetailResp;
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.core.Logger;
 import com.j13.ryze.daos.ImgDAO;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.UserDAO;
@@ -14,8 +15,6 @@ import com.j13.ryze.vos.ImgVO;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.UserLockVO;
 import com.j13.ryze.vos.UserVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +30,6 @@ import java.util.Random;
 @Service
 public class UserService {
 
-    private static Logger LOG = LoggerFactory.getLogger(UserService.class);
     @Autowired
     UserDAO userDAO;
     @Autowired
@@ -47,9 +45,10 @@ public class UserService {
     private List<Integer> machineUserList = Lists.newLinkedList();
 
     @PostConstruct
-    public void init(){
+    public void init() {
         // load all machine userId in memory
         machineUserList = userDAO.getAllMachineUser();
+        Logger.COMMON.info("loaded user machine. size={}", machineUserList.size());
     }
 
     public UserVO getUserInfo(int userId) {
@@ -147,9 +146,9 @@ public class UserService {
                         Constants.UserLock.UnlockOperatorType.SYSTEM,
                         Constants.UserLock.UnlockReason.DEFAULT_TIMEOUT_REASON);
                 userDAO.unlockUser(userId);
-                LOG.info("unlock user successfully. userId={}", userId);
+                Logger.COMMON.info("unlock user successfully. userId={}", userId);
             } else {
-                LOG.info("user locked. userId={}", userId);
+                Logger.COMMON.info("user locked. userId={}", userId);
             }
         }
     }
@@ -166,7 +165,7 @@ public class UserService {
                 Constants.UserLock.UnlockOperatorType.ADMIN,
                 unlockReason);
         userDAO.unlockUser(userId);
-        LOG.info("unlock user. userId={}", userId);
+        Logger.COMMON.info("unlock user. userId={}", userId);
     }
 
     /**
@@ -176,7 +175,7 @@ public class UserService {
         long time = System.currentTimeMillis();
         userLockDAO.lock(userId, lockOperatorType, lockReasonType, lockReason, time, unlockTime);
         userDAO.lockUser(userId);
-        LOG.info("lock user. userId={},time={},unlockTime={}", userId, DateUtil.format(time), DateUtil.format(unlockTime));
+        Logger.COMMON.info("lock user. userId={},time={},unlockTime={}", userId, DateUtil.format(time), DateUtil.format(unlockTime));
     }
 
     /**
@@ -225,10 +224,29 @@ public class UserService {
         return list;
     }
 
-    public void randomMachineUser() {
+    /**
+     * 随机一个机器人用户，主要是为了给抓取数据插入模块使用
+     *
+     * @return
+     */
+    public int randomMachineUser() {
+        int index = random.nextInt(machineUserList.size());
+        return machineUserList.get(index);
+    }
 
-
-
-
+    /**
+     * 随机一个机器人用户id，但是不能是传入的用户id
+     *
+     * @param excludeUserId
+     * @return
+     */
+    public int randomMachineUser(int excludeUserId) {
+        while (true) {
+            int randomUserId = randomMachineUser();
+            if (randomUserId != excludeUserId) {
+                return randomUserId;
+                
+            }
+        }
     }
 }

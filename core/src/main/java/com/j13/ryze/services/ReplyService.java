@@ -3,12 +3,12 @@ package com.j13.ryze.services;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.j13.poppy.JedisManager;
+import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
-import com.j13.ryze.api.resp.AdminReplyDetailResp;
-import com.j13.ryze.api.resp.Level2ReplyDetailResp;
-import com.j13.ryze.api.resp.ReplyDetailResp;
-import com.j13.ryze.api.resp.ReplyListResp;
+import com.j13.ryze.api.resp.*;
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.core.ErrorCode;
+import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.facades.ReplyFacade;
 import com.j13.ryze.utils.CommonJedisManager;
@@ -39,6 +39,12 @@ public class ReplyService {
     UserService userService;
     @Autowired
     PostService postService;
+    @Autowired
+    NoticeService noticeService;
+    @Autowired
+    IAcsClientService iAcsClientService;
+    @Autowired
+    PostDAO postDAO;
 
 
     /**
@@ -179,6 +185,32 @@ public class ReplyService {
         }
         r.setReplySize(replySize.getSize());
         return r;
+    }
+
+    /**
+     * 插入reply
+     *
+     * @param userId
+     * @param barId
+     * @param postId
+     * @param content
+     * @param anonymous
+     * @param lastReplyId
+     * @param imgListStr
+     * @return
+     */
+    public int add(int userId, int barId, int postId, String content, int anonymous, int lastReplyId, String imgListStr, boolean isScan) {
+        if (isScan) {
+            boolean b = iAcsClientService.scan(content);
+            if (b == false) {
+                throw new CommonException(ErrorCode.Common.CONTENT_ILLEGAL);
+            }
+        }
+        int id = replyDAO.add(userId, barId, postId,
+                content, anonymous, lastReplyId, imgListStr);
+        postDAO.addReplyCount(postId);
+        postDAO.updateTime(postId);
+        return id;
     }
 
     /**

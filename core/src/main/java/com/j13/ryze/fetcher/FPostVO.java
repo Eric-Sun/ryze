@@ -6,6 +6,24 @@ public class FPostVO {
     private int sourcePostId;
     private String title;
     private String content;
+    private int postId;
+    private int postUserId;
+
+    public int getPostUserId() {
+        return postUserId;
+    }
+
+    public void setPostUserId(int postUserId) {
+        this.postUserId = postUserId;
+    }
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
 
     public int getId() {
         return id;

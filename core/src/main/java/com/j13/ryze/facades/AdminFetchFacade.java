@@ -4,7 +4,9 @@ import com.google.common.base.Splitter;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.ryze.api.req.AdminFetchUserFromQSBKReq;
+import com.j13.ryze.api.req.AdminFetchUserFromTianyaReq;
 import com.j13.ryze.api.resp.AdminFetchUserFromQSBKResp;
+import com.j13.ryze.api.resp.AdminFetchUserFromTianyaResp;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.services.ImgService;
@@ -32,47 +34,39 @@ public class AdminFetchFacade {
 
     private Random random = new Random();
 
-    @Action(name = "admin.fetchUser.fromQSBK")
-    public AdminFetchUserFromQSBKResp fetchUserFromQSBK(CommandContext ctxt, AdminFetchUserFromQSBKReq req) {
-        AdminFetchUserFromQSBKResp resp = new AdminFetchUserFromQSBKResp();
-        int count = 0;
-        if (!req.getToken().equals("84658544"))
-            return resp;
+    // 去掉ty
+    @Action(name = "admin.fetchUser.fromTianya")
+    public AdminFetchUserFromTianyaResp fetchUserFromTianya(CommandContext ctxt, AdminFetchUserFromTianyaReq req) {
+        AdminFetchUserFromTianyaResp resp = new AdminFetchUserFromTianyaResp();
+        int count = req.getCount();
+        int successCount = 0;
+        int from = req.getFrom();
+        //140364877
+        int currentId = from;
 
-        String fetchUrl = "http://www.qiushibaike.com/text/page/" + req.getPageNum() + "/?s=3232322222";
-        LOG.info("fetch url = " + fetchUrl);
-
-        String rawResponse = InternetUtil.get(fetchUrl);
-
-        Iterator<String> iter = Splitter.on("target=\"_blank\" rel=\"nofollow\" style=\"height: 35px\" onclick=\"_hmt.push(['_trackEvent','web-list-author-img','chick'])\">\n" +
-                "\n" +
-                "<img src=\"").split(rawResponse).iterator();
-        iter.next();
-        while (iter.hasNext()) {
-            String splitterStr = iter.next();
-            int imgTailIndex = splitterStr.indexOf("\" alt=\"");
-            if (imgTailIndex == -1)
+        while (successCount != count) {
+            String rawString = InternetUtil.get("http://www.tianya.cn/" + currentId);
+            int userNickNameIndexStart = rawString.indexOf("<title>") + "<title>".length();
+            int userNickNameIndexEnd = rawString.indexOf("</title>", userNickNameIndexStart);
+            String userNickName = rawString.substring(userNickNameIndexStart, userNickNameIndexEnd);
+            userNickName = userNickName.replaceAll("_天涯社区", "");
+            userNickName = userNickName.replaceAll("ty_", "");
+            if (userNickName.equals("出错了")) {
+                LOG.info("error. currentId={}", currentId);
                 continue;
-            String userImgUrl = "https:" + splitterStr.substring(0, imgTailIndex).replaceAll("\\?imageView2/1/w/90/h/90", "");
-
-
-            int userNameIndex = splitterStr.indexOf("onclick=\"_hmt.push(['_trackEvent','web-list-author-text','chick'])\">\n" +
-                    "<h2>");
-            int userNameFromIndex = userNameIndex + new Integer("onclick=\"_hmt.push(['_trackEvent','web-list-author-text','chick'])\">\n<h2>".length());
-            splitterStr = splitterStr.substring(userNameFromIndex);
-            int userNameLastIndex = splitterStr.indexOf("</h2>");
-            String userName = splitterStr.substring(0, userNameLastIndex).replaceAll("\\n", "");
-
-            int gender = 1;
-            int sexIndex = splitterStr.indexOf("<div class=\"articleGender ") + "<div class=\"articleGender ".length();
-            String sexSign = splitterStr.substring(sexIndex, sexIndex + 3);
-            if (sexSign.equals("wom")) {
-                gender = 2;
             }
 
-            boolean exist = userDAO.checkNickNameExisted(userName);
+            String userImgUrl = "http://tx.tianyaui.com/logo/" + currentId;
+
+            boolean exist = userDAO.checkNickNameExisted(userNickName);
             if (exist) {
-                LOG.info("userName={},existed. so continue.", userName);
+                LOG.info("userName={},existed. so continue. currentId={}", userNickName, currentId);
+                currentId++;
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 continue;
             }
 
@@ -80,18 +74,19 @@ public class AdminFetchFacade {
 
             String anonNickName = "匿名侠" + random.nextInt(1000000);
             // 插入到user_info表中
-            int userId = userDAO.register(userName, anonNickName, imgVO.getId(), Constants.USER_SOURCE_TYPE.MACHINE);
+            int userId = userDAO.register(userNickName, anonNickName, imgVO.getId(), Constants.USER_SOURCE_TYPE.MACHINE);
 
-            userDAO.registerUserInfoFromWechat(userId, "Chaoyang", "China", "Beijing", gender, "zh_CN");
-
-            LOG.info("userId={},userName={},imgUrl={},gender={}", userId, userName, userImgUrl, gender);
-            count++;
-
+            userDAO.registerUserInfoFromWechat(userId, "Chaoyang", "China", "Beijing", Constants.User.Gender.NO, "zh_CN");
+            LOG.info("get userName={}  currentId={}", userNickName, currentId);
+            try {
+                Thread.sleep(1000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            currentId++;
+            successCount++;
         }
-
-        resp.setSuccessCount(count);
+        resp.setSuccessCount(successCount);
         return resp;
     }
-
-
 }

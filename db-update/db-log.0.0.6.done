@@ -1,0 +1,32 @@
+# 抓取Post
+CREATE TABLE `f_post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `source_type` int(11) DEFAULT NULL,
+  `source_post_id` int(11) DEFAULT NULL,
+  `post_id` int(11) DEFAULT '0',
+  `post_user_id` int(11) DEFAULT '0',
+  `title` varchar(255) DEFAULT NULL,
+  `content` varchar(9000) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `fetch_time` timestamp NULL DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 ;
+
+#抓取Reply
+CREATE TABLE `f_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `f_post_id` int(11) DEFAULT NULL,
+  `last_f_reply_id` int(11) DEFAULT NULL,
+  `reply_id` int(11) DEFAULT '0',
+  `source_reply_id` int(11) DEFAULT NULL,
+  `is_author` int(255) DEFAULT '0',
+  `content` varchar(9000) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `fetch_time` timestamp NULL DEFAULT NULL,
+  `status` int(255) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47552 DEFAULT CHARSET=utf8mb4;
+
+alter table post modify column content varchar(9000) ;
+alter table reply modify column content varchar(9000) ;
+
+

@@ -70,26 +70,19 @@ public class ReplyFacade {
     @Action(name = "reply.add", desc = "")
     @NeedToken
     public ReplyAddResp replyAdd(CommandContext ctxt, ReplyAddReq req) {
-
-        boolean b = iAcsClientService.scan(req.getContent());
-        if (b == false) {
-            throw new CommonException(ErrorCode.Common.CONTENT_ILLEGAL);
-        }
-
         ReplyAddResp resp = new ReplyAddResp();
-        int id = replyDAO.add(ctxt.getUid(), req.getBarId(), req.getPostId(),
-                req.getContent(), req.getAnonymous(), req.getLastReplyId(), req.getImgListStr());
-        postDAO.addReplyCount(req.getPostId());
-        postDAO.updateTime(req.getPostId());
+        int replyId = replyService.add(ctxt.getUid(), req.getBarId(), req.getPostId(), req.getContent(),
+                req.getAnonymous(), req.getLastReplyId(), req.getImgListStr(),true);
+
         // 添加对应的notice通知
         if (req.getLastReplyId() == 0) {
             PostVO postVO = postService.getSimplePost(req.getPostId());
-            noticeService.addPostNotice(ctxt.getUid(), postVO.getUserId(), postVO.getPostId(), id);
+            noticeService.addPostNotice(ctxt.getUid(), postVO.getUserId(), postVO.getPostId(), replyId);
         } else {
             ReplyVO replyVO = replyService.getSimpleReply(req.getLastReplyId());
-            noticeService.addReplyNotice(ctxt.getUid(), replyVO.getUserId(), replyVO.getReplyId(), id);
+            noticeService.addReplyNotice(ctxt.getUid(), replyVO.getUserId(), replyVO.getReplyId(), replyId);
         }
-        resp.setReplyId(id);
+        resp.setReplyId(replyId);
         return resp;
     }
 

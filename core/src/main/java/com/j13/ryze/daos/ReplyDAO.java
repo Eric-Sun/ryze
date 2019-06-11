@@ -56,7 +56,7 @@ public class ReplyDAO {
 
     public List<ReplyVO> lastReplylist(int lastReplyId, int pageName, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
-                "post_id,anonymous,last_reply_id,img_list from reply where deleted=? and last_reply_id=?  order by updatetime desc limit ?,? ";
+                "post_id,anonymous,last_reply_id,img_list from reply where deleted=? and last_reply_id=?  order by updatetime asc limit ?,? ";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, lastReplyId, pageName * size, size}, new ReplyRowMapper());
     }
 
