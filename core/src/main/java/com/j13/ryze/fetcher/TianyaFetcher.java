@@ -80,6 +80,7 @@ public class TianyaFetcher {
 
 
     public void parsePostPage(int postId, String title) {
+        postId = 4310197;
         int pageNum = 1;
 
         while (true) {
@@ -138,6 +139,8 @@ public class TianyaFetcher {
 
             i1.next();
             while (i1.hasNext()) {
+
+
                 String replyRawString = i1.next();
 
                 // 找到author
@@ -148,7 +151,6 @@ public class TianyaFetcher {
                 int replyAuthroIdIndexStart = replyRawString.indexOf("_hostid=\"") + "_hostid=\"".length();
                 int replyAuthroIdIndexEnd = replyRawString.indexOf("\"", replyAuthroIdIndexStart);
                 String authorId = replyRawString.substring(replyAuthroIdIndexStart, replyAuthroIdIndexEnd);
-
 
 
                 // 截取到内容的位置
@@ -163,12 +165,46 @@ public class TianyaFetcher {
                 int replyIdEndIndex = replyRawString.indexOf("\">", replyIdStartIndex);
                 String replyId = replyRawString.substring(replyIdStartIndex, replyIdEndIndex);
 
+                // 如果有图片 continue
+                if (replyContent.indexOf("<img src=") > 0) {
+                    continue;
+                }
 
-                replyContent = replyContent.replaceAll("<br>", "\n").replaceAll("<img[^>]*>", "").replaceAll("评论.*：", "");
+                // 判断是否有tianya.cn的域名，如果有的话整体抛弃
+                if (replyContent.indexOf("tianya.cn") > 0) {
+                    continue;
+                }
+                // 天涯的字符串替换
+                replyContent = replyContent.replaceAll("天涯", "豆豆");
+
+
+                // 去掉类似于
+                //                赶上直播了^_^
+                // 　　-----------------------------
+                //　　哈哈，晚上睡不着，码字的人都是夜猫子，等等马上更
+                // ----之前的内容
+                if (replyContent.indexOf("----------") > 0) {
+                    int slashIndexEnd = replyContent.lastIndexOf("----------") + "----------".length();
+                    replyContent = replyContent.substring(slashIndexEnd);
+                }
+
+                replyContent = replyContent.replaceAll("<img[^>]*>", "").replaceAll("评论.*：", "");
 
                 if (replyContent.indexOf("<br>") >= 0) {
                     int prefixUserInfoIndex = replyContent.indexOf("<br>");
-                    replyContent = replyContent.substring(prefixUserInfoIndex + "<br>".length()).replaceAll("<br>", "\n");
+                    if (prefixUserInfoIndex == 0) {
+                        replyContent = replyContent.substring(4);
+                    }
+                    replyContent = replyContent.replaceAll("<br>", "\n");
+                }
+                // 如果最后是\n替换掉
+                if (replyContent.length() == 0) {
+                    continue;
+                } else {
+                    int nIndexEnd = replyContent.lastIndexOf("\n") + "\n".length();
+                    if (replyContent.length() == nIndexEnd) {
+                        replyContent.substring(0, replyContent.lastIndexOf("\n"));
+                    }
                 }
 
                 //丢弃掉发红包相关的评论
@@ -212,6 +248,11 @@ public class TianyaFetcher {
                     String replyReplyRawContent = replyReplyRawString.substring(0, replyReplyContentEndIndex);
                     String replyReplyContent = null;
 
+                    // 如果有图片 continue
+                    if (replyReplyRawContent.indexOf("<img src=") > 0) {
+                        continue;
+                    }
+
                     if (replyReplyRawContent.indexOf("</a>") > 0) {
                         // 有评论两个字，需要去掉
                         int aEndIndex = replyReplyRawContent.indexOf("：") + "：".length();
@@ -221,6 +262,33 @@ public class TianyaFetcher {
                         replyReplyContent = replyReplyRawContent.replaceAll("<img[^>]*>", "").replaceAll("<br>", "\n");
                     }
 
+                    // 判断是否有tianya.cn的域名，如果有的话整体抛弃
+                    if (replyReplyContent.indexOf("tianya.cn") > 0) {
+                        continue;
+                    }
+                    // 天涯的字符串替换
+                    replyReplyContent = replyReplyContent.replaceAll("天涯", "豆豆");
+
+                    // 去掉类似于
+                    //                赶上直播了^_^
+                    // 　　-----------------------------
+                    //　　哈哈，晚上睡不着，码字的人都是夜猫子，等等马上更
+                    // ----之前的内容
+                    if (replyReplyContent.indexOf("----------") > 0) {
+                        int slashIndexEnd = replyReplyContent.lastIndexOf("----------") + "----------".length();
+                        replyContent = replyReplyContent.substring(slashIndexEnd);
+                    }
+
+
+                    // 如果最后是\n替换掉
+                    if (replyReplyContent.length() == 0) {
+                        continue;
+                    } else {
+                        int nIndexEnd = replyReplyContent.lastIndexOf("\n") + "\n".length();
+                        if (replyReplyContent.length() == nIndexEnd) {
+                            replyReplyContent.substring(0, replyReplyContent.lastIndexOf("\n"));
+                        }
+                    }
 
                     //丢弃掉发红包相关的评论
                     if (replyReplyContent.indexOf("<div class=\"red-pkt-v2 red-pkt-3\" title=") > 0)

@@ -6,10 +6,7 @@ import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
-import com.j13.ryze.api.resp.AdminBarQueryResp;
-import com.j13.ryze.api.resp.AdminUserDetailResp;
-import com.j13.ryze.api.resp.AdminUserListResp;
-import com.j13.ryze.api.resp.AdminUserSearchResp;
+import com.j13.ryze.api.resp.*;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.UserDAO;
@@ -113,11 +110,21 @@ public class AdminUserFacade {
         return resp;
     }
 
+    @Action(name = "admin.user.meta",desc="后台获取用户的基本数据")
+    public AdminUserMetaResp meta(CommandContext ctxt, AdminUserMetaReq req) {
+        AdminUserMetaResp resp = new AdminUserMetaResp();
+        int allUsercount = userService.allUserCount();
+        int machineUserCount = userService.machineUserCount();
+        resp.setAllUserCount(allUsercount);
+        resp.setMachineUserCount(machineUserCount);
+        return resp;
+    }
+
 
     @Action(name = "admin.user.search", desc = "模糊查询用户信息")
     public AdminUserSearchResp list(CommandContext ctxt, AdminUserSearchReq req) {
         AdminUserSearchResp resp = new AdminUserSearchResp();
-        List<UserVO> userList = userService.search(req.getText(),req.getPageNum(),req.getSize());
+        List<UserVO> userList = userService.search(req.getText(), req.getPageNum(), req.getSize());
         for (UserVO user : userList) {
             AdminUserDetailResp detail = new AdminUserDetailResp();
             BeanUtils.copyProperties(detail, user);

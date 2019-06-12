@@ -167,6 +167,7 @@ public class UserDAO {
 
     /**
      * 获取所有机器人用户
+     *
      * @return
      */
     public List<Integer> getAllMachineUser() {
@@ -178,5 +179,15 @@ public class UserDAO {
                 return userId;
             }
         });
+    }
+
+    public int allUserCount() {
+        String sql = "select count(1) from user";
+        return j.queryForObject(sql, new Object[]{}, Integer.class);
+    }
+
+    public int machineUserCount() {
+        String sql = "select count(1) from user where source_type=?";
+        return j.queryForObject(sql, new Object[]{Constants.USER_SOURCE_TYPE.MACHINE}, Integer.class);
     }
 }

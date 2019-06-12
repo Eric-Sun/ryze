@@ -249,4 +249,12 @@ public class UserService {
             }
         }
     }
+
+    public int allUserCount() {
+        return userDAO.allUserCount();
+    }
+
+    public int machineUserCount(){
+        return userDAO.machineUserCount();
+    }
 }
