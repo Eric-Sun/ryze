@@ -35,17 +35,20 @@ public class DataInserter {
     public void insertPost() {
         //插入一个post
         Logger.INSERTER.info("Post inserter start.");
+        try {
+            FPostVO fPostVO = fPostDAO.selectOneUninsertedPost();
+            int userId = userService.randomMachineUser();
+            int defaultBarId = config.getIntValue("default.bar.id");
+            int postId = postService.add(userId, defaultBarId, fPostVO.getTitle(), fPostVO.getContent(),
+                    Constants.POST_ANONYMOUS.COMMON,
+                    Constants.POST_TYPE.DIARY, "[]");
 
-        FPostVO fPostVO = fPostDAO.selectOneUninsertedPost();
-        int userId = userService.randomMachineUser();
-        int defaultBarId = config.getIntValue("default.bar.id");
-        int postId = postService.add(userId, defaultBarId, fPostVO.getTitle(), fPostVO.getContent(),
-                Constants.POST_ANONYMOUS.COMMON,
-                Constants.POST_TYPE.DIARY, "[]");
-
-        // 修改fpost的状态
-        fPostDAO.updateStatusAndPostId(fPostVO.getId(), Constants.Fetcher.Status.PUSHED, postId, userId);
-        Logger.INSERTER.info("insert post from fPostId={} to postId={}", fPostVO.getId(), postId);
+            // 修改fpost的状态
+            fPostDAO.updateStatusAndPostId(fPostVO.getId(), Constants.Fetcher.Status.PUSHED, postId, userId);
+            Logger.INSERTER.info("insert post from fPostId={} to postId={}", fPostVO.getId(), postId);
+        } catch (Exception e) {
+            Logger.INSERTER.info("no post to insert.");
+        }
         Logger.INSERTER.info("Post inserter end.");
     }
 
@@ -60,9 +63,9 @@ public class DataInserter {
             List<FReplyVO> fReplyVOList = fReplyDAO.findReplysByFPostId(vo.getSourcePostId(), replyCount);
             for (FReplyVO replyVO : fReplyVOList) {
                 int randomUserId = 0;
-                if(replyVO.getIsAuhtor()==1){
+                if (replyVO.getIsAuhtor() == 1) {
                     randomUserId = vo.getPostUserId();
-                }else{
+                } else {
                     randomUserId = userService.randomMachineUser(vo.getPostUserId());
                 }
                 // 插入数据
@@ -70,14 +73,14 @@ public class DataInserter {
                 if (replyVO.getLastFReplyId() == 0) {
                     // 没有上一级
                     replyId = replyService.add(randomUserId, defaultBarId, vo.getPostId(), replyVO.getContent(),
-                            Constants.REPLY_ANONYMOUS.COMMON, 0, "[]",false);
+                            Constants.REPLY_ANONYMOUS.COMMON, 0, "[]", false);
                     Logger.INSERTER.info("insert post from fReplyId={} to replyId={} on postId={} ", replyVO.getId(), replyId, vo.getPostId(), 0);
 
                 } else {
                     // 查找对应的lastFReplyId对应的replyId
                     int lastReplyId = fReplyDAO.findReplyIdFromFReplyId(replyVO.getLastFReplyId());
                     replyId = replyService.add(randomUserId, defaultBarId, vo.getPostId(), replyVO.getContent(),
-                            Constants.REPLY_ANONYMOUS.COMMON, lastReplyId, "[]",false);
+                            Constants.REPLY_ANONYMOUS.COMMON, lastReplyId, "[]", false);
                     Logger.INSERTER.info("insert post from fReplyId={} to replyId={} on postId={}, lastReplyId={}", replyVO.getId(), replyId, vo.getPostId(), lastReplyId);
 
 
