@@ -7,6 +7,11 @@ public class Constants {
     public static String ANON_LOU = "anon_lou.jpeg";
     public static String ANON_XIA = "anon_xia.jpeg";
 
+    public static class Switch {
+        public static String ON = "on";
+        public static String OFF = "off";
+    }
+
 
     public static class ResponseStatus {
         public static int SUCCESS = 0;

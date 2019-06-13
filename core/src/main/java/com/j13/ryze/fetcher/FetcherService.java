@@ -1,6 +1,7 @@
 package com.j13.ryze.fetcher;
 
 import com.j13.poppy.config.PropertiesConfiguration;
+import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.Logger;
 import com.j13.ryze.destiny.PostOfflineVoteJob;
 import com.j13.ryze.utils.QuartzManager;
@@ -31,14 +32,25 @@ public class FetcherService {
 
     @PostConstruct
     public void init() {
-        triggerFetcherJob(configuration.getIntValue("job.fetch.init.min"));
-        triggerPostInserterJob(configuration.getIntValue("job.postInsert.init.min"));
-        triggerReplyInserterJob(configuration.getIntValue("job.replyInsert.init.min"));
+        if (configuration.getStringValue("job.fetch.switch").equals(Constants.Switch.ON)) {
+            triggerFetcherJob(configuration.getIntValue("job.fetch.init.min"));
+        } else {
+            Logger.FETCHER.info("fetch job is off.");
+        }
+        if (configuration.getStringValue("job.postInsert.switch").equals(Constants.Switch.ON)) {
+            triggerPostInserterJob(configuration.getIntValue("job.postInsert.init.min"));
+        }else{
+            Logger.FETCHER.info("postInsert job is off.");
+        }
+        if (configuration.getStringValue("job.replyInsert.switch").equals(Constants.Switch.ON)) {
+            triggerReplyInserterJob(configuration.getIntValue("job.replyInsert.init.min"));
+        }else{
+            Logger.FETCHER.info("replyInsert job is off.");
+        }
     }
 
 
     /**
-     *
      * @param min
      */
     public void triggerFetcherJob(int min) {
@@ -115,7 +127,6 @@ public class FetcherService {
             Logger.FETCHER.error(e.getMessage());
         }
     }
-
 
 
     @PreDestroy
