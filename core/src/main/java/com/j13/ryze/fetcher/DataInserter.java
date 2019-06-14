@@ -11,6 +11,8 @@ import com.j13.ryze.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -31,6 +33,12 @@ public class DataInserter {
     PropertiesConfiguration config;
 
     private Random random = new Random();
+    int ReplyInsertPerPostInsertSize ;
+
+    @PostConstruct
+    public void init(){
+        ReplyInsertPerPostInsertSize = config.getIntValue("job.replyInsert.perPost.replySize");
+    }
 
     public void insertPost() {
         //插入一个post
@@ -58,8 +66,9 @@ public class DataInserter {
 
         Logger.INSERTER.info("Reply inserter start.");
         List<FPostVO> insertedPostList = fPostDAO.selectInsertedPostList();
+        Collections.shuffle(insertedPostList);
         for (FPostVO vo : insertedPostList) {
-            int replyCount = random.nextInt(5) + 1;
+            int replyCount = random.nextInt(ReplyInsertPerPostInsertSize) + 1;
             List<FReplyVO> fReplyVOList = fReplyDAO.findReplysByFPostId(vo.getSourcePostId(), replyCount);
             for (FReplyVO replyVO : fReplyVOList) {
                 int randomUserId = 0;
