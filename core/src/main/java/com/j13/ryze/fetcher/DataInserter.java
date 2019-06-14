@@ -41,7 +41,7 @@ public class DataInserter {
             int defaultBarId = config.getIntValue("default.bar.id");
             int postId = postService.add(userId, defaultBarId, fPostVO.getTitle(), fPostVO.getContent(),
                     Constants.POST_ANONYMOUS.COMMON,
-                    Constants.POST_TYPE.DIARY, "[]");
+                    Constants.POST_TYPE.STORE, "[]");
 
             // 修改fpost的状态
             fPostDAO.updateStatusAndPostId(fPostVO.getId(), Constants.Fetcher.Status.PUSHED, postId, userId);
@@ -82,8 +82,6 @@ public class DataInserter {
                     replyId = replyService.add(randomUserId, defaultBarId, vo.getPostId(), replyVO.getContent(),
                             Constants.REPLY_ANONYMOUS.COMMON, lastReplyId, "[]", false);
                     Logger.INSERTER.info("insert post from fReplyId={} to replyId={} on postId={}, lastReplyId={}", replyVO.getId(), replyId, vo.getPostId(), lastReplyId);
-
-
                 }
 
                 // 回补数据状态
