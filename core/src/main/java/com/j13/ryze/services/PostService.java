@@ -5,13 +5,11 @@ import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.resp.AdminPostDetailResp;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.daos.BarDAO;
+import com.j13.ryze.daos.CollectDAO;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.utils.CommonJedisManager;
-import com.j13.ryze.vos.ImgVO;
-import com.j13.ryze.vos.PostVO;
-import com.j13.ryze.vos.ReplyVO;
-import com.j13.ryze.vos.UserVO;
+import com.j13.ryze.vos.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +34,8 @@ public class PostService {
     ImgService imgService;
     @Autowired
     BarDAO barDAO;
+    @Autowired
+    CollectDAO collectDAO;
 
     public int replyCount(int postId) {
         int count = replyDAO.replyCount(postId);
@@ -123,5 +123,36 @@ public class PostService {
             }
         }
         return list;
+    }
+
+    /**
+     * 添加收藏
+     * @param userId
+     * @param postId
+     * @return
+     */
+    public int collectAdd(int userId, int postId) {
+        return collectDAO.add(userId, Constants.Collect.Type.POST, postId);
+    }
+
+
+    /**
+     * 删除收藏
+     * @param userId
+     * @param postId
+     */
+    public void collectDelete(int userId, int postId) {
+        collectDAO.delete(userId, postId);
+    }
+
+    /**
+     * 收藏列表
+     * @param userId
+     * @param pageNum
+     * @param size
+     * @return
+     */
+    public List<CollectVO> collectList(int userId, int pageNum, int size) {
+        return collectDAO.list(userId, pageNum, size);
     }
 }

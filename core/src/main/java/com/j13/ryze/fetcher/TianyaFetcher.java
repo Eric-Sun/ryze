@@ -80,7 +80,7 @@ public class TianyaFetcher {
 
 
     public void parsePostPage(int postId, String title) {
-        postId = 4446310;
+
         int pageNum = 1;
 
         while (true) {

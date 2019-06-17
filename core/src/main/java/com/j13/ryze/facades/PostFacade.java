@@ -8,14 +8,12 @@ import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.*;
-import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
+import com.j13.ryze.core.Logger;
 import com.j13.ryze.daos.*;
 import com.j13.ryze.services.*;
 import com.j13.ryze.vos.ImgVO;
 import com.j13.ryze.vos.PostVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +21,6 @@ import java.util.List;
 
 @Component
 public class PostFacade {
-    private static Logger LOG = LoggerFactory.getLogger(PostFacade.class);
 
     @Autowired
     PostDAO postDAO;
@@ -103,7 +100,7 @@ public class PostFacade {
     public CommonResultResp delete(CommandContext ctxt, PostDeleteReq req) {
         int userId = ctxt.getUid();
         postDAO.delete(req.getPostId(), userId);
-        LOG.info("delete post. postId={}, userId={}", req.getPostId(), userId);
+        com.j13.ryze.core.Logger.COMMON.info("delete post. postId={}, userId={}", req.getPostId(), userId);
         return CommonResultResp.success();
     }
 
@@ -184,5 +181,29 @@ public class PostFacade {
         return resp;
     }
 
+
+    @Action(name = "post.collect.add", desc = "收藏帖子")
+    @NeedToken
+    public PostCollectAddResp collectAdd(CommandContext ctxt, PostCollectAddReq req) {
+        PostCollectAddResp resp = new PostCollectAddResp();
+        int userId = ctxt.getUid();
+        int postId = req.getPostId();
+
+        int collectId = postService.collectAdd(userId, postId);
+        Logger.COMMON.info("collect post. userId={},postId={},collectId={}", userId, postId, collectId);
+        resp.setCollectId(collectId);
+        return resp;
+    }
+
+
+    @Action(name = "post.collect.delete")
+    public CommonResultResp collectDelete(CommandContext ctxt, PostCollectDeleteReq req) {
+        int collectId = req.getCollectId();
+        int userId = ctxt.getUid();
+
+        postService.collectDelete(userId, collectId);
+        Logger.COMMON.info("delete collected post. userId={},collectId={}", userId, collectId);
+        return CommonResultResp.success();
+    }
 
 }

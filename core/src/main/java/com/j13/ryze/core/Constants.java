@@ -186,4 +186,10 @@ public class Constants {
             public static int PUSHED = 1;
         }
     }
+
+    public static class Collect {
+        public static class Type {
+            public static int POST = 0;
+        }
+    }
 }
