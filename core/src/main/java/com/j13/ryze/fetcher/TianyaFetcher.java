@@ -80,6 +80,7 @@ public class TianyaFetcher {
 
 
     public void parsePostPage(int postId, String title) {
+        postId = 4446310;
         int pageNum = 1;
 
         while (true) {
@@ -244,7 +245,7 @@ public class TianyaFetcher {
                     int replyReplyContentStartIndex = replyReplyRawString.indexOf("<span class=\"ir-content\">") + "<span class=\"ir-content\">".length();
                     replyReplyRawString = replyReplyRawString.substring(replyReplyContentStartIndex);
                     int replyReplyContentEndIndex = replyReplyRawString.indexOf("</span>");
-                    String replyReplyRawContent = replyReplyRawString.substring(0, replyReplyContentEndIndex);
+                    String replyReplyRawContent = replyReplyRawString.substring(0, replyReplyContentEndIndex).replaceAll("评论.*：", "");
                     String replyReplyContent = null;
 
                     // 如果有图片 continue
