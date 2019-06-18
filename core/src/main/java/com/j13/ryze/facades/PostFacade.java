@@ -79,11 +79,16 @@ public class PostFacade {
     }
 
     @Action(name = "post.detail", desc = "post detail and replies")
+    @NeedToken
     public PostDetailResp detail(CommandContext ctxt, PostDetailReq req) {
+        int userId = ctxt.getUid();
         PostDetailResp resp = new PostDetailResp();
         PostVO vo = postService.getSimplePost(req.getPostId());
         BeanUtils.copyProperties(resp, vo);
         userService.setUserInfoForPost(resp, vo.getUserId());
+
+        boolean isCollect = postService.checkCollectExisted(userId, req.getPostId());
+        resp.setIsCollect(isCollect == true ? 1 : 0);
 
         for (ImgVO imgVO : vo.getImgVOList()) {
             ImgDetailResp imgResp = new ImgDetailResp();
@@ -197,12 +202,13 @@ public class PostFacade {
 
 
     @Action(name = "post.collect.delete")
+    @NeedToken
     public CommonResultResp collectDelete(CommandContext ctxt, PostCollectDeleteReq req) {
-        int collectId = req.getCollectId();
+        int postId = req.getPostId();
         int userId = ctxt.getUid();
 
-        postService.collectDelete(userId, collectId);
-        Logger.COMMON.info("delete collected post. userId={},collectId={}", userId, collectId);
+        postService.collectDelete(userId, postId);
+        Logger.COMMON.info("delete collected post. userId={},postId={}", userId, postId);
         return CommonResultResp.success();
     }
 

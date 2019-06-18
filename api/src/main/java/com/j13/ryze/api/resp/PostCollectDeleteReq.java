@@ -4,13 +4,13 @@ import com.j13.poppy.anno.Parameter;
 
 public class PostCollectDeleteReq {
     @Parameter(desc = "")
-    private int collectId;
+    private int postId;
 
-    public int getCollectId() {
-        return collectId;
+    public int getPostId() {
+        return postId;
     }
 
-    public void setCollectId(int collectId) {
-        this.collectId = collectId;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 }

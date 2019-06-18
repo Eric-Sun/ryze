@@ -1,9 +1,12 @@
 package com.j13.ryze.services;
 
 import com.alibaba.fastjson.JSON;
+import com.j13.poppy.exceptions.CommonException;
+import com.j13.poppy.exceptions.ServerException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.resp.AdminPostDetailResp;
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.BarDAO;
 import com.j13.ryze.daos.CollectDAO;
 import com.j13.ryze.daos.PostDAO;
@@ -66,9 +69,7 @@ public class PostService {
             imgVO.setId(imgId);
             vo.getImgVOList().add(imgVO);
         }
-
         return vo;
-
     }
 
 
@@ -127,26 +128,37 @@ public class PostService {
 
     /**
      * 添加收藏
+     *
      * @param userId
      * @param postId
      * @return
      */
     public int collectAdd(int userId, int postId) {
+        boolean isExisted = collectDAO.checkExist(userId, Constants.Collect.Type.POST, postId);
+        if (isExisted) {
+            throw new CommonException(ErrorCode.POST.COLLECT_IS_EXISTED);
+        }
         return collectDAO.add(userId, Constants.Collect.Type.POST, postId);
     }
 
 
     /**
      * 删除收藏
+     *
      * @param userId
      * @param postId
      */
     public void collectDelete(int userId, int postId) {
-        collectDAO.delete(userId, postId);
+        boolean isExisted = collectDAO.checkExist(userId, Constants.Collect.Type.POST, postId);
+        if (!isExisted) {
+            throw new CommonException(ErrorCode.POST.COLLECT_IS_DELETED);
+        }
+        collectDAO.delete(userId, Constants.Collect.Type.POST, postId);
     }
 
     /**
      * 收藏列表
+     *
      * @param userId
      * @param pageNum
      * @param size
@@ -154,5 +166,17 @@ public class PostService {
      */
     public List<CollectVO> collectList(int userId, int pageNum, int size) {
         return collectDAO.list(userId, pageNum, size);
+    }
+
+
+    /**
+     * 查看这个帖子是否已经被对应的用户收藏过了
+     *
+     * @param userId
+     * @param postId
+     * @return
+     */
+    public boolean checkCollectExisted(int userId, int postId) {
+        return collectDAO.checkExist(userId, Constants.Collect.Type.POST, postId);
     }
 }

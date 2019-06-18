@@ -48,6 +48,8 @@ public class ErrorCode {
 
     public static class POST {
         public static int QUERY_POST_TYPE_ERROR = 30001;
+        public static int COLLECT_IS_EXISTED=30002;
+        public static int COLLECT_IS_DELETED=30003;
 
     }
 

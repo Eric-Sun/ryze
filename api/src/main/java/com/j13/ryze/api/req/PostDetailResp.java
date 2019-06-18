@@ -33,6 +33,17 @@ public class PostDetailResp {
     private int replyCount;
     @Parameter(desc = "")
     private List<ImgDetailResp> imgList = Lists.newLinkedList();
+    @Parameter(desc = "")
+    private int isCollect;
+
+
+    public int getIsCollect() {
+        return isCollect;
+    }
+
+    public void setIsCollect(int isCollect) {
+        this.isCollect = isCollect;
+    }
 
     public List<ImgDetailResp> getImgList() {
         return imgList;

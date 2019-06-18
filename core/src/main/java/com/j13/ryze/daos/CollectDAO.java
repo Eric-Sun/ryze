@@ -39,9 +39,9 @@ public class CollectDAO {
         return holder.getKey().intValue();
     }
 
-    public void delete(int userId, int collectId) {
-        String sql = "update collect set deleted=? where id=? and user_id=? and deleted=?";
-        j.update(sql, new Object[]{Constants.DB.DELETED, collectId, userId, Constants.DB.NOT_DELETED});
+    public void delete(int userId, int type, int postId) {
+        String sql = "update collect set deleted=? where type=? and resource_id=? and user_id=? and deleted=?";
+        j.update(sql, new Object[]{Constants.DB.DELETED, type, postId, userId, Constants.DB.NOT_DELETED});
     }
 
     public List<CollectVO> list(final int userId, int pageNum, int size) {
@@ -61,4 +61,8 @@ public class CollectDAO {
     }
 
 
+    public boolean checkExist(int userId, int type, int postId) {
+        String sql = "select count(1) from collect where user_id=? and deleted=? and type=? and resource_id=?";
+        return j.queryForObject(sql, new Object[]{userId, Constants.DB.NOT_DELETED, type, postId}, Integer.class) == 0 ? false : true;
+    }
 }
