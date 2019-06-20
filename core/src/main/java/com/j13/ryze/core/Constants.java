@@ -117,6 +117,8 @@ public class Constants {
         public static class TYPE {
             public static int REPLY_NOTICE = 1;
             public static int POST_NOTICE = 0;
+            // 收藏的帖子有新的消息
+            public static int POST_COLLECTION_NEW_INFO=2;
         }
 
         public static class STATUS {

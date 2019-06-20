@@ -33,16 +33,15 @@ public class PostDetailResp {
     private int replyCount;
     @Parameter(desc = "")
     private List<ImgDetailResp> imgList = Lists.newLinkedList();
-    @Parameter(desc = "")
-    private int isCollect;
+    @Parameter(desc = "是否已经被用户收藏，0为未收藏，1为已收藏")
+    private int isCollection;
 
-
-    public int getIsCollect() {
-        return isCollect;
+    public int getIsCollection() {
+        return isCollection;
     }
 
-    public void setIsCollect(int isCollect) {
-        this.isCollect = isCollect;
+    public void setIsCollection(int isCollection) {
+        this.isCollection = isCollection;
     }
 
     public List<ImgDetailResp> getImgList() {

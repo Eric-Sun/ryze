@@ -25,7 +25,7 @@ public class NoticeDAO {
                    final int targetResourceId, final int replyId, final int type, final int status) {
         KeyHolder holder = new GeneratedKeyHolder();
 
-        final String sql = "insert into reply_notice (from_user_id,to_user_id,target_resource_id," +
+        final String sql = "insert into notice (from_user_id,to_user_id,target_resource_id," +
                 "reply_id,type,status,createtime,updatetime)" +
                 " values (?,?,?,?,?,?,now(),now())";
         j.update(new PreparedStatementCreator() {
@@ -53,19 +53,19 @@ public class NoticeDAO {
      * @param status
      */
     public void updateStatus(int userId, int noticeId, int status) {
-        String sql = "update reply_notice set status=?,updatetime=now() where to_user_id=? and deleted=? and id=?";
+        String sql = "update notice set status=?,updatetime=now() where to_user_id=? and deleted=? and id=?";
         j.update(sql, new Object[]{status, userId, Constants.DB.NOT_DELETED, noticeId});
     }
 
 
     public void delete(int userId, int noticeId) {
-        String sql = "update reply_notice set deleted=?,updatetime=now() where id=? and to_user_id=?";
+        String sql = "update notice set deleted=?,updatetime=now() where id=? and to_user_id=?";
         j.update(sql, new Object[]{Constants.DB.DELETED, noticeId, userId});
     }
 
     public List<NoticeVO> list(int userId) {
         String sql = "select id,from_user_id,to_user_id,target_resource_id,reply_id,type,status,createtime" +
-                " from reply_notice " +
+                " from notice " +
                 "where deleted=? and to_user_id=? ";
 
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, userId}, new RowMapper<NoticeVO>() {
@@ -87,13 +87,13 @@ public class NoticeDAO {
 
     public int listNotReadSize(int userId) {
         String sql = "select count(1)" +
-                " from reply_notice " +
+                " from notice " +
                 "where deleted=? and to_user_id=? and status=? ";
         return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, userId,Constants.NOTICE.STATUS.NOT_READ}, Integer.class);
     }
 
     public void readAll(int uid) {
-        String sql = "update reply_notice set status=? where to_user_id=? and deleted=?";
+        String sql = "update notice set status=? where to_user_id=? and deleted=?";
         j.update(sql, new Object[]{Constants.NOTICE.STATUS.READED, uid, Constants.DB.NOT_DELETED});
     }
 }

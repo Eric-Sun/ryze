@@ -87,8 +87,8 @@ public class PostFacade {
         BeanUtils.copyProperties(resp, vo);
         userService.setUserInfoForPost(resp, vo.getUserId());
 
-        boolean isCollect = postService.checkCollectExisted(userId, req.getPostId());
-        resp.setIsCollect(isCollect == true ? 1 : 0);
+        boolean isCollection = postService.checkCollectionExisted(userId, req.getPostId());
+        resp.setIsCollection(isCollection == true ? 1 : 0);
 
         for (ImgVO imgVO : vo.getImgVOList()) {
             ImgDetailResp imgResp = new ImgDetailResp();
@@ -187,27 +187,27 @@ public class PostFacade {
     }
 
 
-    @Action(name = "post.collect.add", desc = "收藏帖子")
+    @Action(name = "post.collection.add", desc = "收藏帖子")
     @NeedToken
-    public PostCollectAddResp collectAdd(CommandContext ctxt, PostCollectAddReq req) {
-        PostCollectAddResp resp = new PostCollectAddResp();
+    public PostCollectionAddResp collectionAdd(CommandContext ctxt, PostCollectionAddReq req) {
+        PostCollectionAddResp resp = new PostCollectionAddResp();
         int userId = ctxt.getUid();
         int postId = req.getPostId();
 
-        int collectId = postService.collectAdd(userId, postId);
+        int collectId = postService.collectionAdd(userId, postId);
         Logger.COMMON.info("collect post. userId={},postId={},collectId={}", userId, postId, collectId);
         resp.setCollectId(collectId);
         return resp;
     }
 
 
-    @Action(name = "post.collect.delete")
+    @Action(name = "post.collection.delete")
     @NeedToken
-    public CommonResultResp collectDelete(CommandContext ctxt, PostCollectDeleteReq req) {
+    public CommonResultResp collectionDelete(CommandContext ctxt, PostCollectionDeleteReq req) {
         int postId = req.getPostId();
         int userId = ctxt.getUid();
 
-        postService.collectDelete(userId, postId);
+        postService.collectionDelete(userId, postId);
         Logger.COMMON.info("delete collected post. userId={},postId={}", userId, postId);
         return CommonResultResp.success();
     }

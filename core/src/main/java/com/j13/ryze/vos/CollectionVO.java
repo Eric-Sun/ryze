@@ -2,7 +2,7 @@ package com.j13.ryze.vos;
 
 import java.util.Date;
 
-public class CollectVO {
+public class CollectionVO {
     private int id;
     private int userId;
     private int type;

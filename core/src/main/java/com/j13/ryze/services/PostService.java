@@ -2,9 +2,6 @@ package com.j13.ryze.services;
 
 import com.alibaba.fastjson.JSON;
 import com.j13.poppy.exceptions.CommonException;
-import com.j13.poppy.exceptions.ServerException;
-import com.j13.poppy.util.BeanUtils;
-import com.j13.ryze.api.resp.AdminPostDetailResp;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.BarDAO;
@@ -133,7 +130,7 @@ public class PostService {
      * @param postId
      * @return
      */
-    public int collectAdd(int userId, int postId) {
+    public int collectionAdd(int userId, int postId) {
         boolean isExisted = collectDAO.checkExist(userId, Constants.Collect.Type.POST, postId);
         if (isExisted) {
             throw new CommonException(ErrorCode.POST.COLLECT_IS_EXISTED);
@@ -148,7 +145,7 @@ public class PostService {
      * @param userId
      * @param postId
      */
-    public void collectDelete(int userId, int postId) {
+    public void collectionDelete(int userId, int postId) {
         boolean isExisted = collectDAO.checkExist(userId, Constants.Collect.Type.POST, postId);
         if (!isExisted) {
             throw new CommonException(ErrorCode.POST.COLLECT_IS_DELETED);
@@ -164,7 +161,7 @@ public class PostService {
      * @param size
      * @return
      */
-    public List<CollectVO> collectList(int userId, int pageNum, int size) {
+    public List<CollectionVO> collectionList(int userId, int pageNum, int size) {
         return collectDAO.list(userId, pageNum, size);
     }
 
@@ -176,7 +173,7 @@ public class PostService {
      * @param postId
      * @return
      */
-    public boolean checkCollectExisted(int userId, int postId) {
+    public boolean checkCollectionExisted(int userId, int postId) {
         return collectDAO.checkExist(userId, Constants.Collect.Type.POST, postId);
     }
 }

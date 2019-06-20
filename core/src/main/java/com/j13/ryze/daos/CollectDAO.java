@@ -1,7 +1,7 @@
 package com.j13.ryze.daos;
 
 import com.j13.ryze.core.Constants;
-import com.j13.ryze.vos.CollectVO;
+import com.j13.ryze.vos.CollectionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -44,12 +44,12 @@ public class CollectDAO {
         j.update(sql, new Object[]{Constants.DB.DELETED, type, postId, userId, Constants.DB.NOT_DELETED});
     }
 
-    public List<CollectVO> list(final int userId, int pageNum, int size) {
+    public List<CollectionVO> list(final int userId, int pageNum, int size) {
         String sql = "select id,type,resource_id,createtime from collect where user_id=? and deleted=? order by createtime desc limit ?,?";
-        return j.query(sql, new Object[]{userId, Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<CollectVO>() {
+        return j.query(sql, new Object[]{userId, Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<CollectionVO>() {
             @Override
-            public CollectVO mapRow(ResultSet resultSet, int i) throws SQLException {
-                CollectVO vo = new CollectVO();
+            public CollectionVO mapRow(ResultSet resultSet, int i) throws SQLException {
+                CollectionVO vo = new CollectionVO();
                 vo.setId(resultSet.getInt(1));
                 vo.setUserId(userId);
                 vo.setType(resultSet.getInt(2));
