@@ -42,6 +42,8 @@ public class PostFacade {
     NoticeService noticeService;
     @Autowired
     IAcsClientService iAcsClientService;
+    @Autowired
+    CollectionService collectionService;
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
     @NeedToken
@@ -87,7 +89,7 @@ public class PostFacade {
         BeanUtils.copyProperties(resp, vo);
         userService.setUserInfoForPost(resp, vo.getUserId());
 
-        boolean isCollection = postService.checkCollectionExisted(userId, req.getPostId());
+        boolean isCollection = collectionService.checkCollectionExisted(userId, req.getPostId());
         resp.setIsCollection(isCollection == true ? 1 : 0);
 
         for (ImgVO imgVO : vo.getImgVOList()) {
@@ -187,29 +189,5 @@ public class PostFacade {
     }
 
 
-    @Action(name = "post.collection.add", desc = "收藏帖子")
-    @NeedToken
-    public PostCollectionAddResp collectionAdd(CommandContext ctxt, PostCollectionAddReq req) {
-        PostCollectionAddResp resp = new PostCollectionAddResp();
-        int userId = ctxt.getUid();
-        int postId = req.getPostId();
-
-        int collectId = postService.collectionAdd(userId, postId);
-        Logger.COMMON.info("collect post. userId={},postId={},collectId={}", userId, postId, collectId);
-        resp.setCollectId(collectId);
-        return resp;
-    }
-
-
-    @Action(name = "post.collection.delete")
-    @NeedToken
-    public CommonResultResp collectionDelete(CommandContext ctxt, PostCollectionDeleteReq req) {
-        int postId = req.getPostId();
-        int userId = ctxt.getUid();
-
-        postService.collectionDelete(userId, postId);
-        Logger.COMMON.info("delete collected post. userId={},postId={}", userId, postId);
-        return CommonResultResp.success();
-    }
 
 }

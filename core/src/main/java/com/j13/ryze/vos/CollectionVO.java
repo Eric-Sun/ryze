@@ -8,6 +8,15 @@ public class CollectionVO {
     private int type;
     private int resourceId;
     private long createtime;
+    private Object resourceObject;
+
+    public Object getResourceObject() {
+        return resourceObject;
+    }
+
+    public void setResourceObject(Object resourceObject) {
+        this.resourceObject = resourceObject;
+    }
 
     public int getId() {
         return id;

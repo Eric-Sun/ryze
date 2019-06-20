@@ -3,6 +3,7 @@ package com.j13.ryze.daos;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.vos.NoticeVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -66,7 +67,7 @@ public class NoticeDAO {
     public List<NoticeVO> list(int userId) {
         String sql = "select id,from_user_id,to_user_id,target_resource_id,reply_id,type,status,createtime" +
                 " from notice " +
-                "where deleted=? and to_user_id=? ";
+                "where deleted=? and to_user_id=? order by updatetime desc";
 
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, userId}, new RowMapper<NoticeVO>() {
             @Override
@@ -89,11 +90,27 @@ public class NoticeDAO {
         String sql = "select count(1)" +
                 " from notice " +
                 "where deleted=? and to_user_id=? and status=? ";
-        return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, userId,Constants.NOTICE.STATUS.NOT_READ}, Integer.class);
+        return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, userId, Constants.NOTICE.STATUS.NOT_READ}, Integer.class);
     }
 
     public void readAll(int uid) {
         String sql = "update notice set status=? where to_user_id=? and deleted=?";
         j.update(sql, new Object[]{Constants.NOTICE.STATUS.READED, uid, Constants.DB.NOT_DELETED});
+    }
+
+    public int getPostCollectionNoticeId(int userId, int postId) {
+        String sql = "select id from notice where to_user_id=? and target_resource_id=? and status=? and deleted=?";
+        int noticeId = 0;
+        try {
+            noticeId = j.queryForObject(sql, new Object[]{userId, postId, Constants.NOTICE.STATUS.NOT_READ, Constants.DB.NOT_DELETED}, Integer.class);
+        } catch (DataAccessException e) {
+            return noticeId;
+        }
+        return noticeId;
+    }
+
+    public void updateUpdateTime(int noticeId) {
+        String sql = "update notice set updatetime=now() where id=? ";
+        j.update(sql, new Object[]{noticeId});
     }
 }

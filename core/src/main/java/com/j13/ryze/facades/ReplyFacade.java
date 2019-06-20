@@ -14,6 +14,7 @@ import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.services.*;
+import com.j13.ryze.vos.CollectionVO;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.ReplyVO;
 import com.j13.ryze.vos.UserVO;
@@ -46,6 +47,8 @@ public class ReplyFacade {
     NoticeService noticeService;
     @Autowired
     IAcsClientService iAcsClientService;
+    @Autowired
+    CollectionService collectionService;
 
     @Action(name = "reply.list")
     public ReplyListResp list(CommandContext ctxt, ReplyListReq req) {
@@ -72,7 +75,7 @@ public class ReplyFacade {
     public ReplyAddResp replyAdd(CommandContext ctxt, ReplyAddReq req) {
         ReplyAddResp resp = new ReplyAddResp();
         int replyId = replyService.add(ctxt.getUid(), req.getBarId(), req.getPostId(), req.getContent(),
-                req.getAnonymous(), req.getLastReplyId(), req.getImgListStr(),true);
+                req.getAnonymous(), req.getLastReplyId(), req.getImgListStr(), true);
 
         // 添加对应的notice通知
         if (req.getLastReplyId() == 0) {
@@ -81,6 +84,20 @@ public class ReplyFacade {
         } else {
             ReplyVO replyVO = replyService.getSimpleReply(req.getLastReplyId());
             noticeService.addReplyNotice(ctxt.getUid(), replyVO.getUserId(), replyVO.getReplyId(), replyId);
+        }
+
+        // 添加收藏了这个帖子的所有用户发通知
+        List<CollectionVO> collectionVOList = collectionService.queryCollectionsByResourceId(req.getPostId(), Constants.Collection.Type.POST);
+        for (CollectionVO vo : collectionVOList) {
+            // 检查是否已经有关于这个帖子和用户的未读通知，如果有的话就不插入了
+            int noticeId = noticeService.checkPostCollectionNoticeExist(vo.getUserId(), req.getPostId());
+            if (noticeId == 0) {
+                // 需要插入这个通知
+                noticeService.addPostCollctionNotice(vo.getUserId(), req.getPostId());
+            } else {
+                // 如果已经存在需要更新时间
+                noticeService.updateUpdateTime(noticeId);
+            }
         }
         resp.setReplyId(replyId);
         return resp;

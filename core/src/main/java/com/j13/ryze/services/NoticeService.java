@@ -2,10 +2,9 @@ package com.j13.ryze.services;
 
 import com.alibaba.fastjson.JSON;
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.core.Logger;
 import com.j13.ryze.daos.NoticeDAO;
 import com.j13.ryze.vos.NoticeVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,6 @@ import java.util.List;
 
 @Service
 public class NoticeService {
-    private static Logger LOG = LoggerFactory.getLogger(NoticeService.class);
 
     @Autowired
     NoticeDAO noticeDAO;
@@ -29,7 +27,7 @@ public class NoticeService {
     public void addReplyNotice(int fromUserId, int toUserId, int targetReplyId, int replyId) {
         noticeDAO.add(fromUserId, toUserId, targetReplyId, replyId, Constants.NOTICE.TYPE.REPLY_NOTICE,
                 Constants.NOTICE.STATUS.NOT_READ);
-        LOG.info("add reply notice. fromUserId={},toUserId={},replyId={},targetReplyId={}",
+        Logger.COMMON.info("add reply notice. fromUserId={},toUserId={},replyId={},targetReplyId={}",
                 new Object[]{fromUserId, toUserId, replyId, targetReplyId});
     }
 
@@ -44,18 +42,18 @@ public class NoticeService {
     public void addPostNotice(int fromUserId, int toUserId, int postId, int replyId) {
         noticeDAO.add(fromUserId, toUserId, postId, replyId, Constants.NOTICE.TYPE.POST_NOTICE,
                 Constants.NOTICE.STATUS.NOT_READ);
-        LOG.info("add post notice. fromUserId={},toUserId={},postId={},replyId={}",
+        Logger.COMMON.info("add post notice. fromUserId={},toUserId={},postId={},replyId={}",
                 new Object[]{fromUserId, toUserId, postId, replyId});
     }
 
     public void readNotice(int userId, int noticeId) {
         noticeDAO.updateStatus(userId, noticeId, Constants.NOTICE.STATUS.READED);
-        LOG.info("read notice. noticeId={}", noticeId);
+        Logger.COMMON.info("read notice. noticeId={}", noticeId);
     }
 
     public void deleteNotice(int userId, int noticeId) {
         noticeDAO.delete(userId, noticeId);
-        LOG.info("delete notice. noticeId={}", noticeId);
+        Logger.COMMON.info("delete notice. noticeId={}", noticeId);
     }
 
     public List<NoticeVO> list(int userId) {
@@ -70,7 +68,40 @@ public class NoticeService {
 
     public void readAll(int uid) {
         noticeDAO.readAll(uid);
-        LOG.info("read all notices. userId={}", uid);
+        Logger.COMMON.info("read all notices. userId={}", uid);
+    }
+
+
+    /**
+     * 查询帖子收藏通知的id，如果id为0，说明不存在这个通知
+     *
+     * @param userId
+     * @param postId
+     * @return
+     */
+    public int checkPostCollectionNoticeExist(int userId, int postId) {
+        return noticeDAO.getPostCollectionNoticeId(userId, postId);
+    }
+
+    /**
+     * 添加一个PostCollection的通知
+     * @param userId
+     * @param postId
+     */
+    public void addPostCollctionNotice(int userId, int postId) {
+        noticeDAO.add(Constants.NOTICE.POST_COLLECTION_FROM_USER_ID, userId, postId,
+                Constants.NOTICE.POST_COLLECTION_REPLY_ID, Constants.NOTICE.TYPE.POST_COLLECTION_NEW_INFO,
+                Constants.NOTICE.STATUS.NOT_READ);
+        Logger.COMMON.info("add post collection notice. toUserId={},postId={}",
+                new Object[]{userId, postId});
+    }
+
+    /**
+     * 刷新通知的更新时间
+     * @param noticeId
+     */
+    public void updateUpdateTime(int noticeId) {
+        noticeDAO.updateUpdateTime(noticeId);
     }
 }
 

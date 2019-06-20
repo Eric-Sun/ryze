@@ -132,7 +132,6 @@ public class PostDAO {
     public void delete(int postId, int userId) {
         String sql = "update post set deleted=? where id=? and user_id=?";
         j.update(sql, new Object[]{Constants.DB.DELETED, postId, userId});
-
     }
 
     public List<PostVO> recentlyOtherUserPostList(int otherUserId, int barId, int pageNum, int size) {

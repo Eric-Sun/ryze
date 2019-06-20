@@ -114,6 +114,9 @@ public class Constants {
 
 
     public static class NOTICE {
+
+        public static int POST_COLLECTION_FROM_USER_ID=-1;
+        public static int POST_COLLECTION_REPLY_ID=-1;
         public static class TYPE {
             public static int REPLY_NOTICE = 1;
             public static int POST_NOTICE = 0;
@@ -189,7 +192,7 @@ public class Constants {
         }
     }
 
-    public static class Collect {
+    public static class Collection {
         public static class Type {
             public static int POST = 0;
         }

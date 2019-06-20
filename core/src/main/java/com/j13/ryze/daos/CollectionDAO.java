@@ -17,13 +17,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class CollectDAO {
+public class CollectionDAO {
     @Autowired
     JdbcTemplate j;
 
     public int add(final int userId, final int type, final int resourceId) {
         KeyHolder holder = new GeneratedKeyHolder();
-        final String sql = "insert into collect " +
+        final String sql = "insert into collection " +
                 "(user_id,type,resource_id,createtime) values " +
                 "(?,?,?,now())";
         j.update(new PreparedStatementCreator() {
@@ -40,13 +40,13 @@ public class CollectDAO {
     }
 
     public void delete(int userId, int type, int postId) {
-        String sql = "update collect set deleted=? where type=? and resource_id=? and user_id=? and deleted=?";
+        String sql = "update collection set deleted=? where type=? and resource_id=? and user_id=? and deleted=?";
         j.update(sql, new Object[]{Constants.DB.DELETED, type, postId, userId, Constants.DB.NOT_DELETED});
     }
 
-    public List<CollectionVO> list(final int userId, int pageNum, int size) {
-        String sql = "select id,type,resource_id,createtime from collect where user_id=? and deleted=? order by createtime desc limit ?,?";
-        return j.query(sql, new Object[]{userId, Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<CollectionVO>() {
+    public List<CollectionVO> list(final int userId, int type, int pageNum, int size) {
+        String sql = "select id,type,resource_id,createtime from collection where user_id=? and type=? and deleted=? order by createtime desc limit ?,?";
+        return j.query(sql, new Object[]{userId, type, Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<CollectionVO>() {
             @Override
             public CollectionVO mapRow(ResultSet resultSet, int i) throws SQLException {
                 CollectionVO vo = new CollectionVO();
@@ -62,7 +62,24 @@ public class CollectDAO {
 
 
     public boolean checkExist(int userId, int type, int postId) {
-        String sql = "select count(1) from collect where user_id=? and deleted=? and type=? and resource_id=?";
+        String sql = "select count(1) from collection where user_id=? and deleted=? and type=? and resource_id=?";
         return j.queryForObject(sql, new Object[]{userId, Constants.DB.NOT_DELETED, type, postId}, Integer.class) == 0 ? false : true;
+    }
+
+    public List<CollectionVO> queryCollectionsByResourceId(int resourceId, int type) {
+        String sql = "select idtype,resource_id,createtime,user_id, from collection where " +
+                "resource_id=? and type=? and deleted=? ";
+        return j.query(sql, new Object[]{resourceId, type, Constants.DB.NOT_DELETED}, new RowMapper<CollectionVO>() {
+            @Override
+            public CollectionVO mapRow(ResultSet resultSet, int i) throws SQLException {
+                CollectionVO vo = new CollectionVO();
+                vo.setId(resultSet.getInt(1));
+                vo.setType(resultSet.getInt(2));
+                vo.setResourceId(resultSet.getInt(3));
+                vo.setCreatetime(resultSet.getTimestamp(4).getTime());
+                vo.setUserId(resultSet.getInt(5));
+                return vo;
+            }
+        });
     }
 }
