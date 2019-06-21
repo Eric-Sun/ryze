@@ -8,13 +8,13 @@ import java.util.List;
 public class NoticeListResp {
 
     @Parameter(desc = "")
-    private List<NoticeDetailResp> list = Lists.newLinkedList();
+    private List<Object> list = Lists.newLinkedList();
 
-    public List<NoticeDetailResp> getList() {
+    public List<Object> getList() {
         return list;
     }
 
-    public void setList(List<NoticeDetailResp> list) {
+    public void setList(List<Object> list) {
         this.list = list;
     }
 }

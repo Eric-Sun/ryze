@@ -49,7 +49,6 @@ public class NoticeFacade {
         for (NoticeVO vo : list) {
             NoticeDetailResp detailResp = new NoticeDetailResp();
 
-
             if (vo.getType() == Constants.NOTICE.TYPE.POST_NOTICE) {
                 ReplyVO triggerReplyVO = replyService.getSimpleReply(vo.getReplyId());
                 if (triggerReplyVO == null) {
@@ -83,6 +82,22 @@ public class NoticeFacade {
                 }
                 postContent.setPostUserId(postVO.getUserId());
                 detailResp.setContent(postContent);
+            } else if (vo.getType() == Constants.NOTICE.TYPE.POST_COLLECTION_NEW_INFO) {
+                int postId = vo.getTargetResourceId();
+                detailResp.setType(vo.getType());
+                PostVO postVO = postService.getSimplePost(postId);
+
+                BeanUtils.copyProperties(detailResp, vo);
+
+                NoticePostContentResp postContent = new NoticePostContentResp();
+                postContent.setPostId(postVO.getPostId());
+                postContent.setPostTitle(postVO.getTitle());
+                UserVO postUserVO = userService.getUserInfo(postVO.getUserId());
+                postContent.setPostUserAvatarImgUrl(postUserVO.getAvatarUrl());
+                postContent.setPostUserNickName(postUserVO.getNickName());
+                postContent.setPostUserId(postVO.getUserId());
+                detailResp.setContent(postContent);
+
             } else {
                 // reply notice
                 // 拷贝notice的基本信息

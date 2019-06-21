@@ -7,13 +7,17 @@ import com.j13.poppy.core.CommonResultResp;
 import com.j13.ryze.api.req.CollectionPostAddReq;
 import com.j13.ryze.api.req.CollectionPostDeleteReq;
 import com.j13.ryze.api.req.CollectionPostListReq;
+import com.j13.ryze.api.req.PostDetailResp;
 import com.j13.ryze.api.resp.CollectionPostDetailResp;
 import com.j13.ryze.api.resp.CollectionPostListResp;
 import com.j13.ryze.api.resp.PostCollectionAddResp;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.Logger;
 import com.j13.ryze.services.CollectionService;
+import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.CollectionVO;
+import com.j13.ryze.vos.UserVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +29,8 @@ public class CollectionFacade {
     @Autowired
     CollectionService collectionService;
 
+    @Autowired
+    UserService userService;
 
     @Action(name = "collection.post.add", desc = "收藏帖子")
     @NeedToken
@@ -59,7 +65,15 @@ public class CollectionFacade {
         for (CollectionVO vo : collectionVOList) {
             CollectionPostDetailResp detailResp = new CollectionPostDetailResp();
             detailResp.setCollectionId(vo.getId());
-            detailResp.setPost(vo.getResourceObject());
+
+            //
+            PostDetailResp postResp = new PostDetailResp();
+            BeanUtils.copyProperties(vo.getResourceObject(), postResp);
+            UserVO userVO = userService.getUserInfo(postResp.getUserId());
+            postResp.setUserAvatarUrl(userVO.getAvatarUrl());
+            postResp.setUserName(userVO.getNickName());
+
+            detailResp.setPost(postResp);
             resp.getList().add(detailResp);
         }
         return resp;

@@ -99,6 +99,7 @@ public class ReplyFacade {
                 noticeService.updateUpdateTime(noticeId);
             }
         }
+
         resp.setReplyId(replyId);
         return resp;
     }

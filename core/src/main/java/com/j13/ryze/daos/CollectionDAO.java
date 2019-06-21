@@ -67,7 +67,7 @@ public class CollectionDAO {
     }
 
     public List<CollectionVO> queryCollectionsByResourceId(int resourceId, int type) {
-        String sql = "select idtype,resource_id,createtime,user_id, from collection where " +
+        String sql = "select id,type,resource_id,createtime,user_id from collection where " +
                 "resource_id=? and type=? and deleted=? ";
         return j.query(sql, new Object[]{resourceId, type, Constants.DB.NOT_DELETED}, new RowMapper<CollectionVO>() {
             @Override
