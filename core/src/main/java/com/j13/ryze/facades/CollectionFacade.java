@@ -14,6 +14,7 @@ import com.j13.ryze.api.resp.PostCollectionAddResp;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.Logger;
 import com.j13.ryze.services.CollectionService;
+import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.CollectionVO;
 import com.j13.ryze.vos.UserVO;
@@ -31,6 +32,8 @@ public class CollectionFacade {
 
     @Autowired
     UserService userService;
+    @Autowired
+    PostService postService;
 
     @Action(name = "collection.post.add", desc = "收藏帖子")
     @NeedToken
@@ -72,6 +75,9 @@ public class CollectionFacade {
             UserVO userVO = userService.getUserInfo(postResp.getUserId());
             postResp.setUserAvatarUrl(userVO.getAvatarUrl());
             postResp.setUserName(userVO.getNickName());
+
+            postService.tryToCutOutContent(postResp);
+
 
             detailResp.setPost(postResp);
             resp.getList().add(detailResp);

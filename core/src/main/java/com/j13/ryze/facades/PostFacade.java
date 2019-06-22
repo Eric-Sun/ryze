@@ -59,6 +59,9 @@ public class PostFacade {
             PostDetailResp r = new PostDetailResp();
             BeanUtils.copyProperties(r, vo);
             userService.setUserInfoForPost(r, vo.getUserId());
+
+            postService.tryToCutOutContent(r);
+
             r.setReplyCount(postService.replyCount(vo.getPostId()));
             resp.getList().add(r);
 

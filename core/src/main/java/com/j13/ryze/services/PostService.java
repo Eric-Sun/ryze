@@ -1,7 +1,9 @@
 package com.j13.ryze.services;
 
 import com.alibaba.fastjson.JSON;
+import com.j13.poppy.config.PropertiesConfiguration;
 import com.j13.poppy.exceptions.CommonException;
+import com.j13.ryze.api.req.PostDetailResp;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.BarDAO;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -36,6 +39,15 @@ public class PostService {
     BarDAO barDAO;
     @Autowired
     CollectionDAO collectionDAO;
+    @Autowired
+    PropertiesConfiguration configuration;
+
+    private int POST_CONTENT_CUT_LENGTH;
+
+    @PostConstruct
+    public void init() {
+        POST_CONTENT_CUT_LENGTH = configuration.getIntValue("post.content.cut.length");
+    }
 
     public int replyCount(int postId) {
         int count = replyDAO.replyCount(postId);
@@ -124,4 +136,16 @@ public class PostService {
     }
 
 
+    /**
+     * 尝试处理post的内容过长的问题
+     */
+    public void tryToCutOutContent(PostDetailResp r) {
+        if (r.getContent().length() > POST_CONTENT_CUT_LENGTH) {
+            r.setContent(r.getContent().substring(0, POST_CONTENT_CUT_LENGTH) + "...");
+            r.setIsContentLong(1);
+        } else {
+            return;
+        }
+
+    }
 }

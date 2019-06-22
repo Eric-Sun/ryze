@@ -76,27 +76,30 @@ public class ReplyFacade {
         ReplyAddResp resp = new ReplyAddResp();
         int replyId = replyService.add(ctxt.getUid(), req.getBarId(), req.getPostId(), req.getContent(),
                 req.getAnonymous(), req.getLastReplyId(), req.getImgListStr(), true);
+        PostVO postVO = postService.getSimplePost(req.getPostId());
 
         // 添加对应的notice通知
         if (req.getLastReplyId() == 0) {
-            PostVO postVO = postService.getSimplePost(req.getPostId());
             noticeService.addPostNotice(ctxt.getUid(), postVO.getUserId(), postVO.getPostId(), replyId);
         } else {
             ReplyVO replyVO = replyService.getSimpleReply(req.getLastReplyId());
             noticeService.addReplyNotice(ctxt.getUid(), replyVO.getUserId(), replyVO.getReplyId(), replyId);
         }
 
-        // 添加收藏了这个帖子的所有用户发通知
-        List<CollectionVO> collectionVOList = collectionService.queryCollectionsByResourceId(req.getPostId(), Constants.Collection.Type.POST);
-        for (CollectionVO vo : collectionVOList) {
-            // 检查是否已经有关于这个帖子和用户的未读通知，如果有的话就不插入了
-            int noticeId = noticeService.checkPostCollectionNoticeExist(vo.getUserId(), req.getPostId());
-            if (noticeId == 0) {
-                // 需要插入这个通知
-                noticeService.addPostCollctionNotice(vo.getUserId(), req.getPostId());
-            } else {
-                // 如果已经存在需要更新时间
-                noticeService.updateUpdateTime(noticeId);
+        // 当是楼主回帖的时候才会触发收藏帖子通知的机制
+        if (postVO.getUserId() == ctxt.getUid()) {
+            // 添加收藏了这个帖子的所有用户发通知
+            List<CollectionVO> collectionVOList = collectionService.queryCollectionsByResourceId(req.getPostId(), Constants.Collection.Type.POST);
+            for (CollectionVO vo : collectionVOList) {
+                // 检查是否已经有关于这个帖子和用户的未读通知，如果有的话就不插入了
+                int noticeId = noticeService.checkPostCollectionNoticeExist(vo.getUserId(), req.getPostId());
+                if (noticeId == 0) {
+                    // 需要插入这个通知
+                    noticeService.addPostCollctionNotice(vo.getUserId(), req.getPostId());
+                } else {
+                    // 如果已经存在需要更新时间
+                    noticeService.updateUpdateTime(noticeId);
+                }
             }
         }
 

@@ -17,7 +17,7 @@ public class PostDetailResp {
     private String userName;
     @Parameter(desc = "")
     private String title;
-    @Parameter(desc = "")
+    @Parameter(desc = "如果字段超长的话会返回给前端截取后的内容")
     private String content;
     @Parameter(desc = "")
     private int status;
@@ -35,6 +35,16 @@ public class PostDetailResp {
     private List<ImgDetailResp> imgList = Lists.newLinkedList();
     @Parameter(desc = "是否已经被用户收藏，0为未收藏，1为已收藏")
     private int isCollection;
+    @Parameter(desc = "内容是否已经超长了，如果超长的话，返回给前端的将会是截取过的内容，并且此字段设置为1")
+    private int isContentLong = 0;
+
+    public int getIsContentLong() {
+        return isContentLong;
+    }
+
+    public void setIsContentLong(int isContentLong) {
+        this.isContentLong = isContentLong;
+    }
 
     public int getIsCollection() {
         return isCollection;

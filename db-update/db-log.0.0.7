@@ -1,1 +1,11 @@
 ALTER TABLE reply_notice RENAME TO notice;
+
+CREATE TABLE `collection` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `type` int(255) DEFAULT NULL,
+  `resource_id` int(11) DEFAULT NULL,
+  `createtime` datetime DEFAULT NULL,
+  `deleted` int(255) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
