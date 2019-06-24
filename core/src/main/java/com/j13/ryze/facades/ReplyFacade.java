@@ -60,6 +60,8 @@ public class ReplyFacade {
 //        List<ReplyVO> list = replyDAO.list(req.getPostId(), req.getPageNum(), req.getSize());
 //        replyService.handleReplyList(post, list, resp);
 
+        int replySize = replyService.getLevel1ReplySize(req.getPostId());
+        resp.setLevel1ReplySize(replySize);
         for (ReplyVO vo : replyList) {
             ReplyDetailResp detailResp = new ReplyDetailResp();
             BeanUtils.copyProperties(detailResp, vo);

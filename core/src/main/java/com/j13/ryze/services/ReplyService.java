@@ -240,7 +240,7 @@ public class ReplyService {
     public void updateReplyListCache(int postId) {
 
         // 尝试获取一级评论的size
-        int level1Size = replyDAO.level1ReplyCount(postId);
+        int level1Size = getLevel1ReplySize(postId);
 
         int updatePageNum = 0;
 
@@ -253,6 +253,15 @@ public class ReplyService {
         List<ReplyVO> replyVOList = rebuildReplyList(postId, updatePageNum);
         commonJedisManager.set(SIMPLE_REPLY_CATALOG, postId + ":" + updatePageNum, replyVOList);
         LOG.info("replyList cache updated. catalog={},postId={},pageNum={}", SIMPLE_REPLY_CATALOG, postId, updatePageNum);
+    }
+
+    /**
+     * 获取post的一级评论的总量
+     * @param postId
+     * @return
+     */
+    public int getLevel1ReplySize(int postId){
+        return replyDAO.level1ReplyCount(postId);
     }
 
 
