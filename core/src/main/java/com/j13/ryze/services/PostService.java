@@ -1,6 +1,7 @@
 package com.j13.ryze.services;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.j13.poppy.config.PropertiesConfiguration;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.ryze.api.req.PostDetailResp;
@@ -66,18 +67,7 @@ public class PostService {
         }
 
 
-        // imgList info
-        String imgListStr = vo.getImgListStr();
-        List<String> imgIdList = JSON.parseArray(imgListStr, String.class);
-
-        for (String imgIdStr : imgIdList) {
-            ImgVO imgVO = new ImgVO();
-            int imgId = new Integer(imgIdStr);
-            String url = imgService.getFileUrl(imgId);
-            imgVO.setUrl(url);
-            imgVO.setId(imgId);
-            vo.getImgVOList().add(imgVO);
-        }
+        parsePostImgList(vo);
         return vo;
     }
 
@@ -108,31 +98,37 @@ public class PostService {
     }
 
     public List<PostVO> list(int barId, int type, int pageNum, int size) {
-        List<PostVO> list = null;
+        List<PostVO> list = Lists.newLinkedList();
+        List<Integer> postIdList = null;
         if (type == Constants.POST_TYPE.ALL_TYPE)
-            list = postDAO.list(barId, pageNum, size);
+            postIdList = postDAO.list(barId, pageNum, size);
         else
-            list = postDAO.listByType(barId, type, pageNum, size);
-        for (PostVO vo : list) {
+            postIdList = postDAO.listByType(barId, type, pageNum, size);
+        for (Integer postId : postIdList) {
+            PostVO vo = getSimplePost(postId);
             // user info
             UserVO user = userService.getUserInfo(vo.getUserId());
             vo.setUserName(user.getNickName());
             vo.setUserAvatarUrl(user.getAvatarUrl());
 
-            // imgList info
-            String imgListStr = vo.getImgListStr();
-            List<String> imgIdList = JSON.parseArray(imgListStr, String.class);
-
-            for (String imgIdStr : imgIdList) {
-                ImgVO imgVO = new ImgVO();
-                int imgId = new Integer(imgIdStr);
-                String url = imgService.getFileUrl(imgId);
-                imgVO.setUrl(url);
-                imgVO.setId(imgId);
-                vo.getImgVOList().add(imgVO);
-            }
+            list.add(vo);
         }
         return list;
+    }
+
+    private void parsePostImgList(PostVO vo) {
+        // imgList info
+        String imgListStr = vo.getImgListStr();
+        List<String> imgIdList = JSON.parseArray(imgListStr, String.class);
+
+        for (String imgIdStr : imgIdList) {
+            ImgVO imgVO = new ImgVO();
+            int imgId = new Integer(imgIdStr);
+            String url = imgService.getFileUrl(imgId);
+            imgVO.setUrl(url);
+            imgVO.setId(imgId);
+            vo.getImgVOList().add(imgVO);
+        }
     }
 
 

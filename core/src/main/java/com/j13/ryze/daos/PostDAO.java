@@ -49,19 +49,18 @@ public class PostDAO {
     }
 
 
-    public List<PostVO> list(int barId, int pageNum, int size) {
-        String sql = "select user_id,bar_id,content,createtime,id," +
-                "reply_count,updatetime,title,status,anonymous,`type`,img_list " +
+    public List<Integer> list(int barId, int pageNum, int size) {
+        String sql = "select id " +
                 "from post where deleted=? and bar_id=? and status=? order by updatetime desc limit ?,?";
-        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, Constants.POST_STATUS.ONLINE, pageNum * size, size}, new PostRowMapper());
+        return j.queryForList(sql, new Object[]{Constants.DB.NOT_DELETED, barId, Constants.POST_STATUS.ONLINE, pageNum * size, size},
+                Integer.class);
     }
 
-    public List<PostVO> listByType(int barId, int type, int pageNum, int size) {
-        String sql = "select user_id,bar_id,content,createtime,id," +
-                "reply_count,updatetime,title,status,anonymous,`type`,img_list " +
+    public List<Integer> listByType(int barId, int type, int pageNum, int size) {
+        String sql = "select id " +
                 "from post where deleted=? and bar_id=? and status=? and `type`=? order by updatetime desc limit ?,?";
-        return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, barId, Constants.POST_STATUS.ONLINE, type,
-                pageNum * size, size}, new PostRowMapper());
+        return j.queryForList(sql, new Object[]{Constants.DB.NOT_DELETED, barId, Constants.POST_STATUS.ONLINE, type,
+                pageNum * size, size}, Integer.class);
     }
 
 
@@ -139,7 +138,7 @@ public class PostDAO {
                 "reply_count,updatetime,title,status,anonymous,`type`,img_list " +
                 "from post where user_id=? and deleted=? and bar_id=? and anonymous=? and status=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{otherUserId, Constants.DB.NOT_DELETED, barId,
-                Constants.POST_ANONYMOUS.COMMON, Constants.POST_STATUS.ONLINE,pageNum * size, size}, new PostRowMapper());
+                Constants.POST_ANONYMOUS.COMMON, Constants.POST_STATUS.ONLINE, pageNum * size, size}, new PostRowMapper());
     }
 
 

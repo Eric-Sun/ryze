@@ -29,6 +29,7 @@ public class ReplyService {
 
     private static Logger LOG = LoggerFactory.getLogger(ReplyService.class);
     private static String SIMPLE_REPLY_CATALOG = "simplReply";
+    private static String REPLY_LIST_CATALOG = "replyList";
     @Autowired
     ReplyDAO replyDAO;
     @Autowired
@@ -56,14 +57,14 @@ public class ReplyService {
     public ReplyVO getSimpleReply(int replyId) {
         ReplyVO vo = commonJedisManager.get(SIMPLE_REPLY_CATALOG, replyId, ReplyVO.class);
         if (vo == null) {
-            LOG.debug("simpleReply not find in cache. catalog={},replyId={}", SIMPLE_REPLY_CATALOG, replyId);
+            LOG.info("simpleReply not find in cache. catalog={},replyId={}", SIMPLE_REPLY_CATALOG, replyId);
             vo = replyDAO.get(replyId);
             if (vo == null)
                 return null;
             commonJedisManager.set(SIMPLE_REPLY_CATALOG, replyId, vo);
-            LOG.debug("simpleReply reset. catalog={},replyId={}", SIMPLE_REPLY_CATALOG, replyId);
+            LOG.info("simpleReply reset. catalog={},replyId={}", SIMPLE_REPLY_CATALOG, replyId);
         } else {
-            LOG.debug("simpleReply exist. catalog={},replyId={}", SIMPLE_REPLY_CATALOG, replyId);
+            LOG.info("simpleReply exist. catalog={},replyId={}", SIMPLE_REPLY_CATALOG, replyId);
         }
         return vo;
     }
@@ -92,18 +93,13 @@ public class ReplyService {
     /**
      * 处理reply.list和reply.reverseList接口中的共用方法
      *
-     * @param post
      * @param list
-     * @param resp
      */
-    public void handleReplyList(PostVO post, List<ReplyVO> list, ReplyListResp resp) {
+    public void handleReplyList(List<ReplyVO> list) {
         for (ReplyVO vo : list) {
             // 获得一级评论的数据
-            ReplyDetailResp r = new ReplyDetailResp();
-            BeanUtils.copyProperties(r, vo);
             parseImgList(vo);
-            userService.setUserInfoForReply(post.getAnonymous(), r, vo.getUserId());
-            resp.getData().add(r);
+            userService.setUserInfoForReply(vo, vo.getUserId());
 
             SizeObject replySize = new SizeObject();
             replySize.setSize(0);
@@ -112,7 +108,7 @@ public class ReplyService {
             int level2DefaultSize = 2;
             List<ReplyVO> tmpLevel2ReplyList = Lists.newLinkedList();
 
-            findAllChildReply(post.getAnonymous(), vo, level2DefaultSize, replySize, tmpLevel2ReplyList);
+            findAllChildReply(vo, level2DefaultSize, replySize, tmpLevel2ReplyList);
 
 
             Collections.sort(tmpLevel2ReplyList);
@@ -125,17 +121,15 @@ public class ReplyService {
 
 
             for (ReplyVO finalVO : tmpFinalList) {
-                Level2ReplyDetailResp level2Resp = new Level2ReplyDetailResp();
-                BeanUtils.copyProperties(level2Resp, finalVO);
-                userService.setUserInfoForReply(post.getAnonymous(), level2Resp, level2Resp.getUserId());
-                r.getReplyList().add(level2Resp);
+                userService.setUserInfoForReply(finalVO, finalVO.getUserId());
+                vo.getReplyList().add(finalVO);
             }
 
-            r.setReplySize(replySize.getSize());
+            vo.setReplySize(replySize.getSize());
         }
     }
 
-    private void findAllChildReply(int postAnonymous, ReplyVO replyVO, int level2DefaultSize,
+    private void findAllChildReply(ReplyVO replyVO, int level2DefaultSize,
                                    SizeObject replySize, List<ReplyVO> tmpLevel2ReplyList) {
         List<ReplyVO> list = replyDAO.lastReplylist(replyVO.getReplyId(), 0, level2DefaultSize);
         int listSize = replyDAO.lastReplylistSize(replyVO.getReplyId());
@@ -145,24 +139,19 @@ public class ReplyService {
             UserVO replyUser = userService.getUserInfo(replyVO.getUserId());
             vo.setLastReplyUserName(replyUser.getNickName());
             vo.setLastReplyUserId(vo.getUserId());
-            if (vo.getAnonymous() == Constants.REPLY_ANONYMOUS.ANONYMOUS ||
-                    postAnonymous == Constants.REPLY_ANONYMOUS.ANONYMOUS) {
-                vo.setLastReplyUserName(replyUser.getAnonNickName());
-            }
-
-            findAllChildReply(postAnonymous, vo, level2DefaultSize, replySize, tmpLevel2ReplyList);
+            findAllChildReply(vo, level2DefaultSize, replySize, tmpLevel2ReplyList);
 
         }
     }
 
-    public ReplyDetailResp handleReplyDetail(int replyId) {
+    public ReplyVO handleReplyDetail(int replyId) {
 
         ReplyVO vo = replyDAO.get(replyId);
         PostVO post = postService.getSimplePost(vo.getPostId());
         // 获得一级评论的数据
         ReplyDetailResp r = new ReplyDetailResp();
+        userService.setUserInfoForReply(vo, vo.getUserId());
         BeanUtils.copyProperties(r, vo);
-        userService.setUserInfoForReply(post.getAnonymous(), r, vo.getUserId());
 
         ReplyService.SizeObject replySize = new SizeObject();
         replySize.setSize(0);
@@ -171,20 +160,17 @@ public class ReplyService {
         int level2DefaultSize = 5;
         List<ReplyVO> tmpLevel2ReplyList = Lists.newLinkedList();
 
-        findAllChildReply(post.getAnonymous(), vo, level2DefaultSize, replySize, tmpLevel2ReplyList);
+        findAllChildReply(vo, level2DefaultSize, replySize, tmpLevel2ReplyList);
 
         Collections.sort(tmpLevel2ReplyList);
 
         for (ReplyVO finalVO : tmpLevel2ReplyList) {
             parseImgList(finalVO);
-            Level2ReplyDetailResp level2Resp = new Level2ReplyDetailResp();
-            BeanUtils.copyProperties(level2Resp, finalVO);
-            userService.setUserInfoForReply(post.getAnonymous(), level2Resp, level2Resp.getUserId());
-
-            r.getReplyList().add(level2Resp);
+            userService.setUserInfoForReply(finalVO, finalVO.getUserId());
+            vo.getReplyList().add(finalVO);
         }
-        r.setReplySize(replySize.getSize());
-        return r;
+        vo.setReplySize(replySize.getSize());
+        return vo;
     }
 
     /**
@@ -211,6 +197,77 @@ public class ReplyService {
         postDAO.addReplyCount(postId);
         postDAO.updateTime(postId);
         return id;
+    }
+
+    /**
+     * 用户获取某一个帖子的reply列表
+     *
+     * @param postId
+     * @param pageNum
+     * @param size
+     * @return
+     */
+    public List<ReplyVO> list(int postId, int pageNum, int size) {
+        // 尝试从缓存中获取该分页的内容，如果不存在的话
+        return getReplyListFromCache(postId, pageNum);
+    }
+
+
+    /**
+     * @param postId
+     * @param pageNum
+     * @return
+     */
+    public List<ReplyVO> getReplyListFromCache(int postId, int pageNum) {
+        List<ReplyVO> replyVOList = commonJedisManager.getArray(SIMPLE_REPLY_CATALOG, postId + ":" + pageNum, ReplyVO.class);
+        if (replyVOList == null) {
+            LOG.info("replyList cache not find in cache. catalog={},postId={},pageNum={}", SIMPLE_REPLY_CATALOG, postId, pageNum);
+            // 重新组建这个页
+            replyVOList = rebuildReplyList(postId, pageNum);
+            commonJedisManager.set(SIMPLE_REPLY_CATALOG, postId + ":" + pageNum, replyVOList);
+            LOG.info("replyList cache reset. catalog={},postId={},pageNum={}", SIMPLE_REPLY_CATALOG, postId, pageNum);
+        } else {
+            LOG.info("replyList cache exist. catalog={},postId={},pageNum={}", SIMPLE_REPLY_CATALOG, postId, pageNum);
+        }
+        return replyVOList;
+    }
+
+    /**
+     * 在添加回复的时候调用，刷新cache
+     *
+     * @param postId
+     */
+    public void updateReplyListCache(int postId) {
+
+        // 尝试获取一级评论的size
+        int level1Size = replyDAO.level1ReplyCount(postId);
+
+        int updatePageNum = 0;
+
+        if (level1Size % Constants.Reply.REPLY_SIZE_PER_PAGE == 0) {
+            updatePageNum = level1Size / Constants.Reply.REPLY_SIZE_PER_PAGE - 1;
+        } else {
+            updatePageNum = level1Size / Constants.Reply.REPLY_SIZE_PER_PAGE;
+        }
+
+        List<ReplyVO> replyVOList = rebuildReplyList(postId, updatePageNum);
+        commonJedisManager.set(SIMPLE_REPLY_CATALOG, postId + ":" + updatePageNum, replyVOList);
+        LOG.info("replyList cache updated. catalog={},postId={},pageNum={}", SIMPLE_REPLY_CATALOG, postId, updatePageNum);
+    }
+
+
+    /**
+     * 重新组建基于PostId和pageNum的replyList列表
+     * 在cache失效、新增二三级回复和删除回复的时候调用
+     *
+     * @param postId
+     * @param pageNum
+     * @return
+     */
+    private List<ReplyVO> rebuildReplyList(int postId, int pageNum) {
+        List<ReplyVO> list = replyDAO.list(postId, pageNum, Constants.Reply.REPLY_SIZE_PER_PAGE);
+        handleReplyList(list);
+        return list;
     }
 
     /**

@@ -53,9 +53,20 @@ public class ReplyFacade {
     @Action(name = "reply.list")
     public ReplyListResp list(CommandContext ctxt, ReplyListReq req) {
         ReplyListResp resp = new ReplyListResp();
-        PostVO post = postDAO.get(req.getPostId());
-        List<ReplyVO> list = replyDAO.list(req.getPostId(), req.getPageNum(), req.getSize());
-        replyService.handleReplyList(post, list, resp);
+
+        List<ReplyVO> replyList = replyService.list(req.getPostId(), req.getPageNum(), Constants.Reply.REPLY_SIZE_PER_PAGE);
+
+//        PostVO post = postDAO.get(req.getPostId());
+//        List<ReplyVO> list = replyDAO.list(req.getPostId(), req.getPageNum(), req.getSize());
+//        replyService.handleReplyList(post, list, resp);
+
+        for (ReplyVO vo : replyList) {
+            ReplyDetailResp detailResp = new ReplyDetailResp();
+            BeanUtils.copyProperties(detailResp, vo);
+            resp.getData().add(detailResp);
+        }
+
+
         return resp;
     }
 
@@ -63,9 +74,9 @@ public class ReplyFacade {
     @Action(name = "reply.reverseList")
     public ReplyListResp reverseList(CommandContext ctxt, ReplyListReq req) {
         ReplyListResp resp = new ReplyListResp();
-        PostVO post = postDAO.get(req.getPostId());
-        List<ReplyVO> list = replyDAO.reverselist(req.getPostId(), req.getPageNum(), req.getSize());
-        replyService.handleReplyList(post, list, resp);
+//        PostVO post = postDAO.get(req.getPostId());
+//        List<ReplyVO> list = replyDAO.reverselist(req.getPostId(), req.getPageNum(), req.getSize());
+//        replyService.handleReplyList(post, list, resp);
         return resp;
     }
 
@@ -76,8 +87,10 @@ public class ReplyFacade {
         ReplyAddResp resp = new ReplyAddResp();
         int replyId = replyService.add(ctxt.getUid(), req.getBarId(), req.getPostId(), req.getContent(),
                 req.getAnonymous(), req.getLastReplyId(), req.getImgListStr(), true);
+
         PostVO postVO = postService.getSimplePost(req.getPostId());
 
+        replyService.updateReplyListCache(postVO.getPostId());
         // 添加对应的notice通知
         if (req.getLastReplyId() == 0) {
             noticeService.addPostNotice(ctxt.getUid(), postVO.getUserId(), postVO.getPostId(), replyId);
@@ -118,7 +131,10 @@ public class ReplyFacade {
 
     @Action(name = "reply.detail")
     public ReplyDetailResp detail(CommandContext ctxt, ReplyDetailReq req) {
-        return replyService.handleReplyDetail(req.getReplyId());
+        ReplyDetailResp resp = new ReplyDetailResp();
+        ReplyVO vo = replyService.handleReplyDetail(req.getReplyId());
+        BeanUtils.copyProperties(resp, vo);
+        return resp;
     }
 
 }

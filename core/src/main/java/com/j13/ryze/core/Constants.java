@@ -98,6 +98,11 @@ public class Constants {
         public static int ANONYMOUS = 1;
     }
 
+    public static class Reply {
+        // 用户系统中每页的条数
+        public static int REPLY_SIZE_PER_PAGE = 100;
+    }
+
     /**
      * 帖子类型
      */
@@ -115,13 +120,14 @@ public class Constants {
 
     public static class NOTICE {
 
-        public static int POST_COLLECTION_FROM_USER_ID=-1;
-        public static int POST_COLLECTION_REPLY_ID=-1;
+        public static int POST_COLLECTION_FROM_USER_ID = -1;
+        public static int POST_COLLECTION_REPLY_ID = -1;
+
         public static class TYPE {
             public static int REPLY_NOTICE = 1;
             public static int POST_NOTICE = 0;
             // 收藏的帖子有新的消息
-            public static int POST_COLLECTION_NEW_INFO=2;
+            public static int POST_COLLECTION_NEW_INFO = 2;
         }
 
         public static class STATUS {

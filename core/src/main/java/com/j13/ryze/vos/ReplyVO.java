@@ -9,6 +9,7 @@ public class ReplyVO implements Comparable<ReplyVO> {
     private int postId;
     private int userId;
     private String userName;
+    private String userAvatarUrl;
     private int barId;
     private String content;
     private long createtime;
@@ -19,6 +20,32 @@ public class ReplyVO implements Comparable<ReplyVO> {
     private String lastReplyAnonUserName;
     private String imgListStr;
     private List<ImgVO> imgList = Lists.newLinkedList();
+    private List<ReplyVO> replyList = Lists.newLinkedList();
+    private int replySize;
+
+    public int getReplySize() {
+        return replySize;
+    }
+
+    public void setReplySize(int replySize) {
+        this.replySize = replySize;
+    }
+
+    public List<ReplyVO> getReplyList() {
+        return replyList;
+    }
+
+    public void setReplyList(List<ReplyVO> replyList) {
+        this.replyList = replyList;
+    }
+
+    public String getUserAvatarUrl() {
+        return userAvatarUrl;
+    }
+
+    public void setUserAvatarUrl(String userAvatarUrl) {
+        this.userAvatarUrl = userAvatarUrl;
+    }
 
     public List<ImgVO> getImgList() {
         return imgList;

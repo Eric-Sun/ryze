@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Component
 @Lazy
@@ -35,6 +36,13 @@ public class CommonJedisManager {
         return JSON.parseObject(value, clazz);
     }
 
+    public <T> List<T>  getArray(String catalog, Object key, Class<T> clazz) {
+        String value = jedisManager.get(PREFIX + catalog + ":" + key.toString());
+        if (value == null) {
+            return null;
+        }
+        return JSON.parseArray(value, clazz);
+    }
 
     public void set(String catalog, Object key, Object value) {
         jedisManager.set(PREFIX + catalog + ":" + key, JSON.toJSONString(value), OBJECT_EXPIRE_S);

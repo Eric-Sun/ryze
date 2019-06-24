@@ -13,8 +13,10 @@ public class ReplyAddReq {
     private int anonymous;
     @Parameter(desc = "")
     private int lastReplyId;
-    @Parameter(desc="")
+    @Parameter(desc = "")
     private String imgListStr;
+    @Parameter(desc = "")
+    private int pageNum;
 
     public String getImgListStr() {
         return imgListStr;

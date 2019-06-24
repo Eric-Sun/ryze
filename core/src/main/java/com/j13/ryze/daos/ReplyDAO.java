@@ -98,6 +98,16 @@ public class ReplyDAO {
         return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, Integer.class);
     }
 
+    /**
+     * 获取一级评论的总数量
+     * @param postId
+     * @return
+     */
+    public int level1ReplyCount(int postId) {
+        String sql = "select count(1) from reply where post_id=? and last_reply_id=0 and deleted=?";
+        return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, Integer.class);
+    }
+
 
     public List<ReplyVO> listByBarId(int barId, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id,post_id,anonymous,last_reply_id,img_list " +

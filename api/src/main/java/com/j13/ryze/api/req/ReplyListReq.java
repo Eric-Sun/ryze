@@ -7,8 +7,6 @@ public class ReplyListReq {
     private int postId;
     @Parameter(desc = "")
     private int pageNum;
-    @Parameter(desc = "")
-    private int size;
 
     public int getPageNum() {
         return pageNum;
@@ -26,11 +24,4 @@ public class ReplyListReq {
         this.postId = postId;
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
 }

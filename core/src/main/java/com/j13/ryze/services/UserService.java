@@ -11,10 +11,7 @@ import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.daos.UserLockDAO;
 import com.j13.ryze.utils.DateUtil;
-import com.j13.ryze.vos.ImgVO;
-import com.j13.ryze.vos.PostVO;
-import com.j13.ryze.vos.UserLockVO;
-import com.j13.ryze.vos.UserVO;
+import com.j13.ryze.vos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -99,38 +96,13 @@ public class UserService {
     }
 
 
-    public void setUserInfoForReply(int postAnonymous, ReplyDetailResp r, int userId) {
+    public void setUserInfoForReply(ReplyVO r, int userId) {
 
         UserVO user = getUserInfo(userId);
-        if (postAnonymous == Constants.REPLY_ANONYMOUS.COMMON) {
-            if (r.getAnonymous() == Constants.REPLY_ANONYMOUS.COMMON) {
-                r.setUserName(user.getNickName());
-                r.setUserAvatarUrl(user.getAvatarUrl());
-            } else {
-                r.setUserName(user.getAnonNickName());
-                r.setUserAvatarUrl(user.getAnonLouUrl());
-            }
-        } else {
-            r.setUserName(user.getAnonNickName());
-            r.setUserAvatarUrl(user.getAnonLouUrl());
-        }
+        r.setUserName(user.getNickName());
+        r.setUserAvatarUrl(user.getAvatarUrl());
     }
 
-    public void setUserInfoForReply(int postAnonymous, Level2ReplyDetailResp r, int userId) {
-        UserVO user = getUserInfo(userId);
-        if (postAnonymous == Constants.REPLY_ANONYMOUS.COMMON) {
-            if (r.getAnonymous() == Constants.REPLY_ANONYMOUS.COMMON) {
-                r.setUserName(user.getNickName());
-                r.setUserAvatarUrl(user.getAvatarUrl());
-            } else {
-                r.setUserName(user.getAnonNickName());
-                r.setUserAvatarUrl(user.getAnonLouUrl());
-            }
-        } else {
-            r.setUserName(user.getAnonNickName());
-            r.setUserAvatarUrl(user.getAnonLouUrl());
-        }
-    }
 
     /**
      * 查看封号时间是否到了，尝试解封
@@ -245,7 +217,7 @@ public class UserService {
             int randomUserId = randomMachineUser();
             if (randomUserId != excludeUserId) {
                 return randomUserId;
-                
+
             }
         }
     }
@@ -254,7 +226,7 @@ public class UserService {
         return userDAO.allUserCount();
     }
 
-    public int machineUserCount(){
+    public int machineUserCount() {
         return userDAO.machineUserCount();
     }
 }
