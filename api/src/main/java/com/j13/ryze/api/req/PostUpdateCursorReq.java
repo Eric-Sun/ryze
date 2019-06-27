@@ -2,11 +2,13 @@ package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class ReplyListReq {
+public class PostUpdateCursorReq {
     @Parameter(desc = "")
     private int postId;
     @Parameter(desc = "")
-    private int pageNum = -1;
+    private int cursor;
+    @Parameter(desc = "")
+    private int pageNum;
 
     public int getPageNum() {
         return pageNum;
@@ -24,4 +26,11 @@ public class ReplyListReq {
         this.postId = postId;
     }
 
+    public int getCursor() {
+        return cursor;
+    }
+
+    public void setCursor(int cursor) {
+        this.cursor = cursor;
+    }
 }

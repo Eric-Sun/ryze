@@ -1,19 +1,22 @@
 package com.j13.ryze.api.resp;
 
 import com.google.common.collect.Lists;
+import com.j13.poppy.anno.Parameter;
 
 import java.util.List;
 
 public class ReplyListResp {
-    private List<ReplyDetailResp> data  = Lists.newLinkedList();
-    private int level1ReplySize ;
+    @Parameter(desc = "")
+    private List<ReplyDetailResp> data = Lists.newLinkedList();
+    @Parameter(desc = "当前已经记录的cursor")
+    private PostCursorDetailResp cursorInfo;
 
-    public int getLevel1ReplySize() {
-        return level1ReplySize;
+    public PostCursorDetailResp getCursorInfo() {
+        return cursorInfo;
     }
 
-    public void setLevel1ReplySize(int level1ReplySize) {
-        this.level1ReplySize = level1ReplySize;
+    public void setCursorInfo(PostCursorDetailResp cursorInfo) {
+        this.cursorInfo = cursorInfo;
     }
 
     public List<ReplyDetailResp> getData() {

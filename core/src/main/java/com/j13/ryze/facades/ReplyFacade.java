@@ -14,10 +14,7 @@ import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.services.*;
-import com.j13.ryze.vos.CollectionVO;
-import com.j13.ryze.vos.PostVO;
-import com.j13.ryze.vos.ReplyVO;
-import com.j13.ryze.vos.UserVO;
+import com.j13.ryze.vos.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,19 +46,29 @@ public class ReplyFacade {
     IAcsClientService iAcsClientService;
     @Autowired
     CollectionService collectionService;
+    @Autowired
+    PostCursorService postCursorService;
 
     @Action(name = "reply.list")
+    @NeedToken
     public ReplyListResp list(CommandContext ctxt, ReplyListReq req) {
         ReplyListResp resp = new ReplyListResp();
+        PostCursorDetailResp cursorResp = new PostCursorDetailResp();
+        List<ReplyVO> replyList = null;
+        if (req.getPageNum() == -1) {
+            PostCursorVO postCursorVO = postCursorService.getCursor(ctxt.getUid(), req.getPostId());
+            BeanUtils.copyProperties(cursorResp, postCursorVO);
+            resp.setCursorInfo(cursorResp);
+            replyList = replyService.list(req.getPostId(), postCursorVO.getPageNum(), Constants.Reply.REPLY_SIZE_PER_PAGE);
+        } else {
+            PostCursorVO postCursorVO = new PostCursorVO();
+            postCursorVO.setPageNum(req.getPageNum());
+            postCursorVO.setCursor(0);
+            BeanUtils.copyProperties(cursorResp, postCursorVO);
+            resp.setCursorInfo(cursorResp);
+            replyList = replyService.list(req.getPostId(), req.getPageNum(), Constants.Reply.REPLY_SIZE_PER_PAGE);
+        }
 
-        List<ReplyVO> replyList = replyService.list(req.getPostId(), req.getPageNum(), Constants.Reply.REPLY_SIZE_PER_PAGE);
-
-//        PostVO post = postDAO.get(req.getPostId());
-//        List<ReplyVO> list = replyDAO.list(req.getPostId(), req.getPageNum(), req.getSize());
-//        replyService.handleReplyList(post, list, resp);
-
-        int replySize = replyService.getLevel1ReplySize(req.getPostId());
-        resp.setLevel1ReplySize(replySize);
         for (ReplyVO vo : replyList) {
             ReplyDetailResp detailResp = new ReplyDetailResp();
             BeanUtils.copyProperties(detailResp, vo);

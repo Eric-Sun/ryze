@@ -2,8 +2,8 @@ package com.j13.ryze.api.req;
 
 import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Parameter;
-import com.j13.ryze.api.resp.AdminLevelInfoResp;
 import com.j13.ryze.api.resp.AdminReplyDetailResp;
+import com.j13.ryze.api.resp.PostCursorDetailResp;
 import com.j13.ryze.api.resp.ImgDetailResp;
 
 import java.util.List;
@@ -37,6 +37,16 @@ public class PostDetailResp {
     private int isCollection;
     @Parameter(desc = "内容是否已经超长了，如果超长的话，返回给前端的将会是截取过的内容，并且此字段设置为1")
     private int isContentLong = 0;
+    @Parameter(desc = "一级评论的数量，用来算分页")
+    private int level1ReplySize;
+
+    public int getLevel1ReplySize() {
+        return level1ReplySize;
+    }
+
+    public void setLevel1ReplySize(int level1ReplySize) {
+        this.level1ReplySize = level1ReplySize;
+    }
 
     public int getIsContentLong() {
         return isContentLong;

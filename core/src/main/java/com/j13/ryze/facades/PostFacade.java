@@ -13,6 +13,7 @@ import com.j13.ryze.core.Logger;
 import com.j13.ryze.daos.*;
 import com.j13.ryze.services.*;
 import com.j13.ryze.vos.ImgVO;
+import com.j13.ryze.vos.PostCursorVO;
 import com.j13.ryze.vos.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,10 @@ public class PostFacade {
     IAcsClientService iAcsClientService;
     @Autowired
     CollectionService collectionService;
+    @Autowired
+    ReplyService replyService;
+    @Autowired
+    PostCursorService postCursorService;
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
     @NeedToken
@@ -92,6 +97,10 @@ public class PostFacade {
         BeanUtils.copyProperties(resp, vo);
         userService.setUserInfoForPost(resp, vo.getUserId());
 
+        int replySize = replyService.getLevel1ReplySize(req.getPostId());
+        resp.setLevel1ReplySize(replySize);
+
+
         boolean isCollection = collectionService.checkCollectionExisted(userId, req.getPostId());
         resp.setIsCollection(isCollection == true ? 1 : 0);
 
@@ -103,6 +112,13 @@ public class PostFacade {
         }
 
         return resp;
+    }
+
+    @Action(name = "post.updateCursor")
+    @NeedToken
+    public CommonResultResp updateCursor(CommandContext ctxt, PostUpdateCursorReq req) {
+        postCursorService.updateCursor(ctxt.getUid(), req.getPostId(), req.getCursor(), req.getPageNum());
+        return CommonResultResp.success();
     }
 
     @Action(name = "post.delete")
@@ -190,7 +206,6 @@ public class PostFacade {
         resp.setPostId(postId);
         return resp;
     }
-
 
 
 }
