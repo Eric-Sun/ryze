@@ -144,7 +144,7 @@ public class ReplyService {
         }
     }
 
-    public ReplyVO handleReplyDetail(int replyId) {
+    public ReplyVO handleReplyDetail(int replyId, int pageNum, int size) {
 
         ReplyVO vo = replyDAO.get(replyId);
         PostVO post = postService.getSimplePost(vo.getPostId());
@@ -157,7 +157,7 @@ public class ReplyService {
         replySize.setSize(0);
         // 二级评论默认显示2个，其余显示一个总数，搜索的时候用这个参数作为size，
         // 组成集合之后通过updatetime排序之后按照这个参数取值
-        int level2DefaultSize = 5;
+        int level2DefaultSize = 100;
         List<ReplyVO> tmpLevel2ReplyList = Lists.newLinkedList();
 
         findAllChildReply(vo, level2DefaultSize, replySize, tmpLevel2ReplyList);
@@ -257,10 +257,11 @@ public class ReplyService {
 
     /**
      * 获取post的一级评论的总量
+     *
      * @param postId
      * @return
      */
-    public int getLevel1ReplySize(int postId){
+    public int getLevel1ReplySize(int postId) {
         return replyDAO.level1ReplyCount(postId);
     }
 

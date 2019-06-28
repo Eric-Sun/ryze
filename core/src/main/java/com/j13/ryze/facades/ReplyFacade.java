@@ -146,7 +146,7 @@ public class ReplyFacade {
     @Action(name = "reply.detail")
     public ReplyDetailResp detail(CommandContext ctxt, ReplyDetailReq req) {
         ReplyDetailResp resp = new ReplyDetailResp();
-        ReplyVO vo = replyService.handleReplyDetail(req.getReplyId());
+        ReplyVO vo = replyService.handleReplyDetail(req.getReplyId(), req.getPageNum(), req.getSize());
         BeanUtils.copyProperties(resp, vo);
         return resp;
     }
