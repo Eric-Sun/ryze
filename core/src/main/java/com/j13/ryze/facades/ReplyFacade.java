@@ -54,6 +54,7 @@ public class ReplyFacade {
     public ReplyListResp list(CommandContext ctxt, ReplyListReq req) {
         ReplyListResp resp = new ReplyListResp();
         PostCursorDetailResp cursorResp = new PostCursorDetailResp();
+        PostVO postVO = postService.getSimplePost(req.getPostId());
         List<ReplyVO> replyList = null;
         if (req.getPageNum() == -1) {
             PostCursorVO postCursorVO = postCursorService.getCursor(ctxt.getUid(), req.getPostId());
@@ -71,6 +72,10 @@ public class ReplyFacade {
 
         for (ReplyVO vo : replyList) {
             ReplyDetailResp detailResp = new ReplyDetailResp();
+            if (postVO.getUserId() != vo.getUserId()) {
+                //替换抓取的全角空格
+                vo.setContent(vo.getContent().replace((char) 12288, '\0'));
+            }
             BeanUtils.copyProperties(detailResp, vo);
             resp.getData().add(detailResp);
         }
