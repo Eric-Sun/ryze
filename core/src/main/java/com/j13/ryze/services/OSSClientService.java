@@ -33,7 +33,7 @@ public class OSSClientService {
     private String accessKeySecret = null;
     private String bucketName = null;
 
-    private static long EXPIRE_TIME = 3600l * 1000;
+    private static long EXPIRE_TIME = 3600l * 300 * 1000;
 
     @Autowired
     PropertiesConfiguration propertiesConfiguration;
@@ -74,6 +74,7 @@ public class OSSClientService {
 
     /**
      * 存储图片，只能存储jpg格式的
+     *
      * @param is
      * @param type
      * @return
