@@ -99,10 +99,11 @@ public class NoticeDAO {
     }
 
     public int getPostCollectionNoticeId(int userId, int postId) {
-        String sql = "select id from notice where to_user_id=? and target_resource_id=? and status=? and deleted=?";
+        String sql = "select id from notice where to_user_id=? and target_resource_id=? and status=? and deleted=? and type=?";
         int noticeId = 0;
         try {
-            noticeId = j.queryForObject(sql, new Object[]{userId, postId, Constants.NOTICE.STATUS.NOT_READ, Constants.DB.NOT_DELETED}, Integer.class);
+            noticeId = j.queryForObject(sql, new Object[]{userId, postId, Constants.NOTICE.STATUS.NOT_READ,
+                    Constants.DB.NOT_DELETED, Constants.NOTICE.TYPE.POST_COLLECTION_NEW_INFO}, Integer.class);
         } catch (DataAccessException e) {
             return noticeId;
         }

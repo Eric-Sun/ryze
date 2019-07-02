@@ -7,19 +7,14 @@ import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.NoticeListReq;
 import com.j13.ryze.api.req.NoticeReadAllReq;
-import com.j13.ryze.api.resp.NoticeDetailResp;
-import com.j13.ryze.api.resp.NoticeListResp;
-import com.j13.ryze.api.resp.NoticePostContentResp;
-import com.j13.ryze.api.resp.NoticeReplyContentResp;
+import com.j13.ryze.api.req.PostDetailResp;
+import com.j13.ryze.api.resp.*;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.services.NoticeService;
 import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.ReplyService;
 import com.j13.ryze.services.UserService;
-import com.j13.ryze.vos.NoticeVO;
-import com.j13.ryze.vos.PostVO;
-import com.j13.ryze.vos.ReplyVO;
-import com.j13.ryze.vos.UserVO;
+import com.j13.ryze.vos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -87,16 +82,18 @@ public class NoticeFacade {
                 detailResp.setType(vo.getType());
                 PostVO postVO = postService.getSimplePost(postId);
 
-                BeanUtils.copyProperties(detailResp, vo);
+                PostDetailResp postDetailResp = new PostDetailResp();
 
-                NoticePostContentResp postContent = new NoticePostContentResp();
-                postContent.setPostId(postVO.getPostId());
-                postContent.setPostTitle(postVO.getTitle());
-                UserVO postUserVO = userService.getUserInfo(postVO.getUserId());
-                postContent.setPostUserAvatarImgUrl(postUserVO.getAvatarUrl());
-                postContent.setPostUserNickName(postUserVO.getNickName());
-                postContent.setPostUserId(postVO.getUserId());
-                detailResp.setContent(postContent);
+                BeanUtils.copyProperties(postDetailResp, postVO);
+                userService.setUserInfoForPost(postDetailResp, postVO.getUserId());
+
+                for (ImgVO imgVO : postVO.getImgVOList()) {
+                    ImgDetailResp imgResp = new ImgDetailResp();
+                    imgResp.setImgId(imgVO.getId());
+                    imgResp.setUrl(imgVO.getUrl());
+                    postDetailResp.getImgList().add(imgResp);
+                }
+                detailResp.setContent(postDetailResp);
 
             } else {
                 // reply notice

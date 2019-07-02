@@ -33,6 +33,7 @@ public class OSSClientService {
     private String accessKeySecret = null;
     private String bucketName = null;
 
+    // 300天
     private static long EXPIRE_TIME = 3600l * 300 * 1000;
 
     @Autowired
