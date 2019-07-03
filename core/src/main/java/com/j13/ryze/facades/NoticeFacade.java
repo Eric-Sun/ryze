@@ -81,6 +81,7 @@ public class NoticeFacade {
                 int postId = vo.getTargetResourceId();
                 detailResp.setType(vo.getType());
                 PostVO postVO = postService.getSimplePost(postId);
+                detailResp.setStatus(vo.getStatus());
 
                 PostDetailResp postDetailResp = new PostDetailResp();
 
