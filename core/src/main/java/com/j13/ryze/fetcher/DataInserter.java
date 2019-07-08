@@ -5,6 +5,7 @@ import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.Logger;
 import com.j13.ryze.daos.FPostDAO;
 import com.j13.ryze.daos.FReplyDAO;
+import com.j13.ryze.services.NoticeService;
 import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.ReplyService;
 import com.j13.ryze.services.UserService;
@@ -31,12 +32,14 @@ public class DataInserter {
     UserService userService;
     @Autowired
     PropertiesConfiguration config;
+    @Autowired
+    NoticeService noticeService;
 
     private Random random = new Random();
-    int ReplyInsertPerPostInsertSize ;
+    int ReplyInsertPerPostInsertSize;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         ReplyInsertPerPostInsertSize = config.getIntValue("job.replyInsert.perPost.replySize");
     }
 
@@ -85,6 +88,11 @@ public class DataInserter {
                             Constants.REPLY_ANONYMOUS.COMMON, 0, "[]", false);
                     Logger.INSERTER.info("insert post from fReplyId={} to replyId={} on postId={} ", replyVO.getId(), replyId, vo.getPostId(), 0);
 
+                    // 一级回复需要添加notice
+                    if (replyVO.getIsAuhtor() == 1) {
+                        noticeService.sendPostNotices(vo.getPostId());
+                    }
+
                 } else {
                     // 查找对应的lastFReplyId对应的replyId
                     int lastReplyId = fReplyDAO.findReplyIdFromFReplyId(replyVO.getLastFReplyId());
@@ -95,7 +103,14 @@ public class DataInserter {
 
                 // 回补数据状态
                 fReplyDAO.updateStatusAndReplyId(replyVO.getId(), Constants.Fetcher.Status.PUSHED, replyId);
+                // 每次都刷，避免插入的数据是98，99，100，101条之类的只刷101的第二页
+                try {
+                    replyService.updateReplyListCache(vo.getPostId());
+                } catch (Exception e) {
+                    Logger.INSERTER.error(e.getMessage(), e);
+                }
             }
+
         }
         Logger.INSERTER.info("Reply inserter end.");
     }

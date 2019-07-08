@@ -12,10 +12,7 @@ import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.facades.ReplyFacade;
 import com.j13.ryze.utils.CommonJedisManager;
-import com.j13.ryze.vos.ImgVO;
-import com.j13.ryze.vos.PostVO;
-import com.j13.ryze.vos.ReplyVO;
-import com.j13.ryze.vos.UserVO;
+import com.j13.ryze.vos.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -233,7 +230,7 @@ public class ReplyService {
     }
 
     /**
-     * 在添加回复的时候调用，刷新cache
+     * 在添加回复的时候调用，刷新cache，刷新的是最后一个页的其他的不变
      *
      * @param postId
      */
@@ -294,6 +291,9 @@ public class ReplyService {
             this.size = size;
         }
     }
+
+
+
 
 
 }

@@ -1,9 +1,11 @@
 package com.j13.ryze.services;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.Logger;
 import com.j13.ryze.daos.NoticeDAO;
+import com.j13.ryze.vos.CollectionVO;
 import com.j13.ryze.vos.NoticeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class NoticeService {
 
     @Autowired
     NoticeDAO noticeDAO;
+    @Autowired
+    CollectionService collectionService;
 
 
     /**
@@ -85,6 +89,7 @@ public class NoticeService {
 
     /**
      * 添加一个PostCollection的通知
+     *
      * @param userId
      * @param postId
      */
@@ -98,10 +103,36 @@ public class NoticeService {
 
     /**
      * 刷新通知的更新时间
+     *
      * @param noticeId
      */
     public void updateUpdateTime(int noticeId) {
         noticeDAO.updateUpdateTime(noticeId);
+    }
+
+
+    /**
+     * 给关注这个post的所有用户发送通知
+     *
+     * @param postId
+     */
+    public void sendPostNotices(int postId) {
+        List<Integer> userIdList = Lists.newLinkedList();
+        // 添加收藏了这个帖子的所有用户发通知
+        List<CollectionVO> collectionVOList = collectionService.queryCollectionsByResourceId(postId, Constants.Collection.Type.POST);
+        for (CollectionVO vo : collectionVOList) {
+            // 检查是否已经有关于这个帖子和用户的未读通知，如果有的话就不插入了
+            int noticeId = checkPostCollectionNoticeExist(vo.getUserId(), postId);
+            if (noticeId == 0) {
+                // 需要插入这个通知
+                addPostCollctionNotice(vo.getUserId(), postId);
+            } else {
+                // 如果已经存在需要更新时间
+                updateUpdateTime(noticeId);
+            }
+            userIdList.add(vo.getUserId());
+        }
+        Logger.COMMON.info("send post notices. postId={},userIdList={}", postId, JSON.toJSONString(userIdList));
     }
 }
 
