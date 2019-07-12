@@ -188,6 +188,11 @@ public class PostFacade {
             throw new CommonException(ErrorCode.Common.CONTENT_ILLEGAL);
         }
 
+        boolean c = iAcsClientService.scan(req.getTitle());
+        if (c == false) {
+            throw new CommonException(ErrorCode.Common.CONTENT_ILLEGAL);
+        }
+
         PostAddResp resp = new PostAddResp();
 //        if (!barDAO.exist(req.getBarId())) {
 //            throw new CommonException(ErrorCode.Bar.NOT_EXIST);
