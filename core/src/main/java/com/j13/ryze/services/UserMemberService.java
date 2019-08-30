@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class UserMemberService {
     private static Logger LOG = LoggerFactory.getLogger(UserMemberService.class);
@@ -45,6 +47,7 @@ public class UserMemberService {
             userMemberDAO.updateUserMember(userId, level, expiretime);
         }
     }
+
 
 
 

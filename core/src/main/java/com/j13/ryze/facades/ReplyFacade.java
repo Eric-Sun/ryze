@@ -50,7 +50,6 @@ public class ReplyFacade {
     PostCursorService postCursorService;
 
     @Action(name = "reply.list")
-    @NeedToken
     public ReplyListResp list(CommandContext ctxt, ReplyListReq req) {
         ReplyListResp resp = new ReplyListResp();
         PostCursorDetailResp cursorResp = new PostCursorDetailResp();

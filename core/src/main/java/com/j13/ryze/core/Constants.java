@@ -62,6 +62,7 @@ public class Constants {
     public static class Wechat {
         public static String APPID = "wxaa4fd4f99543a61a";
         public static String AppSecret = "52af06754a9b58a9b6bb14d45f198d4f";
+        public static String MchId = "1536233111";
     }
 
 
@@ -138,6 +139,13 @@ public class Constants {
     }
 
     public static class UER_MEMBER {
+    }
+
+    public static class PAYMENT {
+        public static String TIME_FORMAT="yyyyMMddHHmmss";
+        public static int TIME_EXPIRE_DAY=1;
+        public static String URL_NOTIFY="";
+
     }
 
 

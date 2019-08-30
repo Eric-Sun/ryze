@@ -51,6 +51,11 @@ public class WechatInfoDAO {
         }
     }
 
+    public String getOpenId(int userId) {
+        String sql = "select open_id from wechat_info where user_id=?";
+        return j.queryForObject(sql, new Object[]{userId}, String.class);
+
+    }
 
 }
 

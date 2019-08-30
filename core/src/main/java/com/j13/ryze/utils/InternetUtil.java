@@ -23,7 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.*;
 import java.nio.charset.Charset;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -143,6 +145,39 @@ public class InternetUtil {
 
     public static String post(String url, RequestParams p) {
         return InternetUtil.post(url, p.end());
+    }
+
+
+    /**
+     * 获取外网ip
+     * @return
+     */
+    public static String getLocalIp() {
+        try {
+            Enumeration<NetworkInterface> networks = NetworkInterface.getNetworkInterfaces();
+            while (networks.hasMoreElements()) {
+                Enumeration<InetAddress> addrs = networks.nextElement().getInetAddresses();
+                while (addrs.hasMoreElements()) {
+                    InetAddress ip = addrs.nextElement();
+                    if (ip instanceof Inet4Address && !ip.isSiteLocalAddress() && !ip.isLoopbackAddress()) {
+                        // 从网卡获取外网IP
+                        return ip.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            // 外网IP不存在，那么获取内网IP
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return "";
     }
 
 
