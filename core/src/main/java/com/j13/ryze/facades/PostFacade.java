@@ -75,9 +75,7 @@ public class PostFacade {
                 imgResp.setUrl(imgVO.getUrl());
                 r.getImgList().add(imgResp);
             }
-
         }
-
         // 查看notice数量，给tabbar红点
         if (ctxt.getUid() != 0) {
             int noticeSize = noticeService.listNotReadSize(ctxt.getUid());
