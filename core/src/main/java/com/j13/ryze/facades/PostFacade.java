@@ -51,6 +51,7 @@ public class PostFacade {
     PostCursorService postCursorService;
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
+    @NeedToken
     public PostListResp list(CommandContext ctxt, PostListReq req) {
         // 因为这个是首页，尝试判断用户是否是被锁用户，如果是的话尝试解锁
         int requestUserId = ctxt.getUid();
@@ -86,6 +87,7 @@ public class PostFacade {
     }
 
     @Action(name = "post.detail", desc = "post detail and replies")
+    @NeedToken
     public PostDetailResp detail(CommandContext ctxt, PostDetailReq req) {
         int userId = ctxt.getUid();
         PostDetailResp resp = new PostDetailResp();
