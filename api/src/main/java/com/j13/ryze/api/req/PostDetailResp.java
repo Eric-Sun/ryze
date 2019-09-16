@@ -34,7 +34,7 @@ public class PostDetailResp {
     @Parameter(desc = "")
     private List<ImgDetailResp> imgList = Lists.newLinkedList();
     @Parameter(desc = "是否已经被用户收藏，0为未收藏，1为已收藏")
-    private int isCollection;
+    private int isCollection=0;
     @Parameter(desc = "内容是否已经超长了，如果超长的话，返回给前端的将会是截取过的内容，并且此字段设置为1")
     private int isContentLong = 0;
     @Parameter(desc = "一级评论的数量，用来算分页")

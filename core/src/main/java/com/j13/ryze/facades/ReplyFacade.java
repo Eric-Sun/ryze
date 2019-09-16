@@ -3,6 +3,7 @@ package com.j13.ryze.facades;
 import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.anno.NeedToken;
+import com.j13.poppy.anno.TokenExpireDontThrow16;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.exceptions.CommonException;
@@ -51,12 +52,14 @@ public class ReplyFacade {
 
     @Action(name = "reply.list")
     @NeedToken
+    @TokenExpireDontThrow16
     public ReplyListResp list(CommandContext ctxt, ReplyListReq req) {
         ReplyListResp resp = new ReplyListResp();
         PostCursorDetailResp cursorResp = new PostCursorDetailResp();
         PostVO postVO = postService.getSimplePost(req.getPostId());
         List<ReplyVO> replyList = null;
         if (req.getPageNum() == -1) {
+            // 意味着从来没有看过这篇文章，需要获取cursor
             PostCursorVO postCursorVO = postCursorService.getCursor(ctxt.getUid(), req.getPostId());
             BeanUtils.copyProperties(cursorResp, postCursorVO);
             resp.setCursorInfo(cursorResp);

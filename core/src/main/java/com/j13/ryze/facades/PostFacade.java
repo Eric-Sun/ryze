@@ -2,6 +2,7 @@ package com.j13.ryze.facades;
 
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.anno.NeedToken;
+import com.j13.poppy.anno.TokenExpireDontThrow16;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.exceptions.CommonException;
@@ -52,6 +53,7 @@ public class PostFacade {
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
     @NeedToken
+    @TokenExpireDontThrow16
     public PostListResp list(CommandContext ctxt, PostListReq req) {
         // 因为这个是首页，尝试判断用户是否是被锁用户，如果是的话尝试解锁
         int requestUserId = ctxt.getUid();
@@ -88,6 +90,7 @@ public class PostFacade {
 
     @Action(name = "post.detail", desc = "post detail and replies")
     @NeedToken
+    @TokenExpireDontThrow16
     public PostDetailResp detail(CommandContext ctxt, PostDetailReq req) {
         int userId = ctxt.getUid();
         PostDetailResp resp = new PostDetailResp();
@@ -98,9 +101,10 @@ public class PostFacade {
         int replySize = replyService.getLevel1ReplySize(req.getPostId());
         resp.setLevel1ReplySize(replySize);
 
-
-        boolean isCollection = collectionService.checkCollectionExisted(userId, req.getPostId());
-        resp.setIsCollection(isCollection == true ? 1 : 0);
+        if(userId!=0) {
+            boolean isCollection = collectionService.checkCollectionExisted(userId, req.getPostId());
+            resp.setIsCollection(isCollection == true ? 1 : 0);
+        }
 
         for (ImgVO imgVO : vo.getImgVOList()) {
             ImgDetailResp imgResp = new ImgDetailResp();
