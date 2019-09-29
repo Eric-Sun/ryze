@@ -50,6 +50,8 @@ public class PostFacade {
     ReplyService replyService;
     @Autowired
     PostCursorService postCursorService;
+    @Autowired
+    WechatAPIService wechatAPIService;
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
     @NeedToken
@@ -101,7 +103,7 @@ public class PostFacade {
         int replySize = replyService.getLevel1ReplySize(req.getPostId());
         resp.setLevel1ReplySize(replySize);
 
-        if(userId!=0) {
+        if (userId != 0) {
             boolean isCollection = collectionService.checkCollectionExisted(userId, req.getPostId());
             resp.setIsCollection(isCollection == true ? 1 : 0);
         }
@@ -185,12 +187,15 @@ public class PostFacade {
     @NeedToken
     public PostAddResp add(CommandContext ctxt, PostAddReq req) {
 
-        boolean b = iAcsClientService.scan(req.getContent());
+//        boolean b = iAcsClientService.scan(req.getContent());
+        boolean b = wechatAPIService.msgCheck(req.getContent());
+
         if (b == false) {
             throw new CommonException(ErrorCode.Common.CONTENT_ILLEGAL);
         }
 
-        boolean c = iAcsClientService.scan(req.getTitle());
+//        boolean c = iAcsClientService.scan(req.getTitle());
+        boolean c = wechatAPIService.msgCheck(req.getTitle());
         if (c == false) {
             throw new CommonException(ErrorCode.Common.CONTENT_ILLEGAL);
         }

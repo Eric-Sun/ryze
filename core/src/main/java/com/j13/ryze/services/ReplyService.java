@@ -43,6 +43,8 @@ public class ReplyService {
     IAcsClientService iAcsClientService;
     @Autowired
     PostDAO postDAO;
+    @Autowired
+    WechatAPIService wechatAPIService;
 
 
     /**
@@ -184,7 +186,8 @@ public class ReplyService {
      */
     public int add(int userId, int barId, int postId, String content, int anonymous, int lastReplyId, String imgListStr, boolean isScan) {
         if (isScan) {
-            boolean b = iAcsClientService.scan(content);
+//            boolean b = iAcsClientService.scan(content);
+            boolean b = wechatAPIService.msgCheck(content);
             if (b == false) {
                 throw new CommonException(ErrorCode.Common.CONTENT_ILLEGAL);
             }
@@ -291,9 +294,6 @@ public class ReplyService {
             this.size = size;
         }
     }
-
-
-
 
 
 }

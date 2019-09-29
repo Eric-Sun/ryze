@@ -48,4 +48,12 @@ public class CommonJedisManager {
         jedisManager.set(PREFIX + catalog + ":" + key, JSON.toJSONString(value), OBJECT_EXPIRE_S);
     }
 
+    public void setAccessToken(String token,int expireS){
+        jedisManager.set(PREFIX +"accessToken",token, expireS);
+    }
+
+    public String getAccessToken(){
+        return jedisManager.get(PREFIX+"accessToken");
+    }
+
 }
