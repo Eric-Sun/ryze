@@ -114,4 +114,10 @@ public class NoticeDAO {
         String sql = "update notice set updatetime=now() where id=? ";
         j.update(sql, new Object[]{noticeId});
     }
+
+    public void deleteOldNotice(int userId, int postId, int type) {
+        String sql = "update notice set deleted=? where target_resource_id=? and to_user_id=? and type=?";
+        j.update(sql, new Object[]{Constants.DB.DELETED, postId, userId, type});
+    }
+
 }

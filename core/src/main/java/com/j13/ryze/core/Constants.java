@@ -125,7 +125,9 @@ public class Constants {
         public static int POST_COLLECTION_REPLY_ID = -1;
 
         public static class TYPE {
+            // 基于用户回复，有人给用户的回复进行回复的时候的通知
             public static int REPLY_NOTICE = 1;
+            // 基于用户发的帖子，有人回复帖子给发帖人的回复
             public static int POST_NOTICE = 0;
             // 收藏的帖子有新的消息
             public static int POST_COLLECTION_NEW_INFO = 2;

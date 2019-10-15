@@ -7,12 +7,8 @@ import com.j13.poppy.anno.Action;
 import com.j13.poppy.anno.NeedToken;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
-import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
-import com.j13.ryze.api.req.DefaultReq;
-import com.j13.ryze.api.req.UserCheckTokenReq;
-import com.j13.ryze.api.req.UserOtherUserInfoReq;
-import com.j13.ryze.api.req.WechatLoginRequest;
+import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.UserInfoResp;
 import com.j13.ryze.api.resp.WechatLoginResponse;
 import com.j13.ryze.core.Constants;
@@ -27,7 +23,6 @@ import com.j13.ryze.vos.UserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -150,6 +145,18 @@ public class UserFacade {
         BeanUtils.copyProperties(resp, userVO);
         return resp;
     }
+
+
+    @Action(name = "user.modifyNameAndAvatar")
+    @NeedToken
+    public CommonResultResp modifyNameAndAvatar(CommandContext ctxt, UserModifyNameAndAvatarReq req) {
+
+
+
+        return CommonResultResp.success();
+    }
+
+
 
 }
 

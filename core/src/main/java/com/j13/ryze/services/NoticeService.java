@@ -101,6 +101,18 @@ public class NoticeService {
                 new Object[]{userId, postId});
     }
 
+
+    /**
+     * 删除老的相关这个post的notice
+     *
+     * @param userId
+     * @param postId
+     */
+    public void deleteOldNotice(int userId, int postId) {
+        noticeDAO.deleteOldNotice(userId, postId, Constants.NOTICE.TYPE.POST_COLLECTION_NEW_INFO);
+        Logger.COMMON.info("deleted old collection notice. userId={},postId={}", userId, postId);
+    }
+
     /**
      * 刷新通知的更新时间
      *
@@ -117,6 +129,8 @@ public class NoticeService {
      * @param postId
      */
     public void sendPostNotices(int postId) {
+        // 当插入一个新的通知的时候，之前存在该PostId的通知会被删除掉
+
         List<Integer> userIdList = Lists.newLinkedList();
         // 添加收藏了这个帖子的所有用户发通知
         List<CollectionVO> collectionVOList = collectionService.queryCollectionsByResourceId(postId, Constants.Collection.Type.POST);
@@ -124,6 +138,8 @@ public class NoticeService {
             // 检查是否已经有关于这个帖子和用户的未读通知，如果有的话就不插入了
             int noticeId = checkPostCollectionNoticeExist(vo.getUserId(), postId);
             if (noticeId == 0) {
+                // 先删除之前的遗留的Post
+                deleteOldNotice(vo.getUserId(), postId);
                 // 需要插入这个通知
                 addPostCollctionNotice(vo.getUserId(), postId);
             } else {

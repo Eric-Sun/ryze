@@ -110,13 +110,16 @@ public class ReplyFacade {
         replyService.updateReplyListCache(postVO.getPostId());
         // 添加对应的notice通知
         if (req.getLastReplyId() == 0) {
+            // 当出现一级回复的时候，给发帖人发通知，为Post通知
             noticeService.addPostNotice(ctxt.getUid(), postVO.getUserId(), postVO.getPostId(), replyId);
         } else {
+            // 当出现二级回复的时候，给回复的人发通知，为reply通知
             ReplyVO replyVO = replyService.getSimpleReply(req.getLastReplyId());
             noticeService.addReplyNotice(ctxt.getUid(), replyVO.getUserId(), replyVO.getReplyId(), replyId);
         }
 
         if (postVO.getUserId() == ctxt.getUid()) {
+            // 如果发帖人发新的内容了，则给所有收藏这个帖子的人发消息
             noticeService.sendPostNotices(req.getPostId());
         }
 

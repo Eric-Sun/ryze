@@ -21,7 +21,7 @@ public class ImgFacade {
     @Autowired
     ImgService imgService;
 
-    @Action(name = "img.upload", desc = "")
+    @Action(name = "img.upload", desc = "Constants.IMG_TYPE")
     public ImgUploadResp upload(CommandContext ctxt, ImgUploadReq req) {
         ImgUploadResp resp = new ImgUploadResp();
         ImgVO imgVO = null;

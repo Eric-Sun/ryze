@@ -7,6 +7,7 @@ public class ImgUploadReq {
 
     @Parameter(desc = "")
     private FileItem file;
+    @Parameter(desc = "")
     private int type;
 
     public int getType() {
