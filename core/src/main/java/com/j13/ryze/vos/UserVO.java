@@ -1,9 +1,14 @@
 package com.j13.ryze.vos;
 
+/**
+ * mNickName和mAvatarImgId字段无法被getter访问，是通过访问nickname和avatarImgId的getter方法进行处理的
+ */
 public class UserVO {
     private int userId;
     private String nickName;
     private String anonNickName;
+    private String mNickName;
+    private int mAvatarImgId;
     private int avatarImgId;
     private String avatarUrl;
     private long createtime;
@@ -11,6 +16,14 @@ public class UserVO {
     private String anonXiaUrl;
     private int isLock;
     private int sourceType;
+
+    public void setmNickName(String mNickName) {
+        this.mNickName = mNickName;
+    }
+
+    public void setmAvatarImgId(int mAvatarImgId) {
+        this.mAvatarImgId = mAvatarImgId;
+    }
 
     public int getSourceType() {
         return sourceType;
@@ -69,7 +82,10 @@ public class UserVO {
     }
 
     public int getAvatarImgId() {
-        return avatarImgId;
+        if (mAvatarImgId == 0)
+            return avatarImgId;
+        else
+            return mAvatarImgId;
     }
 
     public void setAvatarImgId(int avatarImgId) {
@@ -77,7 +93,10 @@ public class UserVO {
     }
 
     public String getNickName() {
-        return nickName;
+        if (mNickName.equals(""))
+            return nickName;
+        else
+            return mNickName;
     }
 
     public void setNickName(String nickName) {

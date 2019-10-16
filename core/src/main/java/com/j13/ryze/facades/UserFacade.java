@@ -152,6 +152,8 @@ public class UserFacade {
     public CommonResultResp modifyNameAndAvatar(CommandContext ctxt, UserModifyNameAndAvatarReq req) {
 
 
+        userService.modifyNameAndAvatar(ctxt.getUid(),req.getNewName(),req.getNewImgId());
+
 
         return CommonResultResp.success();
     }

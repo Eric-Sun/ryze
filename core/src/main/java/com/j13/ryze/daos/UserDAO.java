@@ -29,7 +29,7 @@ public class UserDAO {
 //    }
 
     public UserVO getUser(int userId) {
-        String sql = "select nickname,avatar_img_id,createtime,anon_nickname,is_lock from user where id=? and deleted=?";
+        String sql = "select nickname,avatar_img_id,createtime,anon_nickname,is_lock,m_nickname,m_avatar_img_id from user where id=? and deleted=?";
         return j.queryForObject(sql, new Object[]{userId, Constants.DB.NOT_DELETED}, new RowMapper<UserVO>() {
             @Override
             public UserVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -39,13 +39,15 @@ public class UserDAO {
                 vo.setCreatetime(rs.getTimestamp(3).getTime());
                 vo.setAnonNickName(rs.getString(4));
                 vo.setIsLock(rs.getInt(5));
+                vo.setmNickName(rs.getString(6));
+                vo.setmAvatarImgId(rs.getInt(7));
                 return vo;
             }
         });
     }
 
     public List<UserVO> list(int pageNum, int size) {
-        String sql = "select nickname,avatar_img_id,createtime,anon_nickname,is_lock,source_type,id from user where deleted=? limit ?,?";
+        String sql = "select nickname,avatar_img_id,createtime,anon_nickname,is_lock,source_type,id,m_nickname,m_avatar_img_id from user where deleted=? limit ?,?";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, pageNum * size, size}, new RowMapper<UserVO>() {
             @Override
             public UserVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -57,6 +59,8 @@ public class UserDAO {
                 vo.setIsLock(rs.getInt(5));
                 vo.setSourceType(rs.getInt(6));
                 vo.setUserId(rs.getInt(7));
+                vo.setmNickName(rs.getString(8));
+                vo.setmAvatarImgId(rs.getInt(9));
                 return vo;
             }
         });
@@ -189,5 +193,10 @@ public class UserDAO {
     public int machineUserCount() {
         String sql = "select count(1) from user where source_type=?";
         return j.queryForObject(sql, new Object[]{Constants.USER_SOURCE_TYPE.MACHINE}, Integer.class);
+    }
+
+    public void modifyNameAndAvatar(int userId, String newName, int newImgId) {
+        String sql = "update user set m_nickname=?, m_avatar_img_id=? where id=?";
+        j.update(sql, new Object[]{newName, newImgId, userId});
     }
 }

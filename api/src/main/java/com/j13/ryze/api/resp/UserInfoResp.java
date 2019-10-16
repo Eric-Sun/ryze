@@ -5,6 +5,15 @@ public class UserInfoResp {
     private String anonNickName;
     private String avatarUrl;
     private long createtime;
+    private int avatarImgId;
+
+    public int getAvatarImgId() {
+        return avatarImgId;
+    }
+
+    public void setAvatarImgId(int avatarImgId) {
+        this.avatarImgId = avatarImgId;
+    }
 
     public String getAnonNickName() {
         return anonNickName;

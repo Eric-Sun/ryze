@@ -229,4 +229,8 @@ public class UserService {
     public int machineUserCount() {
         return userDAO.machineUserCount();
     }
+
+    public void modifyNameAndAvatar(int userId, String newName, int newImgId) {
+        userDAO.modifyNameAndAvatar(userId,newName,newImgId);
+    }
 }
