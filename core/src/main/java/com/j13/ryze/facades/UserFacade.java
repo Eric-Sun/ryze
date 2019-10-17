@@ -82,7 +82,8 @@ public class UserFacade {
             } else {
                 // 不一样，需要替换图
                 // 删除原图
-                imgService.deleteOldWechatAvatar(imgId);
+                // 10.17 不需要删除原图，直接update imgId就可以了
+//                imgService.deleteOldWechatAvatar(imgId);
                 int newImgId = imgService.saveWechatAvatar(data.getAvatarUrl());
                 userDAO.updateFromWechat(userId, data.getNickName(), newImgId);
             }

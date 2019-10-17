@@ -50,23 +50,7 @@ public class UserService {
 
     public UserVO getUserInfo(int userId) {
         UserVO user = userDAO.getUser(userId);
-        String url = "";
-        if (user.getAvatarImgId() == -1) {
-            // 没有头像，用默认头像
-            url = ossClientService.getFileUrl(Constants.USER_DEFAULT_AVATAR_FILENAME, Constants.IMG_TYPE.AVATAR);
-        } else {
-            ImgVO img = imgDAO.get(user.getAvatarImgId());
-            if (img.getType() == Constants.IMG_TYPE.AVATAR) {
-                url = ossClientService.getFileUrl(img.getName(), Constants.IMG_TYPE.AVATAR);
-            } else {
-                // 微信传过来的头像url，直接使用就可以了
-                url = img.getName();
-            }
-        }
-        user.setAvatarUrl(url);
-        user.setAnonLouUrl(ossClientService.getFileUrl(Constants.ANON_LOU, Constants.IMG_TYPE.AVATAR));
-        user.setAnonXiaUrl(ossClientService.getFileUrl(Constants.ANON_XIA, Constants.IMG_TYPE.AVATAR));
-
+        parseUser(user);
         return user;
     }
 
@@ -170,22 +154,28 @@ public class UserService {
         List<UserVO> list = userDAO.list(pageNum, size);
 
         for (UserVO user : list) {
-            String url = "";
-            if (user.getAvatarImgId() == -1) {
-                // 没有头像，用默认头像
-                url = ossClientService.getFileUrl(Constants.USER_DEFAULT_AVATAR_FILENAME, Constants.IMG_TYPE.AVATAR);
-            } else {
-                ImgVO img = imgDAO.get(user.getAvatarImgId());
-                if (img.getType() == Constants.IMG_TYPE.AVATAR) {
-                    url = ossClientService.getFileUrl(img.getName(), Constants.IMG_TYPE.AVATAR);
-                } else {
-                    // 微信传过来的头像url，直接使用就可以了
-                    url = img.getName();
-                }
-            }
-            user.setAvatarUrl(url);
+            parseUser(user);
         }
         return list;
+    }
+
+    public void parseUser(UserVO user){
+        String url = "";
+        if (user.getAvatarImgId() == -1) {
+            // 没有头像，用默认头像
+            url = ossClientService.getFileUrl(Constants.USER_DEFAULT_AVATAR_FILENAME, Constants.IMG_TYPE.AVATAR);
+        } else {
+            ImgVO img = imgDAO.get(user.getAvatarImgId());
+            if (img.getType() == Constants.IMG_TYPE.AVATAR) {
+                url = ossClientService.getFileUrl(img.getName(), Constants.IMG_TYPE.AVATAR);
+            } else {
+                // 微信传过来的头像url，直接使用就可以了
+                url = img.getName();
+            }
+        }
+        user.setAvatarUrl(url);
+        user.setAnonLouUrl(ossClientService.getFileUrl(Constants.ANON_LOU, Constants.IMG_TYPE.AVATAR));
+        user.setAnonXiaUrl(ossClientService.getFileUrl(Constants.ANON_XIA, Constants.IMG_TYPE.AVATAR));
     }
 
     /**
