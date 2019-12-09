@@ -164,7 +164,7 @@
     </dependencies>
 
     <properties>
-        <jetty.version>8.1.9.v20130131</jetty.version>
+        <jetty.version>9.4.24.v20191120</jetty.version>
         <config>dev</config>
     </properties>
     <build>
