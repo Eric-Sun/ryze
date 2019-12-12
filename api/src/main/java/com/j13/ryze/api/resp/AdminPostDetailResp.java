@@ -34,6 +34,16 @@ public class AdminPostDetailResp {
     @Parameter(desc = "")
     List<ImgDetailResp> imgList = Lists.newLinkedList();
     private List<AdminLevelInfoResp> levelInfo = Lists.newLinkedList();
+    @Parameter(desc = "是否是精华帖子，默认不是精华")
+    private int star=0;
+
+    public int getStar() {
+        return star;
+    }
+
+    public void setStar(int star) {
+        this.star = star;
+    }
 
 
     public List<ImgDetailResp> getImgList() {

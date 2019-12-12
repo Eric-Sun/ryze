@@ -6,10 +6,7 @@ import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.*;
-import com.j13.ryze.daos.BarDAO;
-import com.j13.ryze.daos.BarMemberDAO;
-import com.j13.ryze.daos.PostDAO;
-import com.j13.ryze.daos.UserDAO;
+import com.j13.ryze.daos.*;
 import com.j13.ryze.services.AdminLevelInfoService;
 import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.UserService;
@@ -32,8 +29,8 @@ public class AdminPostFacade {
 
     @Autowired
     BarMemberDAO barMemberDAO;
-
-
+    @Autowired
+    StarPostDAO starPostDAO;
     @Autowired
     UserService userService;
     @Autowired
@@ -75,6 +72,10 @@ public class AdminPostFacade {
         for (PostVO postVO : postVOList) {
             AdminPostDetailResp detailResp = new AdminPostDetailResp();
             BeanUtils.copyProperties(detailResp, postVO);
+            boolean b = starPostDAO.checkStar(postVO.getPostId());
+            if(b){
+                detailResp.setStar(1);
+            }
 
             for (ImgVO imgVO : postVO.getImgVOList()) {
                 ImgDetailResp imgResp = new ImgDetailResp();

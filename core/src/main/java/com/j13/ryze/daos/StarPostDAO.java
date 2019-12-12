@@ -40,11 +40,11 @@ public class StarPostDAO {
 
 
     public void delete(int id) {
-        String sql = "update star_post set delete=? where id=?";
-        j.update(sql, new Object[]{Constants.DB.DELETED,id});
+        String sql = "update star_post set deleted=? where id=?";
+        j.update(sql, new Object[]{Constants.DB.DELETED, id});
     }
 
-    public List<StarPostVO> list(){
+    public List<StarPostVO> list() {
         String sql = "select id,post_id,`value` from star_post where deleted=?";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED}, new RowMapper<StarPostVO>() {
             @Override
@@ -56,5 +56,11 @@ public class StarPostDAO {
                 return vo;
             }
         });
+    }
+
+    public boolean checkStar(int postId) {
+        String sql = "select count(1) from star_post where post_id=? and deleted=?";
+        int cnt = j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, Integer.class);
+        return cnt == 0 ? false : true;
     }
 }
