@@ -3,12 +3,12 @@ package com.j13.ryze.facades;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
-import com.j13.ryze.api.req.StarPostAddReq;
-import com.j13.ryze.api.req.StarPostDeleteReq;
-import com.j13.ryze.api.req.StarPostListReq;
-import com.j13.ryze.api.resp.StarPostAddResp;
-import com.j13.ryze.api.resp.StarPostDetailResp;
-import com.j13.ryze.api.resp.StarPostListResp;
+import com.j13.ryze.api.req.AdminStarPostAddReq;
+import com.j13.ryze.api.req.AdminStarPostDeleteReq;
+import com.j13.ryze.api.req.AdminStarPostListReq;
+import com.j13.ryze.api.resp.AdminStarPostAddResp;
+import com.j13.ryze.api.resp.AdminStarPostDetailResp;
+import com.j13.ryze.api.resp.AdminStarPostListResp;
 import com.j13.ryze.daos.StarPostDAO;
 import com.j13.ryze.services.PostService;
 import com.j13.ryze.vos.PostVO;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class StarPostFacade {
+public class AdminStarPostFacade {
 
     @Autowired
     StarPostDAO starPostDAO;
@@ -28,27 +28,27 @@ public class StarPostFacade {
     PostService postService;
 
 
-    @Action(name = "starPost.add")
-    public StarPostAddResp add(CommandContext ctxt, StarPostAddReq req) {
+    @Action(name = "admin.starPost.add")
+    public AdminStarPostAddResp add(CommandContext ctxt, AdminStarPostAddReq req) {
         int id = starPostDAO.add(req.getPostId(), req.getValue());
-        StarPostAddResp resp = new StarPostAddResp();
+        AdminStarPostAddResp resp = new AdminStarPostAddResp();
         resp.setId(id);
         return resp;
     }
 
-    @Action(name = "starPost.delete")
-    public CommonResultResp delete(CommandContext ctxt, StarPostDeleteReq req) {
+    @Action(name = "admin.starPost.delete")
+    public CommonResultResp delete(CommandContext ctxt, AdminStarPostDeleteReq req) {
         starPostDAO.delete(req.getId());
         return CommonResultResp.success();
     }
 
 
-    @Action(name = "starPost.list")
-    public StarPostListResp list(CommandContext ctxt, StarPostListReq req) {
-        StarPostListResp resp = new StarPostListResp();
+    @Action(name = "admin.starPost.list")
+    public AdminStarPostListResp list(CommandContext ctxt, AdminStarPostListReq req) {
+        AdminStarPostListResp resp = new AdminStarPostListResp();
         List<StarPostVO> voList = starPostDAO.list();
         for (StarPostVO vo : voList) {
-            StarPostDetailResp detailResp = new StarPostDetailResp();
+            AdminStarPostDetailResp detailResp = new AdminStarPostDetailResp();
             detailResp.setId(vo.getId());
             detailResp.setPostId(vo.getPostId());
             detailResp.setValue(vo.getValue());

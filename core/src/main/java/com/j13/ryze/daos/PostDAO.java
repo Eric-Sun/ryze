@@ -141,6 +141,11 @@ public class PostDAO {
                 Constants.POST_ANONYMOUS.COMMON, Constants.POST_STATUS.ONLINE, pageNum * size, size}, new PostRowMapper());
     }
 
+    public List<Integer> offlineList(int barId) {
+        String sql = "select id from post where status=? and deleted=? and bar_id=?";
+        return j.queryForList(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId}, Integer.class);
+    }
+
 
     class PostRowMapper implements RowMapper<PostVO> {
         @Override

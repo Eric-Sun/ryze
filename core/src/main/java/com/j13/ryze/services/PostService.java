@@ -144,4 +144,19 @@ public class PostService {
         }
 
     }
+
+    public List<PostVO> offlineList(int barId) {
+        List<PostVO> list = Lists.newLinkedList();
+        List<Integer> postIdList = postDAO.offlineList(barId);
+        for (Integer postId : postIdList) {
+            PostVO vo = getSimplePost(postId);
+            // user info
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            vo.setUserName(user.getNickName());
+            vo.setUserAvatarUrl(user.getAvatarUrl());
+
+            list.add(vo);
+        }
+        return list;
+    }
 }

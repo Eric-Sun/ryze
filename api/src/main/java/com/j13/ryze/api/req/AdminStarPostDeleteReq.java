@@ -1,8 +1,8 @@
-package com.j13.ryze.api.resp;
+package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class StarPostAddResp {
+public class AdminStarPostDeleteReq {
     @Parameter(desc = "")
     private int id;
 

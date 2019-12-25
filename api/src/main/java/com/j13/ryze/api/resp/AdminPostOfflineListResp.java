@@ -5,15 +5,15 @@ import com.j13.poppy.anno.Parameter;
 
 import java.util.List;
 
-public class StarPostListResp {
+public class AdminPostOfflineListResp {
     @Parameter(desc = "")
-    private List<StarPostDetailResp> data = Lists.newLinkedList();
+    private List<AdminPostDetailResp> data = Lists.newLinkedList();
 
-    public List<StarPostDetailResp> getData() {
+    public List<AdminPostDetailResp> getData() {
         return data;
     }
 
-    public void setData(List<StarPostDetailResp> data) {
+    public void setData(List<AdminPostDetailResp> data) {
         this.data = data;
     }
 }

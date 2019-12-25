@@ -2,7 +2,7 @@ package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class StarPostAddReq {
+public class AdminStarPostAddReq {
     @Parameter(desc = "")
     private int postId;
     @Parameter(desc = "")

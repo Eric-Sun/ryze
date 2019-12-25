@@ -73,7 +73,7 @@ public class AdminPostFacade {
             AdminPostDetailResp detailResp = new AdminPostDetailResp();
             BeanUtils.copyProperties(detailResp, postVO);
             boolean b = starPostDAO.checkStar(postVO.getPostId());
-            if(b){
+            if (b) {
                 detailResp.setStar(1);
             }
 
@@ -133,6 +133,31 @@ public class AdminPostFacade {
     public CommonResultResp online(CommandContext ctxt, AdminPostOnlineReq req) {
         postDAO.online(req.getPostId());
         return CommonResultResp.success();
+    }
+
+    @Action(name="admin.post.offlineList")
+    public AdminPostOfflineListResp offlineList(CommandContext ctxt, AdminPostOfflineListReq req) {
+        AdminPostOfflineListResp resp = new AdminPostOfflineListResp();
+
+        List<PostVO> postVOList = postService.offlineList(req.getBarId());
+
+        for (PostVO postVO : postVOList) {
+            AdminPostDetailResp detailResp = new AdminPostDetailResp();
+            BeanUtils.copyProperties(detailResp, postVO);
+            boolean b = starPostDAO.checkStar(postVO.getPostId());
+            if (b) {
+                detailResp.setStar(1);
+            }
+
+            for (ImgVO imgVO : postVO.getImgVOList()) {
+                ImgDetailResp imgResp = new ImgDetailResp();
+                imgResp.setImgId(imgVO.getId());
+                imgResp.setUrl(imgVO.getUrl());
+                detailResp.getImgList().add(imgResp);
+            }
+            resp.getData().add(detailResp);
+        }
+        return resp;
     }
 
     @Action(name = "admin.post.queryTitle")
