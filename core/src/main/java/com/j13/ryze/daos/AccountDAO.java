@@ -172,4 +172,8 @@ public class AccountDAO {
     }
 
 
+    public int login(String userName, String passwordAfterMD5) {
+        String sql = "select count(1) from account where name=? and password=? and deleted=?";
+        return j.queryForObject(sql, new Object[]{userName, passwordAfterMD5, Constants.DB.NOT_DELETED}, Integer.class);
+    }
 }

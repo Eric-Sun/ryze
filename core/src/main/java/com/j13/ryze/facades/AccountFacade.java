@@ -10,6 +10,7 @@ import com.j13.ryze.api.resp.*;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.AccountDAO;
 import com.j13.ryze.daos.ResourceDAO;
+import com.j13.ryze.utils.MD5Util;
 import com.j13.ryze.vos.AccountVO;
 import com.j13.ryze.vos.AuthorityVO;
 import org.slf4j.Logger;
@@ -122,5 +123,17 @@ public class AccountFacade {
         return resp;
     }
 
+    @Action(name="account.login")
+    public AccountLoginResp add(CommandContext ctxt, AccountLoginReq req) {
+        AccountLoginResp resp = new AccountLoginResp();
+
+        // 如果id为0，则为登陆失败
+        int id = accountDAO.login(req.getUserName(), MD5Util.getMD5String(req.getUserPassword()));
+        if (id == 0)
+            throw new CommonException(ErrorCode.User.PASSWORD_NOT_RIGHT);
+
+        resp.setId(id);
+        return resp;
+    }
 
 }
