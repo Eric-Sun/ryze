@@ -68,6 +68,8 @@ public class AdminPostFacade {
         String barName = barDAO.getBarName(req.getBarId());
         resp.setBarName(barName);
         List<PostVO> postVOList = postService.list(req.getBarId(), req.getPageNum(), req.getSize());
+        int count = postService.postCount(req.getBarId());
+        resp.setCount(count);
 
         for (PostVO postVO : postVOList) {
             AdminPostDetailResp detailResp = new AdminPostDetailResp();
@@ -135,7 +137,7 @@ public class AdminPostFacade {
         return CommonResultResp.success();
     }
 
-    @Action(name="admin.post.offlineList")
+    @Action(name = "admin.post.offlineList")
     public AdminPostOfflineListResp offlineList(CommandContext ctxt, AdminPostOfflineListReq req) {
         AdminPostOfflineListResp resp = new AdminPostOfflineListResp();
 

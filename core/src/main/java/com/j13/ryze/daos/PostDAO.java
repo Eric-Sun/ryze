@@ -146,6 +146,11 @@ public class PostDAO {
         return j.queryForList(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId}, Integer.class);
     }
 
+    public int postCount(int barId) {
+        String sql = "select count(1) from post where bar_id=? and status =? and deleted=?";
+        return j.queryForObject(sql, new Object[]{barId, Constants.POST_STATUS.ONLINE, Constants.DB.NOT_DELETED}, Integer.class);
+    }
+
 
     class PostRowMapper implements RowMapper<PostVO> {
         @Override

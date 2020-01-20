@@ -10,6 +10,16 @@ public class AdminPostListResp {
     private List<AdminPostDetailResp> list = Lists.newLinkedList();
     @Parameter(desc = "")
     private String barName;
+    @Parameter(desc="帖子总数")
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public String getBarName() {
         return barName;

@@ -159,4 +159,8 @@ public class PostService {
         }
         return list;
     }
+
+    public int postCount(int barId){
+        return postDAO.postCount(barId);
+    }
 }
