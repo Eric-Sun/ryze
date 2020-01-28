@@ -126,6 +126,13 @@ public class ReplyDAO {
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED, postId, pageName * size, size}, new ReplyRowMapper());
     }
 
+    public int count(int postId) {
+        String sql = "select count(0) " +
+                "from reply where deleted=? and post_id=? and last_reply_id=0";
+        return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, postId},Integer.class);
+
+    }
+
     class ReplyRowMapper implements RowMapper<ReplyVO> {
 
         @Override

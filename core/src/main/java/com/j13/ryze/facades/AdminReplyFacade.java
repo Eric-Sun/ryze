@@ -53,6 +53,7 @@ public class AdminReplyFacade {
     public AdminReplyListResp replyList(CommandContext ctxt, AdminReplyListReq req) {
         AdminReplyListResp resp = new AdminReplyListResp();
         List<ReplyVO> list = replyDAO.list(req.getPostId(), req.getPageNum(), req.getSize());
+        int count = replyDAO.count(req.getPostId());
         for (ReplyVO vo : list) {
             AdminReplyDetailResp r = new AdminReplyDetailResp();
             BeanUtils.copyProperties(r, vo);
@@ -66,7 +67,7 @@ public class AdminReplyFacade {
             int replyListSize = replyDAO.lastReplylistSize(r.getReplyId());
             r.setReplyListSize(replyListSize);
         }
-
+        resp.setCount(count);
         return resp;
     }
 
@@ -79,7 +80,7 @@ public class AdminReplyFacade {
         UserVO user1 = userService.getUserInfo(vo.getUserId());
         r.setUserName(user1.getNickName());
         r.setUserAvatarUrl(user1.getAvatarUrl());
-        replyService.parseImgList( vo);
+        replyService.parseImgList(vo);
 
         List<ReplyVO> replyList = replyDAO.lastReplylist(req.getReplyId(), 0, 500);
         for (ReplyVO replyVO : replyList) {
