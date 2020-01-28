@@ -63,4 +63,9 @@ public class StarPostDAO {
         int cnt = j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, Integer.class);
         return cnt == 0 ? false : true;
     }
+
+    public void deleteByPostId(int postId) {
+        String sql = "update star_post set deleted=? where post_id=?";
+        j.update(sql, new Object[]{Constants.DB.DELETED, postId});
+    }
 }

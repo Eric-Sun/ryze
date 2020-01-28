@@ -4,6 +4,7 @@ import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.ryze.api.req.AdminStarPostAddReq;
+import com.j13.ryze.api.req.AdminStarPostDeleteByPostIdReq;
 import com.j13.ryze.api.req.AdminStarPostDeleteReq;
 import com.j13.ryze.api.req.AdminStarPostListReq;
 import com.j13.ryze.api.resp.AdminStarPostAddResp;
@@ -40,6 +41,14 @@ public class AdminStarPostFacade {
     public CommonResultResp delete(CommandContext ctxt, AdminStarPostDeleteReq req) {
         starPostDAO.delete(req.getId());
         return CommonResultResp.success();
+    }
+
+
+    @Action(name="admin.starPost.deleteByPostId")
+    public CommonResultResp deletebyPostId(CommandContext ctxt, AdminStarPostDeleteByPostIdReq req){
+        starPostDAO.deleteByPostId(req.getPostId());
+        return CommonResultResp.success();
+
     }
 
 
