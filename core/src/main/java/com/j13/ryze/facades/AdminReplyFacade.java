@@ -82,10 +82,13 @@ public class AdminReplyFacade {
         r.setUserAvatarUrl(user1.getAvatarUrl());
         replyService.parseImgList(vo);
 
-        List<ReplyVO> replyList = replyDAO.lastReplylist(req.getReplyId(), 0, 500);
+        List<ReplyVO> replyList = replyDAO.lastReplylist(req.getReplyId(), req.getPageNum(), req.getSize());
+        int count = replyDAO.lastReplylistSize(req.getReplyId());
         for (ReplyVO replyVO : replyList) {
             AdminReplyDetailResp r2 = new AdminReplyDetailResp();
             BeanUtils.copyProperties(r2, replyVO);
+            UserVO user2 = userService.getUserInfo(replyVO.getUserId());
+            r2.setUserName(user2.getNickName());
             replyService.parseImgList(replyVO);
 
             int replyListSize = replyDAO.lastReplylistSize(r2.getReplyId());
@@ -95,6 +98,7 @@ public class AdminReplyFacade {
         }
         List<AdminLevelInfoResp> levelInfoList = adminLevelInfoService.findLevelInfo(vo.getReplyId(), 2);
         r.setLevelInfo(levelInfoList);
+        r.setReplyListSize(count);
         return r;
     }
 
