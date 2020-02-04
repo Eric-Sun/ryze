@@ -145,9 +145,24 @@ public class PostService {
 
     }
 
-    public List<PostVO> offlineList(int barId) {
+    public List<PostVO> offlineList( int barId,int pageNum,int size) {
         List<PostVO> list = Lists.newLinkedList();
-        List<Integer> postIdList = postDAO.offlineList(barId);
+        List<Integer> postIdList = postDAO.offlineList(barId,pageNum,size);
+        for (Integer postId : postIdList) {
+            PostVO vo = getSimplePost(postId);
+            // user info
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            vo.setUserName(user.getNickName());
+            vo.setUserAvatarUrl(user.getAvatarUrl());
+
+            list.add(vo);
+        }
+        return list;
+    }
+
+    public List<PostVO> deletedList(int barId,int pageNum,int size) {
+        List<PostVO> list = Lists.newLinkedList();
+        List<Integer> postIdList = postDAO.deletedList(barId,pageNum,size);
         for (Integer postId : postIdList) {
             PostVO vo = getSimplePost(postId);
             // user info
@@ -162,5 +177,13 @@ public class PostService {
 
     public int postCount(int barId){
         return postDAO.postCount(barId);
+    }
+
+    public int deletedListCount(int barId) {
+        return postDAO.deletedListCount(barId);
+    }
+
+    public int offlineListCount(int barId) {
+        return postDAO.offlineListCount(barId);
     }
 }

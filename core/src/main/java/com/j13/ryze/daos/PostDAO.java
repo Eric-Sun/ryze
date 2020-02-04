@@ -77,8 +77,8 @@ public class PostDAO {
 
     public PostVO get(int postId) {
         String sql = "select user_id,bar_id,content,createtime,id," +
-                "reply_count,updatetime,title,status,anonymous,`type`,img_list  from post where id=? and deleted=?";
-        return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, new PostRowMapper());
+                "reply_count,updatetime,title,status,anonymous,`type`,img_list  from post where id=? ";
+        return j.queryForObject(sql, new Object[]{postId}, new PostRowMapper());
     }
 
     public void addReplyCount(int postId) {
@@ -141,14 +141,36 @@ public class PostDAO {
                 Constants.POST_ANONYMOUS.COMMON, Constants.POST_STATUS.ONLINE, pageNum * size, size}, new PostRowMapper());
     }
 
-    public List<Integer> offlineList(int barId) {
-        String sql = "select id from post where status=? and deleted=? and bar_id=?";
-        return j.queryForList(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId}, Integer.class);
+    public List<Integer> offlineList(int barId, int pageNum, int size) {
+        String sql = "select id from post where status=? and deleted=? and bar_id=? order by createtime desc limit ?,?";
+        return j.queryForList(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId, pageNum * size, size}, Integer.class);
     }
 
     public int postCount(int barId) {
         String sql = "select count(1) from post where bar_id=? and status =? and deleted=?";
         return j.queryForObject(sql, new Object[]{barId, Constants.POST_STATUS.ONLINE, Constants.DB.NOT_DELETED}, Integer.class);
+    }
+
+    public List<Integer> deletedList(int barId, int pageNum, int size) {
+        String sql = "select id from post where deleted=? and bar_id=? order by updatetime desc limit ?,? ";
+        return j.queryForList(sql, new Object[]{Constants.DB.DELETED, barId, pageNum * size, size}, Integer.class);
+    }
+
+    public int deletedListCount(int barId) {
+        String sql = "select count(1) from post where deleted=? and bar_id=? ";
+        return j.queryForObject(sql, new Object[]{Constants.DB.DELETED, barId}, Integer.class);
+
+    }
+
+    public void undoDelete(int barId, int postId) {
+        String sql = "update post set deleted=? where bar_id=? and id=?";
+        j.update(sql, new Object[]{Constants.DB.NOT_DELETED, barId, postId});
+
+    }
+
+    public int offlineListCount(int barId) {
+        String sql = "select count(1) from post where status=? and deleted=? and bar_id=? ";
+        return j.queryForObject(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId }, Integer.class);
     }
 
 

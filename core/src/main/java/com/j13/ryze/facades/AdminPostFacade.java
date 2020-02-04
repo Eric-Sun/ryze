@@ -141,7 +141,8 @@ public class AdminPostFacade {
     public AdminPostOfflineListResp offlineList(CommandContext ctxt, AdminPostOfflineListReq req) {
         AdminPostOfflineListResp resp = new AdminPostOfflineListResp();
 
-        List<PostVO> postVOList = postService.offlineList(req.getBarId());
+        List<PostVO> postVOList = postService.offlineList(req.getBarId(),req.getPageNum(),req.getSize());
+        int count = postService.offlineListCount(req.getBarId());
 
         for (PostVO postVO : postVOList) {
             AdminPostDetailResp detailResp = new AdminPostDetailResp();
@@ -159,6 +160,7 @@ public class AdminPostFacade {
             }
             resp.getData().add(detailResp);
         }
+        resp.setCount(count);
         return resp;
     }
 
@@ -192,4 +194,37 @@ public class AdminPostFacade {
         return resp;
     }
 
+    @Action(name = "admin.post.deletedList")
+    public AdminPostDeletedListResp deletedList(CommandContext ctxt, AdminPostDeletedListReq req) {
+
+        AdminPostDeletedListResp resp = new AdminPostDeletedListResp();
+
+        List<PostVO> postVOList = postService.deletedList(req.getBarId(), req.getPageNum(), req.getSize());
+        int count = postService.deletedListCount(req.getBarId());
+
+        for (PostVO postVO : postVOList) {
+            AdminPostDetailResp detailResp = new AdminPostDetailResp();
+            BeanUtils.copyProperties(detailResp, postVO);
+            boolean b = starPostDAO.checkStar(postVO.getPostId());
+            if (b) {
+                detailResp.setStar(1);
+            }
+
+            for (ImgVO imgVO : postVO.getImgVOList()) {
+                ImgDetailResp imgResp = new ImgDetailResp();
+                imgResp.setImgId(imgVO.getId());
+                imgResp.setUrl(imgVO.getUrl());
+                detailResp.getImgList().add(imgResp);
+            }
+            resp.getList().add(detailResp);
+        }
+        resp.setCount(count);
+        return resp;
+    }
+
+    @Action(name="admin.post.undoDelete")
+    public CommonResultResp undoDelete(CommandContext ctxt, AdminPostUndoDeleteReq req){
+        postDAO.undoDelete(req.getBarId(),req.getPostId());
+        return CommonResultResp.success();
+    }
 }
