@@ -58,12 +58,6 @@ public class AdminPostFacade {
     @Action(name = "admin.post.list", desc = "")
     public AdminPostListResp list(CommandContext ctxt, AdminPostListReq req) {
         AdminPostListResp resp = new AdminPostListResp();
-//        if (!barDAO.exist(req.getBarId())) {
-//            throw new CommonException(ErrorCode.Bar.NOT_EXIST);
-//        }
-//        if (!barMemberDAO.hasMember(req.getBarId(), req.getUserId())) {
-//            throw new CommonException(ErrorCode.Bar.NOT_HAS_MEMBER);
-//        }
 
         String barName = barDAO.getBarName(req.getBarId());
         resp.setBarName(barName);
