@@ -210,6 +210,6 @@ public class PostService {
      * @param postId
      */
     public void addStarPostShowlog(int requestUserId, Integer postId) {
-        starPostShowlogDAO.add(postId, requestUserId);
+        starPostShowlogDAO.add(requestUserId, postId);
     }
 }
