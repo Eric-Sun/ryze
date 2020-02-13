@@ -20,6 +20,15 @@ public class PostVO {
     private int type;
     private String imgListStr;
     private List<ImgVO> imgVOList = Lists.newLinkedList();
+    private int star;
+
+    public int getStar() {
+        return star;
+    }
+
+    public void setStar(int star) {
+        this.star = star;
+    }
 
     public String getUserAvatarUrl() {
         return userAvatarUrl;

@@ -9,6 +9,7 @@ import com.j13.ryze.api.resp.*;
 import com.j13.ryze.daos.*;
 import com.j13.ryze.services.AdminLevelInfoService;
 import com.j13.ryze.services.PostService;
+import com.j13.ryze.services.ReplyService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.ImgVO;
 import com.j13.ryze.vos.PostVO;
@@ -37,6 +38,8 @@ public class AdminPostFacade {
     AdminLevelInfoService adminLevelInfoService;
     @Autowired
     PostService postService;
+    @Autowired
+    ReplyService replyService;
 
     @Action(name = "admin.post.add", desc = "")
     public AdminPostAddResp add(CommandContext ctxt, AdminPostAddReq req) {
@@ -72,6 +75,8 @@ public class AdminPostFacade {
             if (b) {
                 detailResp.setStar(1);
             }
+
+            int replyCount = replyService.getReplyCount(postVO.getPostId());
 
             for (ImgVO imgVO : postVO.getImgVOList()) {
                 ImgDetailResp imgResp = new ImgDetailResp();

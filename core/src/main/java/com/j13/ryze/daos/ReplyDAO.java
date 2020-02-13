@@ -100,6 +100,7 @@ public class ReplyDAO {
 
     /**
      * 获取一级评论的总数量
+     *
      * @param postId
      * @return
      */
@@ -129,8 +130,13 @@ public class ReplyDAO {
     public int count(int postId) {
         String sql = "select count(0) " +
                 "from reply where deleted=? and post_id=? and last_reply_id=0";
-        return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, postId},Integer.class);
+        return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED, postId}, Integer.class);
 
+    }
+
+    public int getReplyCount(int postId) {
+        String sql = "select count(1) from reply where post_id=? and deleted=?";
+        return j.queryForObject(sql, new Object[]{postId, Constants.DB.NOT_DELETED}, Integer.class);
     }
 
     class ReplyRowMapper implements RowMapper<ReplyVO> {

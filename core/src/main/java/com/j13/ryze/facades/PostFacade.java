@@ -64,6 +64,25 @@ public class PostFacade {
         PostListResp resp = new PostListResp();
         List<PostVO> list = null;
         list = postService.list(req.getBarId(), req.getType(), req.getPageNum(), req.getSize());
+
+        // 检测是否有没有显示的加精信息，选择两个插入到最前面
+        List<Integer> showedStarPostIdList = postService.showedStarPostIdList(requestUserId);
+        List<Integer> starPostIdList = postService.starPostIdList();
+        starPostIdList.removeAll(showedStarPostIdList);
+        if (starPostIdList.size() >= 0) {
+            starPostIdList = starPostIdList.subList(0, 2);
+        }
+
+        for (Integer postId : starPostIdList) {
+            if (list.contains(postId)) {
+                list.remove(postId);
+            }
+            PostVO vo = postService.getSimplePost(postId);
+            list.add(0, vo);
+            vo.setStar(1);
+            postService.addStarPostShowlog(requestUserId, postId);
+        }
+
         for (PostVO vo : list) {
             PostDetailResp r = new PostDetailResp();
             BeanUtils.copyProperties(r, vo);

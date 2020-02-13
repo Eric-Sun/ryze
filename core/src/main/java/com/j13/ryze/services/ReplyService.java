@@ -281,6 +281,15 @@ public class ReplyService {
     }
 
     /**
+     * 获取某一个帖子下所有回复的数量，用于admin后台展示
+     * @param postId
+     * @return
+     */
+    public int getReplyCount(int postId) {
+        return replyDAO.getReplyCount(postId);
+    }
+
+    /**
      * size对象
      */
     class SizeObject {

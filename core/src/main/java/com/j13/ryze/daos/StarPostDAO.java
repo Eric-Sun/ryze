@@ -68,4 +68,9 @@ public class StarPostDAO {
         String sql = "update star_post set deleted=? where post_id=?";
         j.update(sql, new Object[]{Constants.DB.DELETED, postId});
     }
+
+    public List<Integer> listPostId() {
+        String sql = "select post_id from star_post where deleted=?";
+        return j.queryForList(sql, new Object[]{Constants.DB.NOT_DELETED}, Integer.class);
+    }
 }

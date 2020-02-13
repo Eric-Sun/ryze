@@ -39,6 +39,16 @@ public class PostDetailResp {
     private int isContentLong = 0;
     @Parameter(desc = "一级评论的数量，用来算分页")
     private int level1ReplySize;
+    @Parameter(desc="是否是加精，如果为1的话是加精帖子，0为不是")
+    private int star=0;
+
+    public int getStar() {
+        return star;
+    }
+
+    public void setStar(int star) {
+        this.star = star;
+    }
 
     public int getLevel1ReplySize() {
         return level1ReplySize;

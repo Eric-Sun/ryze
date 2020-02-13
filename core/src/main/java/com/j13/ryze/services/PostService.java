@@ -7,10 +7,7 @@ import com.j13.poppy.exceptions.CommonException;
 import com.j13.ryze.api.req.PostDetailResp;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
-import com.j13.ryze.daos.BarDAO;
-import com.j13.ryze.daos.CollectionDAO;
-import com.j13.ryze.daos.PostDAO;
-import com.j13.ryze.daos.ReplyDAO;
+import com.j13.ryze.daos.*;
 import com.j13.ryze.utils.CommonJedisManager;
 import com.j13.ryze.vos.*;
 import org.slf4j.Logger;
@@ -42,6 +39,10 @@ public class PostService {
     CollectionDAO collectionDAO;
     @Autowired
     PropertiesConfiguration configuration;
+    @Autowired
+    StarPostDAO starPostDAO;
+    @Autowired
+    StarPostShowlogDAO starPostShowlogDAO;
 
     private int POST_CONTENT_CUT_LENGTH;
 
@@ -145,9 +146,9 @@ public class PostService {
 
     }
 
-    public List<PostVO> offlineList( int barId,int pageNum,int size) {
+    public List<PostVO> offlineList(int barId, int pageNum, int size) {
         List<PostVO> list = Lists.newLinkedList();
-        List<Integer> postIdList = postDAO.offlineList(barId,pageNum,size);
+        List<Integer> postIdList = postDAO.offlineList(barId, pageNum, size);
         for (Integer postId : postIdList) {
             PostVO vo = getSimplePost(postId);
             // user info
@@ -160,9 +161,9 @@ public class PostService {
         return list;
     }
 
-    public List<PostVO> deletedList(int barId,int pageNum,int size) {
+    public List<PostVO> deletedList(int barId, int pageNum, int size) {
         List<PostVO> list = Lists.newLinkedList();
-        List<Integer> postIdList = postDAO.deletedList(barId,pageNum,size);
+        List<Integer> postIdList = postDAO.deletedList(barId, pageNum, size);
         for (Integer postId : postIdList) {
             PostVO vo = getSimplePost(postId);
             // user info
@@ -175,7 +176,7 @@ public class PostService {
         return list;
     }
 
-    public int postCount(int barId){
+    public int postCount(int barId) {
         return postDAO.postCount(barId);
     }
 
@@ -185,5 +186,30 @@ public class PostService {
 
     public int offlineListCount(int barId) {
         return postDAO.offlineListCount(barId);
+    }
+
+    /**
+     * 获得该用户之前已经
+     *
+     * @param requestUserId
+     * @return
+     */
+    public List<Integer> showedStarPostIdList(int requestUserId) {
+        return starPostShowlogDAO.list(requestUserId);
+    }
+
+    public List<Integer> starPostIdList() {
+        return starPostDAO.listPostId();
+    }
+
+
+    /**
+     * 添加加精内容的日志，表示这个用户已经曝光过这个加精日志了
+     *
+     * @param requestUserId
+     * @param postId
+     */
+    public void addStarPostShowlog(int requestUserId, Integer postId) {
+        starPostShowlogDAO.add(postId, requestUserId);
     }
 }
