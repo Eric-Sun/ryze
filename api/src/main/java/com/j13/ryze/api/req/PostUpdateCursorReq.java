@@ -9,6 +9,16 @@ public class PostUpdateCursorReq {
     private int cursor;
     @Parameter(desc = "")
     private int pageNum;
+    @Parameter(desc = "")
+    private String userToken;
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
 
     public int getPageNum() {
         return pageNum;

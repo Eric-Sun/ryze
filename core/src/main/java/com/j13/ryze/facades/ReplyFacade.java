@@ -60,7 +60,7 @@ public class ReplyFacade {
         List<ReplyVO> replyList = null;
         if (req.getPageNum() == -1) {
             // 意味着从来没有看过这篇文章，需要获取cursor
-            PostCursorVO postCursorVO = postCursorService.getCursor(ctxt.getUid(), req.getPostId());
+            PostCursorVO postCursorVO = postCursorService.getCursor(req.getUserToken(), req.getPostId());
             BeanUtils.copyProperties(cursorResp, postCursorVO);
             resp.setCursorInfo(cursorResp);
             replyList = replyService.list(req.getPostId(), postCursorVO.getPageNum(), Constants.Reply.REPLY_SIZE_PER_PAGE);

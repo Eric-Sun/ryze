@@ -7,6 +7,16 @@ public class ReplyListReq {
     private int postId;
     @Parameter(desc = "")
     private int pageNum = -1;
+    @Parameter(desc = "")
+    private String userToken;
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
 
     public int getPageNum() {
         return pageNum;

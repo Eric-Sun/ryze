@@ -140,7 +140,7 @@ public class PostFacade {
     @Action(name = "post.updateCursor")
     @NeedToken
     public CommonResultResp updateCursor(CommandContext ctxt, PostUpdateCursorReq req) {
-        postCursorService.updateCursor(ctxt.getUid(), req.getPostId(), req.getCursor(), req.getPageNum());
+        postCursorService.updateCursor(req.getUserToken(), req.getPostId(), req.getCursor(), req.getPageNum());
         return CommonResultResp.success();
     }
 
