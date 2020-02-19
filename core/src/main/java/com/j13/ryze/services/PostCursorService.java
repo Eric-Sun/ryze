@@ -19,13 +19,6 @@ public class PostCursorService {
      * @param postId
      */
     public PostCursorVO getCursor(String userToken, int postId) {
-        // 如果userId==0的话，返回0
-        if (userToken.equals("")) {
-            PostCursorVO vo = new PostCursorVO();
-            vo.setPageNum(0);
-            vo.setCursor(0);
-            return vo;
-        }
         boolean b = postCursorDAO.checkExist(userToken, postId);
         if (b) {
             PostCursorVO vo = postCursorDAO.getCursor(userToken, postId);

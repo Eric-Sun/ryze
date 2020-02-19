@@ -66,10 +66,10 @@ public class PostFacade {
         list = postService.list(req.getBarId(), req.getType(), req.getPageNum(), req.getSize());
 
         // 检测是否有没有显示的加精信息，选择两个插入到最前面
-        List<Integer> showedStarPostIdList = postService.showedStarPostIdList(requestUserId);
+        List<Integer> showedStarPostIdList = postService.showedStarPostIdList(req.getUserToken());
         List<Integer> starPostIdList = postService.starPostIdList();
         starPostIdList.removeAll(showedStarPostIdList);
-        if (starPostIdList.size() >= 0) {
+        if (starPostIdList.size() >= 2) {
             starPostIdList = starPostIdList.subList(0, 2);
         }
 
@@ -80,7 +80,7 @@ public class PostFacade {
             PostVO vo = postService.getSimplePost(postId);
             list.add(0, vo);
             vo.setStar(1);
-            postService.addStarPostShowlog(requestUserId, postId);
+            postService.addStarPostShowlog(req.getUserToken(), postId);
         }
 
         for (PostVO vo : list) {

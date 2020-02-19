@@ -6,12 +6,10 @@ import com.j13.ryze.api.resp.Level2ReplyDetailResp;
 import com.j13.ryze.api.resp.ReplyDetailResp;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.Logger;
-import com.j13.ryze.daos.ImgDAO;
-import com.j13.ryze.daos.PostDAO;
-import com.j13.ryze.daos.UserDAO;
-import com.j13.ryze.daos.UserLockDAO;
+import com.j13.ryze.daos.*;
 import com.j13.ryze.utils.DateUtil;
 import com.j13.ryze.vos.*;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +24,7 @@ import java.util.Random;
  */
 @Service
 public class UserService {
+    private static org.slf4j.Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     UserDAO userDAO;
@@ -38,6 +37,8 @@ public class UserService {
     PostDAO postDAO;
     @Autowired
     UserLockDAO userLockDAO;
+    @Autowired
+    User2UserTokenDAO user2UserTokenDAO;
 
     private List<Integer> machineUserList = Lists.newLinkedList();
 
@@ -159,7 +160,7 @@ public class UserService {
         return list;
     }
 
-    public void parseUser(UserVO user){
+    public void parseUser(UserVO user) {
         String url = "";
         if (user.getAvatarImgId() == -1) {
             // 没有头像，用默认头像
@@ -221,6 +222,63 @@ public class UserService {
     }
 
     public void modifyNameAndAvatar(int userId, String newName, int newImgId) {
-        userDAO.modifyNameAndAvatar(userId,newName,newImgId);
+        userDAO.modifyNameAndAvatar(userId, newName, newImgId);
+    }
+
+
+    /**
+     * 获取对应userId在系统中已经对应好了的token
+     * 如果数据库没有的对应的话，返回一个新生成的，如果有userId的话则绑定，没有则直接返回，等登陆的时候完成绑定
+     * 如果有对应的话返回，直接返回对应的
+     *
+     * @param userId
+     */
+    public String getUserToken(int userId) {
+        if (userId == 0) {
+            // 如果没有userId，则返回一个生成的userToken
+            String userToken = genUserToken();
+            LOG.info("userId=0. gen userToken. userToken={}", userToken);
+            return userToken;
+        } else {
+            // 如果有userId的话，查询是否有一个已经存在的
+            String userToken = user2UserTokenDAO.getUserToken(userId);
+            if (userToken == null) {
+                LOG.info("userId={}. no userToken. gen userToken. userToken={}", userId,userToken);
+                userToken = genUserToken();
+                user2UserTokenDAO.add(userId, userToken);
+                return userToken;
+            } else {
+                LOG.info("userId={}. have userToken. userToken={}", userId,userToken);
+                return userToken;
+            }
+        }
+
+    }
+
+    /**
+     * 生成一个userToken，用于未登录状态的用户信息绑定
+     *
+     * @return
+     */
+    private String genUserToken() {
+        Random random = new Random();
+        int ran = random.nextInt(999);
+        return "UT" + System.currentTimeMillis() + ran;
+    }
+
+
+    /**
+     * 登陆的时候保存客户端的UserToken，如果存在的话更新，如果不存在的话添加相关关系
+     *
+     * @param userId
+     * @param userToken
+     */
+    public void setUserToken(int userId, String userToken) {
+        String tmpUserToken = user2UserTokenDAO.getUserToken(userId);
+        if (tmpUserToken == null) {
+            user2UserTokenDAO.add(userId, userToken);
+        } else {
+            user2UserTokenDAO.updateUserToken(userId, userToken);
+        }
     }
 }

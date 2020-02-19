@@ -9,6 +9,7 @@ import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
+import com.j13.ryze.api.resp.UserGetUserTokenResp;
 import com.j13.ryze.api.resp.UserInfoResp;
 import com.j13.ryze.api.resp.WechatLoginResponse;
 import com.j13.ryze.core.Constants;
@@ -108,6 +109,15 @@ public class UserFacade {
         LOG.debug("add new t. t={},userId={},:t={}", new Object[]{t, userId, valueStr});
 
 
+        // 保存客户端的userToken
+        if (req.getUserToken() != null) {
+            userService.setUserToken(userId, req.getUserToken());
+            LOG.info("update userToken. userId={},userToken={}", userId, req.getUserToken());
+        } else {
+            LOG.info("no userToken. app not set userToken. userId={}", userId);
+        }
+
+
         WechatLoginResponse resp = new WechatLoginResponse();
         resp.setUserId(userId);
         resp.setT(t);
@@ -121,6 +131,15 @@ public class UserFacade {
         UserInfoResp resp = new UserInfoResp();
         UserVO userVO = userService.getUserInfo(ctxt.getUid());
         BeanUtils.copyProperties(resp, userVO);
+        return resp;
+    }
+
+    @Action(name = "user.getUserToken")
+    public UserGetUserTokenResp getUserToken(CommandContext ctxt, UserGetUserTokenReq req) {
+
+        String userToken = userService.getUserToken(ctxt.getUid());
+        UserGetUserTokenResp resp = new UserGetUserTokenResp();
+        resp.setUserToken(userToken);
         return resp;
     }
 
@@ -153,12 +172,11 @@ public class UserFacade {
     public CommonResultResp modifyNameAndAvatar(CommandContext ctxt, UserModifyNameAndAvatarReq req) {
 
 
-        userService.modifyNameAndAvatar(ctxt.getUid(),req.getNewName(),req.getNewImgId());
+        userService.modifyNameAndAvatar(ctxt.getUid(), req.getNewName(), req.getNewImgId());
 
 
         return CommonResultResp.success();
     }
-
 
 
 }

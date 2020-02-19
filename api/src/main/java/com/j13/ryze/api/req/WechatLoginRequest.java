@@ -9,6 +9,16 @@ public class WechatLoginRequest {
     private String encryptedData;
     @Parameter(desc = "")
     private String iv;
+    @Parameter(desc = "")
+    private String userToken;
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
 
     public String getCode() {
         return code;

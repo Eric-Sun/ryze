@@ -49,7 +49,7 @@ public class PostCursorDAO {
      * @return
      */
     public boolean checkExist(String userToken, int postId) {
-        String sql = "select count(1) from post_cursor where userToken=? and post_id=?";
+        String sql = "select count(1) from post_cursor where user_token=? and post_id=?";
         return j.queryForObject(sql, new Object[]{userToken, postId}, Integer.class) == 0 ? false : true;
     }
 

@@ -189,13 +189,13 @@ public class PostService {
     }
 
     /**
-     * 获得该用户之前已经
+     * 获得该用户之前已经看过的精华帖子列表
      *
-     * @param requestUserId
+     * @param userToken
      * @return
      */
-    public List<Integer> showedStarPostIdList(int requestUserId) {
-        return starPostShowlogDAO.list(requestUserId);
+    public List<Integer> showedStarPostIdList(String userToken) {
+        return starPostShowlogDAO.list(userToken);
     }
 
     public List<Integer> starPostIdList() {
@@ -206,10 +206,10 @@ public class PostService {
     /**
      * 添加加精内容的日志，表示这个用户已经曝光过这个加精日志了
      *
-     * @param requestUserId
+     * @param userToken
      * @param postId
      */
-    public void addStarPostShowlog(int requestUserId, Integer postId) {
-        starPostShowlogDAO.add(requestUserId, postId);
+    public void addStarPostShowlog(String userToken, Integer postId) {
+        starPostShowlogDAO.add(userToken, postId);
     }
 }

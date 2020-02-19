@@ -11,6 +11,16 @@ public class PostListReq {
     private int size;
     @Parameter(desc = "")
     private int type;
+    @Parameter(desc = "")
+    private String userToken;
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
 
     public int getType() {
         return type;
