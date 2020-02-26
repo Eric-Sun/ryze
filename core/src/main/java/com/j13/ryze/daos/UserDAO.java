@@ -86,12 +86,12 @@ public class UserDAO {
         return holder.getKey().intValue();
     }
 
-    public void updateFromWechat(int userId, String nickName, int avatarImgId) {
+    public void update(int userId, String nickName, int avatarImgId) {
         String sql = "update user set nickname=? , avatar_img_id=? where id=? and deleted=?";
         j.update(sql, new Object[]{nickName, avatarImgId, userId, Constants.DB.NOT_DELETED});
     }
 
-    public void updateFromWechat(int userId, String nickName) {
+    public void update(int userId, String nickName) {
         String sql = "update user set nickname=?  where id=? and deleted=?";
         j.update(sql, new Object[]{nickName, userId, Constants.DB.NOT_DELETED});
     }
@@ -173,6 +173,8 @@ public class UserDAO {
      * 获取所有机器人用户
      *
      * @return
+     * 123456
+     *
      */
     public List<Integer> getAllMachineUser() {
         String sql = "select id from user where source_type=?";

@@ -9,13 +9,14 @@ import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
+import com.j13.ryze.api.resp.ToutiaoLoginResponse;
 import com.j13.ryze.api.resp.UserGetUserTokenResp;
 import com.j13.ryze.api.resp.UserInfoResp;
 import com.j13.ryze.api.resp.WechatLoginResponse;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.UserTokenValue;
 import com.j13.ryze.daos.UserDAO;
-import com.j13.ryze.daos.WechatInfoDAO;
+import com.j13.ryze.daos.ThirdPartInfoDAO;
 import com.j13.ryze.services.ImgService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.utils.InternetUtil;
@@ -33,7 +34,7 @@ public class UserFacade {
     @Autowired
     UserDAO userDAO;
     @Autowired
-    WechatInfoDAO wechatInfoDAO;
+    ThirdPartInfoDAO thirdPartInfoDAO;
 
     @Autowired
     UserService userService;
@@ -62,7 +63,7 @@ public class UserFacade {
         EncryptedData data = JSON.parseObject(json, EncryptedData.class);
 
         // 检查这个openId有没有对应的记录
-        int userId = wechatInfoDAO.getUserId(openId);
+        int userId = thirdPartInfoDAO.getUserId(openId, Constants.USER_SOURCE_TYPE.WECHAT);
         LOG.info("userId={},openId={},sessionKey={}", new Object[]{userId, openId, sessionKey});
         if (userId == -1) {
             // 需要注册
@@ -72,24 +73,24 @@ public class UserFacade {
             int imgId = imgService.saveWechatAvatar(data.getAvatarUrl());
             userId = userDAO.register(data.getNickName(), anonNickName, imgId, Constants.USER_SOURCE_TYPE.WECHAT);
             userDAO.registerUserInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
-            wechatInfoDAO.insert(userId, openId, sessionKey);
+            thirdPartInfoDAO.insert(userId, openId, sessionKey, Constants.USER_SOURCE_TYPE.WECHAT);
         } else {
             // 检测之前存的微信的头像有没有变化，没有的话就不更新了
             UserVO userVO = userDAO.getUser(userId);
             int imgId = userVO.getAvatarImgId();
-            String oldAvatarUrl = imgService.getWechatUrlFromImgId(imgId);
+            String oldAvatarUrl = imgService.getUrlFromImgId(imgId);
             if (oldAvatarUrl.trim().equals(data.getAvatarUrl())) {
-                userDAO.updateFromWechat(userId, data.getNickName());
+                userDAO.update(userId, data.getNickName());
             } else {
                 // 不一样，需要替换图
                 // 删除原图
                 // 10.17 不需要删除原图，直接update imgId就可以了
 //                imgService.deleteOldWechatAvatar(imgId);
                 int newImgId = imgService.saveWechatAvatar(data.getAvatarUrl());
-                userDAO.updateFromWechat(userId, data.getNickName(), newImgId);
+                userDAO.update(userId, data.getNickName(), newImgId);
             }
             userDAO.updateInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
-            wechatInfoDAO.updateSessionKey(openId, sessionKey);
+            thirdPartInfoDAO.updateSessionKey(openId, sessionKey, Constants.USER_SOURCE_TYPE.WECHAT);
         }
         // 清楚之前user的token信息
         String oldValueStr = jedisManager.get(userId + ":t");
@@ -117,8 +118,85 @@ public class UserFacade {
             LOG.info("no userToken. app not set userToken. userId={}", userId);
         }
 
-
         WechatLoginResponse resp = new WechatLoginResponse();
+        resp.setUserId(userId);
+        resp.setT(t);
+        return resp;
+    }
+
+
+    @Action(name = "user.toutiaoLogin", desc = "头条注册")
+    public ToutiaoLoginResponse toutiaoLogin(CommandContext ctxt, ToutiaoLoginRequest req) {
+        String code = req.getCode();
+        String rawResponse = InternetUtil.get("https://developer.toutiao.com/api/apps/jscode2session?appid=" +
+                Constants.TOUTIAO.APPID + "&secret=" + Constants.TOUTIAO.AppSecret
+                + "&code=" + code);
+        ToutiaoLoginRawJSCode2Session toutiaoInterfaceResponse =
+                JSON.parseObject(rawResponse, ToutiaoLoginRawJSCode2Session.class);
+
+        String openId = toutiaoInterfaceResponse.getOpenid();
+        String sessionKey = toutiaoInterfaceResponse.getSession_key();
+        // 获取基础信息
+        String json = WechatUtil.getUserInfo(req.getEncryptedData(), sessionKey, req.getIv());
+        EncryptedData data = JSON.parseObject(json, EncryptedData.class);
+
+        // 检查这个openId有没有对应的记录
+        int userId = thirdPartInfoDAO.getUserId(openId, Constants.USER_SOURCE_TYPE.TOUTIAO);
+        LOG.info("userId={},openId={},sessionKey={}", new Object[]{userId, openId, sessionKey});
+        if (userId == -1) {
+            // 需要注册
+            // 随机一个anonNickName
+            String anonNickName = userService.randomAnonNickName();
+            // 微信提供的头像存在imgDAO中
+            int imgId = imgService.saveToutiaoAvatar(data.getAvatarUrl());
+            userId = userDAO.register(data.getNickName(), anonNickName, imgId, Constants.USER_SOURCE_TYPE.TOUTIAO);
+            userDAO.registerUserInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
+            thirdPartInfoDAO.insert(userId, openId, sessionKey,Constants.USER_SOURCE_TYPE.TOUTIAO);
+        } else {
+            // 检测之前存的微信的头像有没有变化，没有的话就不更新了
+            UserVO userVO = userDAO.getUser(userId);
+            int imgId = userVO.getAvatarImgId();
+            String oldAvatarUrl = imgService.getUrlFromImgId(imgId);
+            if (oldAvatarUrl.trim().equals(data.getAvatarUrl())) {
+                userDAO.update(userId, data.getNickName());
+            } else {
+                // 不一样，需要替换图
+                // 删除原图
+                // 10.17 不需要删除原图，直接update imgId就可以了
+//                imgService.deleteOldWechatAvatar(imgId);
+                int newImgId = imgService.saveToutiaoAvatar(data.getAvatarUrl());
+                userDAO.update(userId, data.getNickName(), newImgId);
+            }
+            userDAO.updateInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
+            thirdPartInfoDAO.updateSessionKey(openId, sessionKey,Constants.USER_SOURCE_TYPE.TOUTIAO);
+        }
+        // 清楚之前user的token信息
+        String oldValueStr = jedisManager.get(userId + ":t");
+        if (oldValueStr != null) {
+            UserTokenValue oldValue = JSON.parseObject(oldValueStr, UserTokenValue.class);
+            String oldT = oldValue.getT();
+            jedisManager.delete(oldT);
+            LOG.debug("clean old t. t={}", oldT);
+        }
+        String t = tokenManager.genT();
+        // 设置token，可以查询到uid
+        tokenManager.setTicket(t, userId);
+        // 设置user:t，可以反查到token和其他信息
+        UserTokenValue value = new UserTokenValue(openId, sessionKey, t);
+        String valueStr = JSON.toJSONString(value);
+        jedisManager.set(userId + ":t", valueStr);
+        LOG.debug("add new t. t={},userId={},:t={}", new Object[]{t, userId, valueStr});
+
+
+        // 保存客户端的userToken
+        if (req.getUserToken() != null) {
+            userService.setUserToken(userId, req.getUserToken());
+            LOG.info("update userToken. userId={},userToken={}", userId, req.getUserToken());
+        } else {
+            LOG.info("no userToken. app not set userToken. userId={}", userId);
+        }
+
+        ToutiaoLoginResponse resp = new ToutiaoLoginResponse();
         resp.setUserId(userId);
         resp.setT(t);
         return resp;
@@ -182,6 +260,27 @@ public class UserFacade {
 }
 
 class WechatLoginRawJSCode2Session {
+    private String openid;
+    private String session_key;
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    public String getSession_key() {
+        return session_key;
+    }
+
+    public void setSession_key(String session_key) {
+        this.session_key = session_key;
+    }
+}
+
+class ToutiaoLoginRawJSCode2Session {
     private String openid;
     private String session_key;
 

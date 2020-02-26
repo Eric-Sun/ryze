@@ -105,6 +105,21 @@ public class ImgService {
         return imgId;
     }
 
+
+    /**
+     * 用于存储来源于头条的头像
+     *
+     * @param url
+     * @return
+     */
+    public int saveToutiaoAvatar(String url) {
+        int imgId = insertImg(url, Constants.IMG_TYPE.AVATAR_URL_FROM_TOUTIAO);
+        return imgId;
+    }
+
+
+
+
     public void deleteOldWechatAvatar(int imgId) {
         imgDAO.delete(imgId);
     }
@@ -127,7 +142,7 @@ public class ImgService {
     }
 
 
-    public String getWechatUrlFromImgId(int imgId) {
+    public String getUrlFromImgId(int imgId) {
         String name = imgDAO.getName(imgId);
         return name;
     }

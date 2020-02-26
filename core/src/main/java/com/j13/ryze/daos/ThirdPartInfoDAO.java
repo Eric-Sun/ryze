@@ -14,21 +14,21 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Repository
-public class WechatInfoDAO {
+public class ThirdPartInfoDAO {
 
     @Autowired
     JdbcTemplate j;
 
-    public void updateSessionKey(String openId, String newSessionKey) {
-        String sql = "update wechat_info set session_key=? where open_id=? and deleted=?";
-        j.update(sql, new Object[]{newSessionKey, openId, Constants.DB.NOT_DELETED});
+    public void updateSessionKey(String openId, String newSessionKey, int thirdPartSource) {
+        String sql = "update third_part_info set session_key=? where open_id=? and deleted=? and third_part_source";
+        j.update(sql, new Object[]{newSessionKey, openId, Constants.DB.NOT_DELETED, thirdPartSource});
     }
 
 
-    public int insert(final int userId, final String openId, final String sessionKey) {
+    public int insert(final int userId, final String openId, final String sessionKey, final int thirdPartSource) {
         KeyHolder holder = new GeneratedKeyHolder();
-        final String sql = "insert into wechat_info (user_id,open_id,session_key,createtime,updatetime)" +
-                " values (?,?,?,now(),now())";
+        final String sql = "insert into third_part_info (user_id,open_id,session_key,createtime,updatetime,third_part_source)" +
+                " values (?,?,?,now(),now(),?)";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -36,25 +36,20 @@ public class WechatInfoDAO {
                 pstmt.setInt(1, userId);
                 pstmt.setString(2, openId);
                 pstmt.setString(3, sessionKey);
+                pstmt.setInt(4, thirdPartSource);
                 return pstmt;
             }
         }, holder);
         return holder.getKey().intValue();
     }
 
-    public int getUserId(String openId) {
-        String sql = "select user_id from wechat_info where open_id=? and deleted=?";
+    public int getUserId(String openId, int thirdPartSource) {
+        String sql = "select user_id from third_part_info where open_id=? and deleted=? and third_part_source";
         try {
-            return j.queryForObject(sql, new Object[]{openId, Constants.DB.NOT_DELETED}, Integer.class);
+            return j.queryForObject(sql, new Object[]{openId, Constants.DB.NOT_DELETED, thirdPartSource}, Integer.class);
         } catch (DataAccessException e) {
             return -1;
         }
-    }
-
-    public String getOpenId(int userId) {
-        String sql = "select open_id from wechat_info where user_id=?";
-        return j.queryForObject(sql, new Object[]{userId}, String.class);
-
     }
 
 }

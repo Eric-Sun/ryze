@@ -40,6 +40,7 @@ public class Constants {
             public static int WOMAN = 2;
             public static int NO = 0;
         }
+
     }
 
     public static class OrderRecordActionType {
@@ -65,6 +66,11 @@ public class Constants {
         public static String MchId = "1536233111";
     }
 
+    public static class TOUTIAO {
+        public static String APPID = "ttec739ace7359f661";
+        public static String AppSecret = "8a0d0eea74d7cdb7975d8c63e883b45fee3f54d7";
+    }
+
 
     public static class Banner {
         public static int ONLINE = 1;
@@ -76,12 +82,14 @@ public class Constants {
         public static int AVATAR = 0;
         public static int AVATAR_URL_FROM_WECHAT = 1;
         public static int POST_IMG = 2;
+        public static int AVATAR_URL_FROM_TOUTIAO = 3;
     }
 
     // 用户表中的用户类型
     public static class USER_SOURCE_TYPE {
         public static int MACHINE = 0;
         public static int WECHAT = 1;
+        public static int TOUTIAO = 2;
     }
 
     public static class POST_STATUS {
@@ -144,9 +152,9 @@ public class Constants {
     }
 
     public static class PAYMENT {
-        public static String TIME_FORMAT="yyyyMMddHHmmss";
-        public static int TIME_EXPIRE_DAY=1;
-        public static String URL_NOTIFY="";
+        public static String TIME_FORMAT = "yyyyMMddHHmmss";
+        public static int TIME_EXPIRE_DAY = 1;
+        public static String URL_NOTIFY = "";
 
     }
 

@@ -1,0 +1,4 @@
+alter table wechat_info rename to third_part_info;
+
+alter table third_part_info add column third_part_source int default 0 after user_id
+
