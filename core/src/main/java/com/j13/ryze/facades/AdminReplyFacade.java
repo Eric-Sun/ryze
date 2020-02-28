@@ -13,8 +13,10 @@ import com.j13.ryze.daos.PostDAO;
 import com.j13.ryze.daos.ReplyDAO;
 import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.services.AdminLevelInfoService;
+import com.j13.ryze.services.PostService;
 import com.j13.ryze.services.ReplyService;
 import com.j13.ryze.services.UserService;
+import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.ReplyVO;
 import com.j13.ryze.vos.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,8 @@ public class AdminReplyFacade {
     AdminLevelInfoService adminLevelInfoService;
     @Autowired
     ReplyService replyService;
+    @Autowired
+    PostService postService;
 
     @Action(name = "admin.reply.add", desc = "")
     public AdminReplyAddResp replyAdd(CommandContext ctxt, AdminReplyAddReq req) {
@@ -53,6 +57,7 @@ public class AdminReplyFacade {
     public AdminReplyListResp replyList(CommandContext ctxt, AdminReplyListReq req) {
         AdminReplyListResp resp = new AdminReplyListResp();
         List<ReplyVO> list = replyDAO.list(req.getPostId(), req.getPageNum(), req.getSize());
+        PostVO postVO = postService.getSimplePost(req.getPostId());
         int count = replyDAO.count(req.getPostId());
         for (ReplyVO vo : list) {
             AdminReplyDetailResp r = new AdminReplyDetailResp();
@@ -63,7 +68,7 @@ public class AdminReplyFacade {
             r.setUserName(user.getNickName());
             r.setUserAvatarUrl(user.getAvatarUrl());
             resp.getData().add(r);
-
+            r.setPostUserId(postVO.getUserId());
             int replyListSize = replyDAO.lastReplylistSize(r.getReplyId());
             r.setReplyListSize(replyListSize);
         }
@@ -75,13 +80,14 @@ public class AdminReplyFacade {
     @Action(name = "admin.reply.detail")
     public AdminReplyDetailResp detail(CommandContext ctxt, AdminReplyDetailReq req) {
         ReplyVO vo = replyDAO.get(req.getReplyId());
+        PostVO postVO = postService.getSimplePost(vo.getPostId());
         AdminReplyDetailResp r = new AdminReplyDetailResp();
         BeanUtils.copyProperties(r, vo);
         UserVO user1 = userService.getUserInfo(vo.getUserId());
         r.setUserName(user1.getNickName());
         r.setUserAvatarUrl(user1.getAvatarUrl());
         replyService.parseImgList(vo);
-
+        r.setPostUserId(postVO.getUserId());
         List<ReplyVO> replyList = replyDAO.lastReplylist(req.getReplyId(), req.getPageNum(), req.getSize());
         int count = replyDAO.lastReplylistSize(req.getReplyId());
         for (ReplyVO replyVO : replyList) {
@@ -90,7 +96,7 @@ public class AdminReplyFacade {
             UserVO user2 = userService.getUserInfo(replyVO.getUserId());
             r2.setUserName(user2.getNickName());
             replyService.parseImgList(replyVO);
-
+            r2.setPostUserId(postVO.getUserId());
             int replyListSize = replyDAO.lastReplylistSize(r2.getReplyId());
             r2.setReplyListSize(replyListSize);
             r.getReplyList().add(r2);

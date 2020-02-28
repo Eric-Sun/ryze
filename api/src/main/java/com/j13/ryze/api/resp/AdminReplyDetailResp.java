@@ -28,14 +28,24 @@ public class AdminReplyDetailResp {
     private int barId;
     // replyList 只有在调用detail类接口的时候才会有数据
     private List<AdminReplyDetailResp> replyList = Lists.newLinkedList();
-    @Parameter(desc="")
+    @Parameter(desc = "")
     private int replyListSize;
     @Parameter(desc = "")
     private String userAvatarUrl;
     @Parameter(desc = "")
+    private int postUserId;
+    @Parameter(desc = "")
     private List<AdminLevelInfoResp> levelInfo = Lists.newLinkedList();
     @Parameter(desc = "")
     private List<ImgDetailResp> imgList = Lists.newLinkedList();
+
+    public int getPostUserId() {
+        return postUserId;
+    }
+
+    public void setPostUserId(int postUserId) {
+        this.postUserId = postUserId;
+    }
 
     public List<AdminReplyDetailResp> getReplyList() {
         return replyList;
