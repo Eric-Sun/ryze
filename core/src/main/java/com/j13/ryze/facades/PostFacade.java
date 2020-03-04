@@ -74,7 +74,9 @@ public class PostFacade {
         }
 
         for (Integer postId : starPostIdList) {
-            if (list.contains(postId)) {
+            PostVO tmpPostVO = new PostVO();
+            tmpPostVO.setPostId(postId);
+            if (list.contains(tmpPostVO)) {
                 list.remove(postId);
             }
             PostVO vo = postService.getSimplePost(postId);
