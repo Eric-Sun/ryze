@@ -98,6 +98,11 @@ public class PostService {
         return postId;
     }
 
+    public int addOffLine(int uid, int barId, String title, String content, int anonymous, int type, String imgList) {
+        int postId = postDAO.addOffline(uid, barId, title, content, anonymous, type, imgList);
+        return postId;
+    }
+
     public List<PostVO> list(int barId, int type, int pageNum, int size) {
         List<PostVO> list = Lists.newLinkedList();
         List<Integer> postIdList = null;

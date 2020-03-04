@@ -16,7 +16,7 @@ public class ReplyDataInserterJob extends BaseJob {
     }
 
     @Override
-    public void doExcute(ApplicationContext applicationContext) {
+    public void doExcute(ApplicationContext applicationContext,JobDataMap jdm) {
         DataInserter inserter = applicationContext.getBean(DataInserter.class);
         while (true) {
             Logger.INSERTER.info("reply data inserter start.");

@@ -20,7 +20,7 @@ public class PostDataInserterJob extends BaseJob {
     }
 
     @Override
-    public void doExcute(ApplicationContext applicationContext) {
+    public void doExcute(ApplicationContext applicationContext,JobDataMap jdm) {
 
         DataInserter inserter = applicationContext.getBean(DataInserter.class);
         while (true) {

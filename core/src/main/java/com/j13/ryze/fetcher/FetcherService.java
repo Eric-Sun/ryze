@@ -39,12 +39,12 @@ public class FetcherService {
         }
         if (configuration.getStringValue("job.postInsert.switch").equals(Constants.Switch.ON)) {
             triggerPostInserterJob(configuration.getIntValue("job.postInsert.init.min"));
-        }else{
+        } else {
             Logger.FETCHER.info("postInsert job is off.");
         }
         if (configuration.getStringValue("job.replyInsert.switch").equals(Constants.Switch.ON)) {
             triggerReplyInserterJob(configuration.getIntValue("job.replyInsert.init.min"));
-        }else{
+        } else {
             Logger.FETCHER.info("replyInsert job is off.");
         }
     }
@@ -132,6 +132,30 @@ public class FetcherService {
     @PreDestroy
     public void destroy() {
 
+    }
+
+
+    public void triggerFetchTianyaByPostId(int postId) {
+        Date triggerDate = futureDate(5, DateBuilder.IntervalUnit.SECOND);
+        Scheduler scheduler = quartzManager.getScheduler();
+
+        JobDetail job = newJob(TianyaFetchOnePostJob.class)
+                .withIdentity("job_tianyaFetchOnePost" + postId, "group1")
+                .build();
+
+        job.getJobDataMap().put("postId", postId);
+
+        SimpleTrigger trigger = (SimpleTrigger) newTrigger()
+                .withIdentity("trigger_tianyaFetchOnePost" + postId, "group1")
+                .startAt(triggerDate) // use DateBuilder to create a date in the future
+                .forJob(job) // identify job with its JobKey
+                .build();
+        try {
+            scheduler.scheduleJob(job, trigger);
+            Logger.INSERTER.info("tianyaFetchOnePost(postId={}) will start in {} seconds later.", postId, 5);
+        } catch (SchedulerException e) {
+            Logger.FETCHER.error(e.getMessage());
+        }
     }
 
 

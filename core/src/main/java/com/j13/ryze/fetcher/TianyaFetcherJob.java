@@ -17,7 +17,7 @@ public class TianyaFetcherJob extends BaseJob{
     }
 
     @Override
-    public void doExcute(ApplicationContext applicationContext) {
+    public void doExcute(ApplicationContext applicationContext,JobDataMap jdm) {
         TianyaFetcher fetcher = applicationContext.getBean(TianyaFetcher.class);
         while (true) {
             Logger.FETCHER.info("tianya fetcher start.");

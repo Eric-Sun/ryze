@@ -94,6 +94,13 @@ public class TianyaFetcher {
                 Logger.FETCHER.info("开始抓取页面 pageNum={}", pageNum);
             }
 
+            if (title == null) {
+                // capture title
+                int titleIndexStart = rawString.indexOf("<meta itemprop=\"name\" content=\"") + "<meta itemprop=\"name\" content=\"".length();
+                int titleIndexEnd = rawString.indexOf("\">", titleIndexStart);
+                title = rawString.substring(titleIndexStart, titleIndexEnd);
+                Logger.FETCHER.info("title : {}", title);
+            }
 
             // capture author
             int authorIndexStart = rawString.indexOf("<meta name=\"author\" content=\"") + "<meta name=\"author\" content=\"".length();

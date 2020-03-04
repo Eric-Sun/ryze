@@ -9,10 +9,11 @@ public abstract class BaseJob implements Job {
 
     public abstract void init(PropertiesConfiguration configuration);
 
-    public abstract void doExcute(ApplicationContext applicationContext );
+    public abstract void doExcute(ApplicationContext applicationContext,JobDataMap jdm );
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        JobDataMap jdm = jobExecutionContext.getJobDetail().getJobDataMap();
         SchedulerContext schCtx = null;
         try {
             schCtx = jobExecutionContext.getScheduler().getContext();
@@ -22,6 +23,6 @@ public abstract class BaseJob implements Job {
         ApplicationContext applicationContext = (ApplicationContext) schCtx.get("applicationContext");
         PropertiesConfiguration configuration = applicationContext.getBean(PropertiesConfiguration.class);
         init(configuration);
-        doExcute(applicationContext);
+        doExcute(applicationContext,jdm);
     }
 }

@@ -50,7 +50,8 @@ public class DataInserter {
             FPostVO fPostVO = fPostDAO.selectOneUninsertedPost();
             int userId = userService.randomMachineUser();
             int defaultBarId = config.getIntValue("default.bar.id");
-            int postId = postService.add(userId, defaultBarId, fPostVO.getTitle(), fPostVO.getContent(),
+            // 200304 修改为插入为下线状态
+            int postId = postService.addOffLine(userId, defaultBarId, fPostVO.getTitle(), fPostVO.getContent(),
                     Constants.POST_ANONYMOUS.COMMON,
                     Constants.POST_TYPE.STORE, "[]");
 
@@ -58,7 +59,7 @@ public class DataInserter {
             fPostDAO.updateStatusAndPostId(fPostVO.getId(), Constants.Fetcher.Status.PUSHED, postId, userId);
             Logger.INSERTER.info("insert post from fPostId={} to postId={}", fPostVO.getId(), postId);
         } catch (Exception e) {
-            Logger.INSERTER.info("no post to insert.");
+            Logger.INSERTER.error("no post to insert.", e);
         }
         Logger.INSERTER.info("Post inserter end.");
     }
