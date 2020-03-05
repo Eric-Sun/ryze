@@ -37,7 +37,7 @@ public class TianyaFetcher {
 
     public void doFetch() {
         try {
-            String rawString = InternetUtil.get("http://bbs.tianya.cn/list-feeling-1.shtml");
+            String rawString = InternetUtil.getContentForFetch("http://bbs.tianya.cn/list-feeling-1.shtml");
 
             Iterator<String> i1 = Splitter.on("<div id=\"shang_tab_list\"></div>").split(rawString).iterator();
 
@@ -84,7 +84,7 @@ public class TianyaFetcher {
         int pageNum = 1;
 
         while (true) {
-            String rawString = InternetUtil.get("http://bbs.tianya.cn/post-feeling-" + postId + "-" + pageNum + ".shtml");
+            String rawString = InternetUtil.getContentForFetch("http://bbs.tianya.cn/post-feeling-" + postId + "-" + pageNum + ".shtml");
 
 
             if (rawString == null) {
