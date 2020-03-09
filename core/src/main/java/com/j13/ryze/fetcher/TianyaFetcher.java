@@ -69,7 +69,8 @@ public class TianyaFetcher {
                 parsePostPage(new Integer(postIdStr), postTitleStr);
 //                parsePostPage(4429545, "");
                 count++;
-                break;
+                if(count==2)
+                    break;
             }
             Logger.FETCHER.info("count={}", count);
         } catch (Exception e) {
