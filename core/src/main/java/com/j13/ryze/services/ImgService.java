@@ -117,6 +117,18 @@ public class ImgService {
         return imgId;
     }
 
+    /**
+     * 用于存储来源于头条的头像
+     *
+     * @param url
+     * @return
+     */
+    public int saveBaiduAvatar(String url) {
+        int imgId = insertImg(url, Constants.IMG_TYPE.AVATAR_URL_FROM_BAIDU);
+        return imgId;
+    }
+
+
 
 
 

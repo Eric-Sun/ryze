@@ -6,6 +6,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.Charset;
 import java.security.AlgorithmParameters;
 import java.security.Security;
 import java.util.Arrays;
@@ -49,4 +50,5 @@ public class WechatUtil {
         return null;
 
     }
+
 }
