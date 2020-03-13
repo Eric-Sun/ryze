@@ -1,5 +1,6 @@
 package com.j13.ryze.facades;
 
+import com.alibaba.fastjson.JSON;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
@@ -124,6 +125,13 @@ public class AdminPostFacade {
         return resp;
     }
 
+    @Action(name = "admin.post.updateImg")
+    public CommonResultResp updateImg(CommandContext ctxt, AdminPostUpdateImgReq req) {
+        postDAO.updateImg(req.getPostId(), req.getImgIdListStr());
+        postService.flushSimplePost(req.getPostId());
+        return CommonResultResp.success();
+    }
+
     @Action(name = "admin.post.offline")
     public CommonResultResp offline(CommandContext ctxt, AdminPostOfflineReq req) {
         postDAO.offline(req.getPostId());
@@ -140,7 +148,7 @@ public class AdminPostFacade {
     public AdminPostOfflineListResp offlineList(CommandContext ctxt, AdminPostOfflineListReq req) {
         AdminPostOfflineListResp resp = new AdminPostOfflineListResp();
 
-        List<PostVO> postVOList = postService.offlineList(req.getBarId(),req.getPageNum(),req.getSize());
+        List<PostVO> postVOList = postService.offlineList(req.getBarId(), req.getPageNum(), req.getSize());
         int count = postService.offlineListCount(req.getBarId());
 
         for (PostVO postVO : postVOList) {
@@ -221,9 +229,9 @@ public class AdminPostFacade {
         return resp;
     }
 
-    @Action(name="admin.post.undoDelete")
-    public CommonResultResp undoDelete(CommandContext ctxt, AdminPostUndoDeleteReq req){
-        postDAO.undoDelete(req.getBarId(),req.getPostId());
+    @Action(name = "admin.post.undoDelete")
+    public CommonResultResp undoDelete(CommandContext ctxt, AdminPostUndoDeleteReq req) {
+        postDAO.undoDelete(req.getBarId(), req.getPostId());
         return CommonResultResp.success();
     }
 }

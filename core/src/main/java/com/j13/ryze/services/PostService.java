@@ -66,10 +66,14 @@ public class PostService {
         } else {
             LOG.debug("simplePost exist. catalog={},postId={}", SIMPLE_POST_CATALOG, postId);
         }
-
-
         parsePostImgList(vo);
         return vo;
+    }
+
+    public void flushSimplePost(int postId){
+        PostVO vo = postDAO.get(postId);
+        commonJedisManager.set(SIMPLE_POST_CATALOG, postId, vo);
+        LOG.debug("simplePost flushed. catalog={},postId={}", SIMPLE_POST_CATALOG, postId);
     }
 
 

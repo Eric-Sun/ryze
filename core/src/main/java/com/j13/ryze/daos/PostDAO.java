@@ -24,7 +24,7 @@ public class PostDAO {
     JdbcTemplate j;
 
     public int add(final int userId, final int barId, final String title, final String content,
-                   final int anonymous, final int type, final String imgList,final int status) {
+                   final int anonymous, final int type, final String imgList, final int status) {
         KeyHolder holder = new GeneratedKeyHolder();
         final String sql = "insert into post " +
                 "(user_id,bar_id,content,reply_count,createtime,updatetime,title,status,anonymous,`type`,img_list) " +
@@ -49,14 +49,14 @@ public class PostDAO {
     }
 
     public int add(final int userId, final int barId, final String title, final String content,
-                     final int anonymous, final int type, final String imgList) {
-        return add(userId,barId,title,content,anonymous,type,imgList, Constants.POST_STATUS.ONLINE);
-    }
-    public int addOffline(final int userId, final int barId, final String title, final String content,
                    final int anonymous, final int type, final String imgList) {
-        return add(userId,barId,title,content,anonymous,type,imgList, Constants.POST_STATUS.OFFLINE);
+        return add(userId, barId, title, content, anonymous, type, imgList, Constants.POST_STATUS.ONLINE);
     }
 
+    public int addOffline(final int userId, final int barId, final String title, final String content,
+                          final int anonymous, final int type, final String imgList) {
+        return add(userId, barId, title, content, anonymous, type, imgList, Constants.POST_STATUS.OFFLINE);
+    }
 
 
     public List<Integer> list(int barId, int pageNum, int size) {
@@ -180,7 +180,12 @@ public class PostDAO {
 
     public int offlineListCount(int barId) {
         String sql = "select count(1) from post where status=? and deleted=? and bar_id=? ";
-        return j.queryForObject(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId }, Integer.class);
+        return j.queryForObject(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId}, Integer.class);
+    }
+
+    public void updateImg(int postId, String imgIdListStr) {
+        String sql = "update post set img_list=? where id=?";
+        j.update(sql, new Object[]{imgIdListStr, postId});
     }
 
 
