@@ -50,8 +50,9 @@ public class DataInserter {
             FPostVO fPostVO = fPostDAO.selectOneUninsertedPost();
             int userId = userService.randomMachineUser();
             int defaultBarId = config.getIntValue("default.bar.id");
-            // 200304 修改为插入为下线状态
-            int postId = postService.addOffLine(userId, defaultBarId, fPostVO.getTitle(), fPostVO.getContent(),
+            // 200304 修改为插入为下线状态、
+            // 200323 改回直接上线状态
+            int postId = postService.add(userId, defaultBarId, fPostVO.getTitle(), fPostVO.getContent(),
                     Constants.POST_ANONYMOUS.COMMON,
                     Constants.POST_TYPE.STORE, "[]");
 
