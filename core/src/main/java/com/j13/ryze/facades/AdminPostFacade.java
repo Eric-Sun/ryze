@@ -41,6 +41,8 @@ public class AdminPostFacade {
     PostService postService;
     @Autowired
     ReplyService replyService;
+    @Autowired
+    FPostDAO fPostDAO;
 
     @Action(name = "admin.post.add", desc = "")
     public AdminPostAddResp add(CommandContext ctxt, AdminPostAddReq req) {
@@ -152,7 +154,12 @@ public class AdminPostFacade {
         int count = postService.offlineListCount(req.getBarId());
 
         for (PostVO postVO : postVOList) {
+
+            // 获取对应postId的总抓取评论的量
+            int fReplyCount = fPostDAO.getFReplyCount(postVO.getPostId());
+
             AdminPostDetailResp detailResp = new AdminPostDetailResp();
+            detailResp.setfReplyCount(fReplyCount);
             BeanUtils.copyProperties(detailResp, postVO);
             boolean b = starPostDAO.checkStar(postVO.getPostId());
             if (b) {

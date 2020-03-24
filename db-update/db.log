@@ -1,0 +1,1 @@
+alter table f_post add column reply_count int default 0 after post_user_id

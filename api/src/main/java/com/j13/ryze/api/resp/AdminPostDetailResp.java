@@ -38,6 +38,16 @@ public class AdminPostDetailResp {
     private int star = 0;
     @Parameter(desc = "")
     private int replyCount = 0;
+    @Parameter(desc="已经抓取的回复数量，用于后台显示")
+    private int fReplyCount=0;
+
+    public int getfReplyCount() {
+        return fReplyCount;
+    }
+
+    public void setfReplyCount(int fReplyCount) {
+        this.fReplyCount = fReplyCount;
+    }
 
     public int getReplyCount() {
         return replyCount;

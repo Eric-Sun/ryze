@@ -100,4 +100,18 @@ public class FPostDAO {
             }
         });
     }
+
+    public void updateReplyCount(int postId, int addReplyCountPerPost) {
+        String sql = "update f_post set reply_count=? where id=?";
+        j.update(sql, new Object[]{addReplyCountPerPost, postId});
+    }
+
+    public int getFReplyCount(int postId) {
+        String sql = "select reply_count from f_post where post_id=?";
+        try {
+            return j.queryForObject(sql, new Object[]{postId}, Integer.class);
+        }catch(Exception e){
+            return 0;
+        }
+    }
 }

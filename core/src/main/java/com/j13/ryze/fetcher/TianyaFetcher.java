@@ -69,7 +69,7 @@ public class TianyaFetcher {
                 parsePostPage(new Integer(postIdStr), postTitleStr);
 //                parsePostPage(4429545, "");
                 count++;
-                if(count==2)
+                if (count == 2)
                     break;
             }
             Logger.FETCHER.info("count={}", count);
@@ -83,6 +83,8 @@ public class TianyaFetcher {
     public void parsePostPage(int postId, String title) {
 
         int pageNum = 1;
+        int addReplyCountPerPost = 0;
+        int fPostId = 0;
 
         while (true) {
             String rawString = InternetUtil.getContentForFetch("http://bbs.tianya.cn/post-feeling-" + postId + "-" + pageNum + ".shtml");
@@ -90,6 +92,7 @@ public class TianyaFetcher {
 
             if (rawString == null) {
                 Logger.FETCHER.info("页面到底了 PageNum={}", pageNum);
+                fPostDAO.updateReplyCount(fPostId, addReplyCountPerPost);
                 return;
             } else {
                 Logger.FETCHER.info("开始抓取页面 pageNum={}", pageNum);
@@ -129,7 +132,7 @@ public class TianyaFetcher {
                 try {
                     // 判断是否已经插入过了，插入过了就放弃
                     if (!fPostDAO.checkExist(postId)) {
-                        fPostDAO.add(Constants.Fetcher.SourceType.TIANYA, postId, title, content);
+                        fPostId = fPostDAO.add(Constants.Fetcher.SourceType.TIANYA, postId, title, content);
                         Logger.FETCHER.info("postId={},content={}", postId, content);
                     } else {
                         Logger.FETCHER.info("post existed postId={}", postId);
@@ -224,7 +227,8 @@ public class TianyaFetcher {
                 if (!fReplyDAO.checkExist(new Integer(replyId))) {
                     fReplyId = fReplyDAO.add(postId, 0, replyContent, new Integer(replyId),
                             replyAuthor.equals(author) ? 1 : 0);
-                    Logger.FETCHER.info("-LEVEL1-- author:{} [{}]{}", replyAuthor.equals(author) ? 1 : 0, replyId, replyContent);
+                    addReplyCountPerPost++;
+                    Logger.FETCHER.info("-LEVEL1-- author:{} [{}]{},count={}", replyAuthor.equals(author) ? 1 : 0, replyId, replyContent, addReplyCountPerPost);
                     saveUser(replyAuthor, new Integer(authorId));
                 } else {
                     fReplyId = fReplyDAO.findFReplyId(new Integer(replyId));
@@ -317,7 +321,9 @@ public class TianyaFetcher {
                     if (!fReplyDAO.checkExist(new Integer(replyReplyId))) {
                         fReplyDAO.add(postId, new Integer(fReplyId), replyReplyContent, new Integer(replyReplyId),
                                 replyReplyAuthor.equals(author) ? 1 : 0);
-                        Logger.FETCHER.info("--LEVEL2- author:{} -[{}]{}", replyReplyAuthor.equals(author) ? 1 : 0, replyReplyId, replyReplyContent);
+                        addReplyCountPerPost++;
+                        Logger.FETCHER.info("--LEVEL2- author:{} -[{}]{},replyCount={}",
+                                replyReplyAuthor.equals(author) ? 1 : 0, replyReplyId, replyReplyContent, addReplyCountPerPost);
                         saveUser(replyReplyAuthor, replyReplyAuthorId);
 
                     } else {
@@ -327,8 +333,10 @@ public class TianyaFetcher {
                 }
             }
             pageNum++;
-        }
 
+
+
+        }
 
     }
 
