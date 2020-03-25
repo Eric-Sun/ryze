@@ -43,6 +43,8 @@ public class AdminPostFacade {
     ReplyService replyService;
     @Autowired
     FPostDAO fPostDAO;
+    @Autowired
+    FReplyDAO fReplyDAO;
 
     @Action(name = "admin.post.add", desc = "")
     public AdminPostAddResp add(CommandContext ctxt, AdminPostAddReq req) {
@@ -191,6 +193,17 @@ public class AdminPostFacade {
             resp.getList().add(r);
         }
         return resp;
+    }
+
+    @Action(name="admin.post.flushFPostReplyCount")
+    public CommonResultResp flushFPostReplyCount(CommandContext ctxt, AdminPostFlushFPostReplyCountReq req){
+
+        List<Integer> fPostIdList = fPostDAO.getSourcePostIdList();
+        for(Integer fPostId : fPostIdList){
+            int replyCount =fReplyDAO.countReplyCount(fPostId);
+            fPostDAO.updateReplyCountBySourcePostId(fPostId,replyCount);
+        }
+        return CommonResultResp.success();
     }
 
     @Action(name = "admin.post.queryUserId")

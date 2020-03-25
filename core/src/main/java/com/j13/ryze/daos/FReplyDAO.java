@@ -82,4 +82,9 @@ public class FReplyDAO {
         String sql = "select reply_id from f_reply where id=?";
         return j.queryForObject(sql, new Object[]{lastFReplyId}, Integer.class);
     }
+
+    public int countReplyCount(Integer fPostId) {
+        String sql = "select count(1) from f_reply where f_post_id=?";
+        return j.queryForObject(sql, new Object[]{fPostId}, Integer.class);
+    }
 }

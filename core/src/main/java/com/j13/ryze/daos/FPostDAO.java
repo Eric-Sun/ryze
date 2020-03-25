@@ -105,6 +105,10 @@ public class FPostDAO {
         String sql = "update f_post set reply_count=? where id=?";
         j.update(sql, new Object[]{addReplyCountPerPost, postId});
     }
+    public void updateReplyCountBySourcePostId(int sourcePostId, int addReplyCountPerPost) {
+        String sql = "update f_post set reply_count=? where source_post_id=?";
+        j.update(sql, new Object[]{addReplyCountPerPost, sourcePostId});
+    }
 
     public int getFReplyCount(int postId) {
         String sql = "select reply_count from f_post where post_id=?";
@@ -113,5 +117,11 @@ public class FPostDAO {
         }catch(Exception e){
             return 0;
         }
+    }
+
+    public List<Integer> getSourcePostIdList() {
+
+        String sql = "select source_post_id from f_post";
+        return j.queryForList(sql,new Object[]{},Integer.class);
     }
 }
