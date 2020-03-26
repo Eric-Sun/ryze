@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.j13.poppy.config.PropertiesConfiguration;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.ryze.api.req.PostDetailResp;
+import com.j13.ryze.cache.PostIdListCache;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.*;
@@ -43,6 +44,8 @@ public class PostService {
     StarPostDAO starPostDAO;
     @Autowired
     StarPostShowlogDAO starPostShowlogDAO;
+    @Autowired
+    PostIdListCache postIdListCache;
 
     private int POST_CONTENT_CUT_LENGTH;
 
@@ -83,6 +86,13 @@ public class PostService {
     }
 
 
+    /**
+     * admin模块用到
+     * @param barId
+     * @param pageNum
+     * @param size
+     * @return
+     */
     public List<PostVO> list(int barId, int pageNum, int size) {
         return list(barId, Constants.POST_TYPE.ALL_TYPE, pageNum, size);
     }
@@ -107,14 +117,25 @@ public class PostService {
         return postId;
     }
 
+    /**
+     * 客户端模块用到
+     * @param barId
+     * @param type
+     * @param pageNum
+     * @param size
+     * @return
+     */
     public List<PostVO> list(int barId, int type, int pageNum, int size) {
         List<PostVO> list = Lists.newLinkedList();
-        List<Integer> postIdList = null;
-        if (type == Constants.POST_TYPE.ALL_TYPE)
-            postIdList = postDAO.list(barId, pageNum, size);
-        else
-            postIdList = postDAO.listByType(barId, type, pageNum, size);
-        for (Integer postId : postIdList) {
+//        List<Integer> postIdList = null;
+//        if (type == Constants.POST_TYPE.ALL_TYPE)
+//            postIdList = postDAO.list(barId, pageNum, size);
+//        else
+//            postIdList = postDAO.listByType(barId, type, pageNum, size);
+        List<String> postIdLis =postIdListCache.randomNPostId(size);
+
+        for (String postIdStr : postIdLis) {
+            Integer postId = new Integer(postIdStr);
             PostVO vo = getSimplePost(postId);
             // user info
             UserVO user = userService.getUserInfo(vo.getUserId());

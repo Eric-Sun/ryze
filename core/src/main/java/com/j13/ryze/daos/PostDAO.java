@@ -208,4 +208,9 @@ public class PostDAO {
             return vo;
         }
     }
+
+    public List<Integer> listPostIdForCache() {
+        String sql = "select id from post where status=? and deleted=?";
+        return j.queryForList(sql, new Object[]{Constants.POST_STATUS.ONLINE, Constants.DB.NOT_DELETED}, Integer.class);
+    }
 }
