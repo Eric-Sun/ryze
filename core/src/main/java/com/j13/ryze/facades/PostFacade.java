@@ -9,6 +9,7 @@ import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.*;
+import com.j13.ryze.cache.PostIdListCache;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.core.Logger;
 import com.j13.ryze.daos.*;
@@ -52,6 +53,8 @@ public class PostFacade {
     PostCursorService postCursorService;
     @Autowired
     WechatAPIService wechatAPIService;
+    @Autowired
+    PostIdListCache postIdListCache;
 
     @Action(name = "post.list", desc = "type=0:故事贴，1：一日一记，-1：全部")
     @NeedToken
@@ -151,6 +154,8 @@ public class PostFacade {
     public CommonResultResp delete(CommandContext ctxt, PostDeleteReq req) {
         int userId = ctxt.getUid();
         postDAO.delete(req.getPostId(), userId);
+        postIdListCache.addPostId(req.getPostId());
+
         com.j13.ryze.core.Logger.COMMON.info("delete post. postId={}, userId={}", req.getPostId(), userId);
         return CommonResultResp.success();
     }
@@ -237,6 +242,9 @@ public class PostFacade {
         int postId = postService.add(ctxt.getUid(),
                 req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgList());
         resp.setPostId(postId);
+
+        postIdListCache.addPostId(postId);
+
         return resp;
     }
 

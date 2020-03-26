@@ -7,6 +7,7 @@ import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.*;
+import com.j13.ryze.cache.PostIdListCache;
 import com.j13.ryze.daos.*;
 import com.j13.ryze.services.AdminLevelInfoService;
 import com.j13.ryze.services.PostService;
@@ -45,6 +46,8 @@ public class AdminPostFacade {
     FPostDAO fPostDAO;
     @Autowired
     FReplyDAO fReplyDAO;
+    @Autowired
+    PostIdListCache postIdListCache;
 
     @Action(name = "admin.post.add", desc = "")
     public AdminPostAddResp add(CommandContext ctxt, AdminPostAddReq req) {
@@ -104,6 +107,7 @@ public class AdminPostFacade {
     @Action(name = "admin.post.delete")
     public CommonResultResp delete(CommandContext ctxt, AdminPostDeleteReq req) {
         postDAO.delete(req.getPostId());
+        postIdListCache.removePostId(req.getPostId());
         barDAO.reducePostCount(req.getBarId());
         return CommonResultResp.success();
     }
@@ -139,12 +143,14 @@ public class AdminPostFacade {
     @Action(name = "admin.post.offline")
     public CommonResultResp offline(CommandContext ctxt, AdminPostOfflineReq req) {
         postDAO.offline(req.getPostId());
+        postIdListCache.removePostId(req.getPostId());
         return CommonResultResp.success();
     }
 
     @Action(name = "admin.post.online")
     public CommonResultResp online(CommandContext ctxt, AdminPostOnlineReq req) {
         postDAO.online(req.getPostId());
+        postIdListCache.addPostId(req.getPostId());
         return CommonResultResp.success();
     }
 
@@ -252,6 +258,8 @@ public class AdminPostFacade {
     @Action(name = "admin.post.undoDelete")
     public CommonResultResp undoDelete(CommandContext ctxt, AdminPostUndoDeleteReq req) {
         postDAO.undoDelete(req.getBarId(), req.getPostId());
+        // 默认回复删除之后是下架的状态
+        postService.offline(req.getPostId());
         return CommonResultResp.success();
     }
 }

@@ -82,6 +82,7 @@ public class PostService {
 
     public void offline(int postId) {
         postDAO.offline(postId);
+        postIdListCache.removePostId(postId);
         LOG.info("post offline done. postId={}", postId);
     }
 
