@@ -1,15 +1,20 @@
 package com.j13.ryze.facades;
 
+import com.aliyun.oss.model.OSSObject;
 import com.google.common.base.Splitter;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
+import com.j13.poppy.core.CommonResultResp;
+import com.j13.ryze.api.req.AdminFetchUserCheckImgReq;
 import com.j13.ryze.api.req.AdminFetchUserFromQSBKReq;
 import com.j13.ryze.api.req.AdminFetchUserFromTianyaReq;
 import com.j13.ryze.api.resp.AdminFetchUserFromQSBKResp;
 import com.j13.ryze.api.resp.AdminFetchUserFromTianyaResp;
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.daos.ImgDAO;
 import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.services.ImgService;
+import com.j13.ryze.services.OSSClientService;
 import com.j13.ryze.utils.InternetUtil;
 import com.j13.ryze.vos.ImgVO;
 import org.apache.commons.fileupload.FileItem;
@@ -21,6 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 @Component
@@ -31,6 +37,10 @@ public class AdminFetchFacade {
     UserDAO userDAO;
     @Autowired
     ImgService imgService;
+    @Autowired
+    ImgDAO imgDAO;
+    @Autowired
+    OSSClientService ossClientService;
 
     private Random random = new Random();
 
@@ -89,4 +99,48 @@ public class AdminFetchFacade {
         resp.setSuccessCount(successCount);
         return resp;
     }
+
+
+    @Action(name = "admin.fetchUser.checkImg")
+    public CommonResultResp checkImg(CommandContext ctxt, AdminFetchUserCheckImgReq req) {
+
+
+        List<ImgVO> imgList = imgDAO.listForAvatar();
+        int currentId = req.getFrom();
+
+        for (ImgVO imgVO : imgList) {
+            OSSObject obj = null;
+            try {
+                obj = ossClientService.getFileObject(imgVO.getName(), imgVO.getType());
+            } catch (Exception e) {
+                LOG.error("checkImg: error imgId={}", imgVO.getId());
+            }
+            if (obj != null) {
+                String etag = obj.getObjectMetadata().getETag();
+                if (etag.equals("C34718E38BFBBC37D1029A4C24CC471A")) {
+                    // 需要重新上传
+                    boolean isFinished = false;
+                    while (!isFinished) {
+                        String userImgUrl = "http://tx.tianyaui.com/logo/" + currentId;
+                        imgService.saveFileWithFileName(imgVO.getName(), userImgUrl, Constants.IMG_TYPE.AVATAR);
+                        OSSObject o2 = ossClientService.getFileObject(imgVO.getName(), Constants.IMG_TYPE.AVATAR);
+                        if (o2.getObjectMetadata().getETag().equals("C34718E38BFBBC37D1029A4C24CC471A")) {
+                            currentId++;
+                            LOG.info("checkImg: userImgUrl={} is wrong.",userImgUrl);
+                            continue;
+                        } else {
+                            LOG.info("checkImg: userImgUrl={} is ok.",userImgUrl);
+                            currentId++;
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        return CommonResultResp.success();
+    }
+
+
 }

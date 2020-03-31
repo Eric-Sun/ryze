@@ -1,6 +1,7 @@
 package com.j13.ryze.services;
 
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.OSSObject;
 import com.j13.poppy.config.PropertiesConfiguration;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.poppy.exceptions.ServerException;
@@ -87,6 +88,19 @@ public class OSSClientService {
         return fileName;
     }
 
+    /**
+     * 存储图片，只能存储jpg格式的
+     *
+     * @param is
+     * @param type
+     * @return
+     */
+    public String saveFile(String fileName,InputStream is, int type) {
+        String fullFileName = findDir(type) + "/" + fileName;
+        ossClient.putObject(bucketName, fullFileName, is);
+        return fileName;
+    }
+
     @PreDestroy
     public void destroy() {
         ossClient.shutdown();
@@ -122,5 +136,12 @@ public class OSSClientService {
         // 生成URL
         URL url = ossClient.generatePresignedUrl(bucketName, fullFileName, expiration);
         return url.toString();
+    }
+
+    public OSSObject getFileObject(String name, int type) {
+        Date expiration = new Date(new Date().getTime() + EXPIRE_TIME);
+        String fullFileName = findDir(type) + "/" + name;
+        // 生成URL
+        return  ossClient.getObject(bucketName, fullFileName);
     }
 }

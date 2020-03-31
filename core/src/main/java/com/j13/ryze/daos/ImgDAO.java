@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class ImgDAO {
@@ -60,5 +61,21 @@ public class ImgDAO {
     public void delete(int imgId) {
         String sql = "update img set deleted=?,updatetime=now() where id=?";
         j.update(sql, new Object[]{Constants.DB.DELETED, imgId});
+    }
+
+    public List<ImgVO> listForAvatar() {
+        String sql = "select id,name,type from img where type=? and deleted=?";
+        return j.query(sql, new Object[]{Constants.IMG_TYPE.AVATAR, Constants.DB.NOT_DELETED}, new RowMapper<ImgVO>() {
+            @Override
+            public ImgVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                ImgVO vo = new ImgVO();
+                vo.setId(rs.getInt(1));
+                vo.setName(rs.getString(2));
+                vo.setType(rs.getInt(3));
+                return vo;
+            }
+        });
+
+
     }
 }

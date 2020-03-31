@@ -83,7 +83,57 @@ public class ImgService {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }finally {
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            conn.disconnect();
+        }
+
+    }
+
+    /**
+     * 通过网络图片url存储在库中
+     *
+     * @param imgUrl
+     * @param type
+     * @return
+     */
+    public ImgVO saveFileWithFileName(String fileName, String imgUrl, int type) {
+        HttpURLConnection conn = null;
+        URL url = null;
+        InputStream inputStream = null;
+
+        try {
+            url = new URL(imgUrl);
+
+
+            conn = (HttpURLConnection) url.openConnection();
+            // 设置连接超时时间
+            conn.setConnectTimeout(3000);
+
+            // 正常响应时获取输入流, 在这里也就是图片对应的字节流
+            if (conn.getResponseCode() == 200) {
+                inputStream = conn.getInputStream();
+
+                fileName = ossClientService.saveFile(fileName, inputStream, type);
+                ImgVO img = new ImgVO();
+                int imgId = insertImg(fileName, type);
+                img.setId(imgId);
+                img.setName(fileName);
+                img.setType(type);
+                return img;
+            } else {
+                return null;
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
             try {
                 inputStream.close();
             } catch (IOException e) {
@@ -127,9 +177,6 @@ public class ImgService {
         int imgId = insertImg(url, Constants.IMG_TYPE.AVATAR_URL_FROM_BAIDU);
         return imgId;
     }
-
-
-
 
 
     public void deleteOldWechatAvatar(int imgId) {
