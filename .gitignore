@@ -1,4 +1,5 @@
 /tmp/
+/core/config/deploy/poppy.properties
 /core/config/dev/poppy.properties
 .DS_Store
 .idea/
