@@ -8,6 +8,7 @@ import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.*;
 import com.j13.ryze.cache.PostIdListCache;
+import com.j13.ryze.core.Constants;
 import com.j13.ryze.daos.*;
 import com.j13.ryze.services.AdminLevelInfoService;
 import com.j13.ryze.services.PostService;
@@ -72,7 +73,7 @@ public class AdminPostFacade {
 
         String barName = barDAO.getBarName(req.getBarId());
         resp.setBarName(barName);
-        List<PostVO> postVOList = postService.list(req.getBarId(), req.getPageNum(), req.getSize());
+        List<PostVO> postVOList = postService.listForAdmin(req.getBarId(), Constants.POST_TYPE.ALL_TYPE, req.getPageNum(), req.getSize());
         int count = postService.postCount(req.getBarId());
         resp.setCount(count);
 

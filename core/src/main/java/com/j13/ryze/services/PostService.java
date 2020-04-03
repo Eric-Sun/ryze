@@ -87,18 +87,6 @@ public class PostService {
     }
 
 
-    /**
-     * admin模块用到
-     * @param barId
-     * @param pageNum
-     * @param size
-     * @return
-     */
-    public List<PostVO> list(int barId, int pageNum, int size) {
-        return list(barId, Constants.POST_TYPE.ALL_TYPE, pageNum, size);
-    }
-
-
     public void update(int postId, String content, String title, int anonymous, int type, String imgListStr) {
         postDAO.update(postId, content, title, anonymous, type, imgListStr);
         // update cache
@@ -136,6 +124,35 @@ public class PostService {
         List<String> postIdLis =postIdListCache.randomNPostId(size);
 
         for (String postIdStr : postIdLis) {
+            Integer postId = new Integer(postIdStr);
+            PostVO vo = getSimplePost(postId);
+            // user info
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            vo.setUserName(user.getNickName());
+            vo.setUserAvatarUrl(user.getAvatarUrl());
+
+            list.add(vo);
+        }
+        return list;
+    }
+
+    /**
+     * admin模块用到
+     * @param barId
+     * @param type
+     * @param pageNum
+     * @param size
+     * @return
+     */
+    public List<PostVO> listForAdmin(int barId, int type, int pageNum, int size) {
+        List<PostVO> list = Lists.newLinkedList();
+        List<Integer> postIdList = null;
+        if (type == Constants.POST_TYPE.ALL_TYPE)
+            postIdList = postDAO.list(barId, pageNum, size);
+        else
+            postIdList = postDAO.listByType(barId, type, pageNum, size);
+
+        for (Integer postIdStr : postIdList) {
             Integer postId = new Integer(postIdStr);
             PostVO vo = getSimplePost(postId);
             // user info
