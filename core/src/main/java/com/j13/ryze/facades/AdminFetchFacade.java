@@ -101,7 +101,7 @@ public class AdminFetchFacade {
     }
 
 
-    @Action(name = "admin.fetchUser.checkImg")
+    @Action(name = "admin.fetchUser.checkImg",desc="只是为了去掉头像中的默认天涯的头像，以后不会调用")
     public CommonResultResp checkImg(CommandContext ctxt, AdminFetchUserCheckImgReq req) {
 
 
