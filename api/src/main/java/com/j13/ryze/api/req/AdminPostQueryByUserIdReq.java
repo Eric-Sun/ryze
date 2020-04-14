@@ -2,9 +2,9 @@ package com.j13.ryze.api.req;
 
 import com.j13.poppy.anno.Parameter;
 
-public class AdminPostQueryTitleReq {
+public class AdminPostQueryByUserIdReq {
     @Parameter(desc = "")
-    private String name;
+    private int userId;
     @Parameter(desc = "")
     private int barId;
     @Parameter(desc = "")
@@ -12,28 +12,20 @@ public class AdminPostQueryTitleReq {
     @Parameter(desc = "")
     private int size;
 
-    public int getSize() {
-        return size;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
     public int getPageNum() {
         return pageNum;
     }
 
     public void setPageNum(int pageNum) {
         this.pageNum = pageNum;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public int getBarId() {
@@ -44,4 +36,11 @@ public class AdminPostQueryTitleReq {
         this.barId = barId;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }

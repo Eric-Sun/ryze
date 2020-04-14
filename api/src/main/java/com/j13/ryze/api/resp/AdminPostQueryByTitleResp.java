@@ -5,7 +5,7 @@ import com.j13.poppy.anno.Parameter;
 
 import java.util.List;
 
-public class AdminPostQueryTitleResp {
+public class AdminPostQueryByTitleResp {
     @Parameter(desc = "")
     private List<AdminPostDetailResp> list = Lists.newLinkedList();
 

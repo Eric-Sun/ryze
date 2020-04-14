@@ -1,6 +1,5 @@
 package com.j13.ryze.facades;
 
-import com.alibaba.fastjson.JSON;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
@@ -187,9 +186,9 @@ public class AdminPostFacade {
         return resp;
     }
 
-    @Action(name = "admin.post.queryTitle")
-    public AdminPostQueryTitleResp queryTitle(CommandContext ctxt, AdminPostQueryTitleReq req) {
-        AdminPostQueryTitleResp resp = new AdminPostQueryTitleResp();
+    @Action(name = "admin.post.queryByTitle")
+    public AdminPostQueryByTitleResp queryByTitle(CommandContext ctxt, AdminPostQueryByTitleReq req) {
+        AdminPostQueryByTitleResp resp = new AdminPostQueryByTitleResp();
         List<PostVO> list = postDAO.queryByTtile(req.getBarId(), req.getName(), req.getPageNum(), req.getSize());
         for (PostVO vo : list) {
             AdminPostDetailResp r = new AdminPostDetailResp();
@@ -213,9 +212,9 @@ public class AdminPostFacade {
         return CommonResultResp.success();
     }
 
-    @Action(name = "admin.post.queryUserId")
-    public AdminPostQueryUserIdResp queryByUserId(CommandContext ctxt, AdminPostQueryUserIdReq req) {
-        AdminPostQueryUserIdResp resp = new AdminPostQueryUserIdResp();
+    @Action(name = "admin.post.queryByUserId")
+    public AdminPostQueryByUserIdResp queryByUserId(CommandContext ctxt, AdminPostQueryByUserIdReq req) {
+        AdminPostQueryByUserIdResp resp = new AdminPostQueryByUserIdResp();
         List<PostVO> list = postDAO.queryByUserId(req.getBarId(), req.getUserId(), req.getPageNum(), req.getSize());
         for (PostVO vo : list) {
             AdminPostDetailResp r = new AdminPostDetailResp();
@@ -225,6 +224,19 @@ public class AdminPostFacade {
             r.setUserAvatarUrl(user.getAvatarUrl());
             resp.getList().add(r);
         }
+        return resp;
+    }
+
+    @Action(name = "admin.post.queryByPostId")
+    public AdminPostQueryByPostIdResp queryByPostId(CommandContext ctxt, AdminPostQueryByPostIdReq req) {
+        AdminPostQueryByPostIdResp resp = new AdminPostQueryByPostIdResp();
+            AdminPostDetailResp r = new AdminPostDetailResp();
+            PostVO postVO = postService.getSimplePost(req.getPostId());
+            BeanUtils.copyProperties(r, postVO);
+            UserVO user = userService.getUserInfo(postVO.getUserId());
+            r.setUserName(user.getNickName());
+            r.setUserAvatarUrl(user.getAvatarUrl());
+            resp.getList().add(r);
         return resp;
     }
 

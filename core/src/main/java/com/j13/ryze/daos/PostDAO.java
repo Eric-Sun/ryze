@@ -125,7 +125,7 @@ public class PostDAO {
 
 
     public List<PostVO> queryByUserId(int barId, int userId, int pageNum, int size) {
-        String sql = "select iuser_id,bar_id,content,createtime,id," +
+        String sql = "select user_id,bar_id,content,createtime,id," +
                 "reply_count,updatetime,title,status,anonymous,`type`,img_list " +
                 "from post where user_id=? and bar_id = ? and deleted=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{userId, barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new PostRowMapper());
