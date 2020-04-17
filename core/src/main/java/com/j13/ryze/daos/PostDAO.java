@@ -1,5 +1,6 @@
 package com.j13.ryze.daos;
 
+import com.google.common.collect.Lists;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.vos.BarVO;
 import com.j13.ryze.vos.PostVO;
@@ -186,6 +187,43 @@ public class PostDAO {
     public void updateImg(int postId, String imgIdListStr) {
         String sql = "update post set img_list=? where id=?";
         j.update(sql, new Object[]{imgIdListStr, postId});
+    }
+
+    /**
+     * 为后台提供的通用插入逻辑
+     *
+     * @param barId
+     * @param postId
+     * @param title
+     * @param userId
+     * @param pageNum
+     * @param size
+     * @return
+     */
+    public List<Integer> query(int barId, int postId, String title, int userId, int pageNum, int size) {
+        String postStr = "";
+        String titleStr = "";
+        String userIdStr = "";
+        List<Object> paramList = Lists.newLinkedList();
+        paramList.add(barId);
+        paramList.add(Constants.DB.NOT_DELETED);
+        // 判断是否有postId
+        if (postId != 0) {
+            postStr = "and id=? ";
+            paramList.add(postId);
+        }
+        if (!title.equals("")) {
+            titleStr = " and title like ? ";
+            paramList.add("%" + title + "%");
+        }
+        if (userId != 0) {
+            userIdStr = " and user_id=? ";
+            paramList.add(userId);
+        }
+        paramList.add(pageNum * size);
+        paramList.add(size);
+        String sql = "select id from post where bar_id=? and deleted=? " + postStr + titleStr + userIdStr + "   order by id desc limit ?,?";
+        return j.queryForList(sql, paramList.toArray(), Integer.class);
     }
 
 

@@ -186,7 +186,7 @@ public class AdminPostFacade {
         return resp;
     }
 
-    @Action(name = "admin.post.queryByTitle")
+    @Action(name = "admin.post.queryByTitle", desc = "已废弃")
     public AdminPostQueryByTitleResp queryByTitle(CommandContext ctxt, AdminPostQueryByTitleReq req) {
         AdminPostQueryByTitleResp resp = new AdminPostQueryByTitleResp();
         List<PostVO> list = postDAO.queryByTtile(req.getBarId(), req.getName(), req.getPageNum(), req.getSize());
@@ -201,18 +201,34 @@ public class AdminPostFacade {
         return resp;
     }
 
-    @Action(name="admin.post.flushFPostReplyCount")
-    public CommonResultResp flushFPostReplyCount(CommandContext ctxt, AdminPostFlushFPostReplyCountReq req){
+    @Action(name = "admin.post.query")
+    public AdminPostQueryResp query(CommandContext ctxt, AdminPostQueryReq req) {
+        AdminPostQueryResp resp = new AdminPostQueryResp();
+        List<Integer> postIdList = postDAO.query(req.getBarId(), req.getPostId(), req.getTitle(), req.getUserId(), req.getPageNum(), req.getSize());
+        for (Integer postId : postIdList) {
+            AdminPostDetailResp r = new AdminPostDetailResp();
+            PostVO vo = postService.getSimplePost(postId);
+            BeanUtils.copyProperties(r, vo);
+            UserVO user = userService.getUserInfo(vo.getUserId());
+            r.setUserName(user.getNickName());
+            r.setUserAvatarUrl(user.getAvatarUrl());
+            resp.getList().add(r);
+        }
+        return resp;
+    }
+
+    @Action(name = "admin.post.flushFPostReplyCount")
+    public CommonResultResp flushFPostReplyCount(CommandContext ctxt, AdminPostFlushFPostReplyCountReq req) {
 
         List<Integer> fPostIdList = fPostDAO.getSourcePostIdList();
-        for(Integer fPostId : fPostIdList){
-            int replyCount =fReplyDAO.countReplyCount(fPostId);
-            fPostDAO.updateReplyCountBySourcePostId(fPostId,replyCount);
+        for (Integer fPostId : fPostIdList) {
+            int replyCount = fReplyDAO.countReplyCount(fPostId);
+            fPostDAO.updateReplyCountBySourcePostId(fPostId, replyCount);
         }
         return CommonResultResp.success();
     }
 
-    @Action(name = "admin.post.queryByUserId")
+    @Action(name = "admin.post.queryByUserId", desc = "已废弃")
     public AdminPostQueryByUserIdResp queryByUserId(CommandContext ctxt, AdminPostQueryByUserIdReq req) {
         AdminPostQueryByUserIdResp resp = new AdminPostQueryByUserIdResp();
         List<PostVO> list = postDAO.queryByUserId(req.getBarId(), req.getUserId(), req.getPageNum(), req.getSize());
@@ -227,16 +243,16 @@ public class AdminPostFacade {
         return resp;
     }
 
-    @Action(name = "admin.post.queryByPostId")
+    @Action(name = "admin.post.queryByPostId", desc = "已废弃")
     public AdminPostQueryByPostIdResp queryByPostId(CommandContext ctxt, AdminPostQueryByPostIdReq req) {
         AdminPostQueryByPostIdResp resp = new AdminPostQueryByPostIdResp();
-            AdminPostDetailResp r = new AdminPostDetailResp();
-            PostVO postVO = postService.getSimplePost(req.getPostId());
-            BeanUtils.copyProperties(r, postVO);
-            UserVO user = userService.getUserInfo(postVO.getUserId());
-            r.setUserName(user.getNickName());
-            r.setUserAvatarUrl(user.getAvatarUrl());
-            resp.getList().add(r);
+        AdminPostDetailResp r = new AdminPostDetailResp();
+        PostVO postVO = postService.getSimplePost(req.getPostId());
+        BeanUtils.copyProperties(r, postVO);
+        UserVO user = userService.getUserInfo(postVO.getUserId());
+        r.setUserName(user.getNickName());
+        r.setUserAvatarUrl(user.getAvatarUrl());
+        resp.getList().add(r);
         return resp;
     }
 
