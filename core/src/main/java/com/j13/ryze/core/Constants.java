@@ -97,6 +97,8 @@ public class Constants {
         public static int WECHAT = 1;
         public static int TOUTIAO = 2;
         public static int BAIDU = 3;
+        // 通过短信验证码登陆
+        public static int MOBILE_MESSAGE_CODE=4;
     }
 
     public static class POST_STATUS {

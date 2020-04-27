@@ -2,7 +2,6 @@ package com.j13.ryze.facades;
 
 import com.alibaba.fastjson.JSON;
 import com.j13.poppy.JedisManager;
-import com.j13.poppy.TokenManager;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.anno.NeedToken;
 import com.j13.poppy.core.CommandContext;
@@ -10,8 +9,8 @@ import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.util.BeanUtils;
 import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.*;
+import com.j13.ryze.cache.TokenCache;
 import com.j13.ryze.core.Constants;
-import com.j13.ryze.core.UserTokenValue;
 import com.j13.ryze.daos.UserDAO;
 import com.j13.ryze.daos.ThirdPartInfoDAO;
 import com.j13.ryze.services.ImgService;
@@ -38,11 +37,8 @@ public class UserFacade {
     UserService userService;
     @Autowired
     ImgService imgService;
-
     @Autowired
-    TokenManager tokenManager;
-    @Autowired
-    JedisManager jedisManager;
+    TokenCache tokenCache;
 
 
     @Action(name = "user.wechatLogin", desc = "通过微信客户端尝试登录，如果没有注册的话会通过加密数据进行注册")
@@ -90,23 +86,7 @@ public class UserFacade {
             userDAO.updateInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
             thirdPartInfoDAO.updateSessionKey(openId, sessionKey, Constants.USER_SOURCE_TYPE.WECHAT);
         }
-        // 清楚之前user的token信息
-        String oldValueStr = jedisManager.get(userId + ":t");
-        if (oldValueStr != null) {
-            UserTokenValue oldValue = JSON.parseObject(oldValueStr, UserTokenValue.class);
-            String oldT = oldValue.getT();
-            jedisManager.delete(oldT);
-            LOG.debug("clean old t. t={}", oldT);
-        }
-        String t = tokenManager.genT();
-        // 设置token，可以查询到uid
-        tokenManager.setTicket(t, userId);
-        // 设置user:t，可以反查到token和其他信息
-        UserTokenValue value = new UserTokenValue(openId, sessionKey, t);
-        String valueStr = JSON.toJSONString(value);
-        jedisManager.set(userId + ":t", valueStr);
-        LOG.debug("add new t. t={},userId={},:t={}", new Object[]{t, userId, valueStr});
-
+        String token = userService.resetTokenCache(userId);
 
         // 保存客户端的userToken
         if (req.getUserToken() != null) {
@@ -118,7 +98,7 @@ public class UserFacade {
 
         WechatLoginResponse resp = new WechatLoginResponse();
         resp.setUserId(userId);
-        resp.setT(t);
+        resp.setT(token);
         return resp;
     }
 
@@ -168,24 +148,7 @@ public class UserFacade {
             userDAO.updateInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
             thirdPartInfoDAO.updateSessionKey(openId, sessionKey, Constants.USER_SOURCE_TYPE.TOUTIAO);
         }
-        // 清楚之前user的token信息
-        String oldValueStr = jedisManager.get(userId + ":t");
-        if (oldValueStr != null) {
-            UserTokenValue oldValue = JSON.parseObject(oldValueStr, UserTokenValue.class);
-            String oldT = oldValue.getT();
-            jedisManager.delete(oldT);
-            LOG.debug("clean old t. t={}", oldT);
-        }
-        String t = tokenManager.genT();
-        // 设置token，可以查询到uid
-        tokenManager.setTicket(t, userId);
-        // 设置user:t，可以反查到token和其他信息
-        UserTokenValue value = new UserTokenValue(openId, sessionKey, t);
-        String valueStr = JSON.toJSONString(value);
-        jedisManager.set(userId + ":t", valueStr);
-        LOG.debug("add new t. t={},userId={},:t={}", new Object[]{t, userId, valueStr});
-
-
+        String token = userService.resetTokenCache(userId);
         // 保存客户端的userToken
         if (req.getUserToken() != null) {
             userService.setUserToken(userId, req.getUserToken());
@@ -196,7 +159,7 @@ public class UserFacade {
 
         ToutiaoLoginResponse resp = new ToutiaoLoginResponse();
         resp.setUserId(userId);
-        resp.setT(t);
+        resp.setT(token);
         return resp;
     }
 
@@ -246,23 +209,7 @@ public class UserFacade {
             userDAO.updateInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
             thirdPartInfoDAO.updateSessionKey(openId, sessionKey, Constants.USER_SOURCE_TYPE.BAIDU);
         }
-        // 清楚之前user的token信息
-        String oldValueStr = jedisManager.get(userId + ":t");
-        if (oldValueStr != null) {
-            UserTokenValue oldValue = JSON.parseObject(oldValueStr, UserTokenValue.class);
-            String oldT = oldValue.getT();
-            jedisManager.delete(oldT);
-            LOG.debug("clean old t. t={}", oldT);
-        }
-        String t = tokenManager.genT();
-        // 设置token，可以查询到uid
-        tokenManager.setTicket(t, userId);
-        // 设置user:t，可以反查到token和其他信息
-        UserTokenValue value = new UserTokenValue(openId, sessionKey, t);
-        String valueStr = JSON.toJSONString(value);
-        jedisManager.set(userId + ":t", valueStr);
-        LOG.debug("add new t. t={},userId={},:t={}", new Object[]{t, userId, valueStr});
-
+        String token = userService.resetTokenCache(userId);
 
         // 保存客户端的userToken
         if (req.getUserToken() != null) {
@@ -274,7 +221,7 @@ public class UserFacade {
 
         BaiduLoginResponse resp = new BaiduLoginResponse();
         resp.setUserId(userId);
-        resp.setT(t);
+        resp.setT(token);
         return resp;
     }
 
@@ -302,7 +249,7 @@ public class UserFacade {
     public CommonResultResp checkToken(CommandContext ctxt, UserCheckTokenReq req) {
         CommonResultResp resp = new CommonResultResp();
         String t = req.getT();
-        int id = tokenManager.checkTicket(t);
+        int id = tokenCache.getToken2UserId(t);
         LOG.info("checkToken. t={},id={}", t, id);
         if (id == 0) {
             return CommonResultResp.failure();
@@ -330,6 +277,31 @@ public class UserFacade {
         userService.modifyNameAndAvatar(ctxt.getUid(), req.getNewName(), req.getNewImgId());
 
 
+        return CommonResultResp.success();
+    }
+
+
+    @Action(name = "user.mobilePasswordLogin", desc = "暂时不开发这个接口，主推手机验证码登陆")
+    public UserMobilePasswordLoginResp mobilePasswordLogin(CommandContext ctxt, UserMobilePasswordLoginReq req) {
+        UserMobilePasswordLoginResp resp = new UserMobilePasswordLoginResp();
+
+
+        return resp;
+    }
+
+
+    @Action(name = "user.mobileMessageCodeLogin", desc = "首页注册登陆一体接口，如果没有注册就开始注册操作，然后登陆")
+    public UserMobileMessageCodeLoginResp mobileMessageCodeLogin(CommandContext ctxt, UserMobileMessageCodeLoginReq req) {
+        String mobile = req.getMobile();
+        String messageCode = req.getMessagecode();
+        UserMobileMessageCodeLoginResp resp = userService.mobileMessageCodeLogin(mobile, messageCode);
+        return resp;
+    }
+
+
+    @Action(name = "user.sendMessageCode", desc = "")
+    public CommonResultResp sendMessageCode(CommandContext ctxt, UserSendMessageCodeReq req) {
+        userService.sendMessageCode(req.getMobile());
         return CommonResultResp.success();
     }
 

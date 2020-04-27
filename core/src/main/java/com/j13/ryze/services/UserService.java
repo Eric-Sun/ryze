@@ -1,12 +1,20 @@
 package com.j13.ryze.services;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.j13.poppy.exceptions.CommonException;
 import com.j13.ryze.api.req.PostDetailResp;
 import com.j13.ryze.api.resp.Level2ReplyDetailResp;
 import com.j13.ryze.api.resp.ReplyDetailResp;
+import com.j13.ryze.api.resp.UserMobileMessageCodeLoginResp;
+import com.j13.ryze.cache.MessageCodeCache;
+import com.j13.ryze.cache.TokenCache;
 import com.j13.ryze.core.Constants;
+import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.core.Logger;
 import com.j13.ryze.daos.*;
+import com.j13.ryze.facades.UserTokenValue;
+import com.j13.ryze.utils.CommonJedisManager;
 import com.j13.ryze.utils.DateUtil;
 import com.j13.ryze.vos.*;
 import org.slf4j.LoggerFactory;
@@ -26,6 +34,7 @@ import java.util.Random;
 public class UserService {
     private static org.slf4j.Logger LOG = LoggerFactory.getLogger(UserService.class);
 
+
     @Autowired
     UserDAO userDAO;
     @Autowired
@@ -39,6 +48,13 @@ public class UserService {
     UserLockDAO userLockDAO;
     @Autowired
     User2UserTokenDAO user2UserTokenDAO;
+    @Autowired
+    IAcsClientService iAcsClientService;
+    @Autowired
+    TokenCache tokenCache;
+    @Autowired
+    MessageCodeCache messageCodeCache;
+
 
     private List<Integer> machineUserList = Lists.newLinkedList();
 
@@ -58,6 +74,11 @@ public class UserService {
 
     public String randomAnonNickName() {
         String anonNickName = "匿名侠" + random.nextInt(1000000);
+        return anonNickName;
+    }
+
+    public String randomNickName() {
+        String anonNickName = "豆豆" + random.nextInt(1000000);
         return anonNickName;
     }
 
@@ -243,12 +264,12 @@ public class UserService {
             // 如果有userId的话，查询是否有一个已经存在的
             String userToken = user2UserTokenDAO.getUserToken(userId);
             if (userToken == null) {
-                LOG.info("userId={}. no userToken. gen userToken. userToken={}", userId,userToken);
+                LOG.info("userId={}. no userToken. gen userToken. userToken={}", userId, userToken);
                 userToken = genUserToken();
                 user2UserTokenDAO.add(userId, userToken);
                 return userToken;
             } else {
-                LOG.info("userId={}. have userToken. userToken={}", userId,userToken);
+                LOG.info("userId={}. have userToken. userToken={}", userId, userToken);
                 return userToken;
             }
         }
@@ -280,5 +301,81 @@ public class UserService {
         } else {
             user2UserTokenDAO.updateUserToken(userId, userToken);
         }
+    }
+
+    /**
+     * 通过手机号给用户发送登陆验证码
+     * 需要插入到缓存当中
+     * 验证码为4位
+     *
+     * @param mobile
+     */
+    public void sendMessageCode(String mobile) {
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 4; i++) {
+            sb.append(random.nextInt(10));
+        }
+        String messageCode = sb.toString();
+        messageCodeCache.setMessageCode(mobile, messageCode);
+        iAcsClientService.sendMessageCode(mobile, messageCode);
+    }
+
+    /**
+     * 处理用户基于mobile和验证码的形式进行登陆，如果未注册过会帮助进行注册
+     *
+     * @param mobile
+     * @param messageCode
+     */
+    public UserMobileMessageCodeLoginResp mobileMessageCodeLogin(String mobile, String messageCode) {
+        UserMobileMessageCodeLoginResp resp = new UserMobileMessageCodeLoginResp();
+        // 判断mobile是否已经注册过了，如果注册过了，判断这个code是否对应该mobile，否则返回登陆失败
+        if (userDAO.checkMobileLogined(mobile)) {
+            // 已经注册过，看看是否可以登陆成功
+
+            String cachedMessageCode = messageCodeCache.getMessageCode(mobile);
+            if (cachedMessageCode.equals(messageCode)) {
+                // 可以进行登陆
+                int userId = userDAO.getUserIdByMobile(mobile);
+                String token = resetTokenCache(userId);
+                resp.setT(token);
+                resp.setUserId(userId);
+                return resp;
+            } else {
+                // 验证不通过
+                throw new CommonException(ErrorCode.User.MESSAGE_CODE_WRONG);
+            }
+        } else {
+            // 没有注册过，需要注册   默认的图片为25
+            int userId = userDAO.register(randomNickName(), randomAnonNickName(), 25, Constants.USER_SOURCE_TYPE.MOBILE_MESSAGE_CODE);
+            // 全都设置成默认值
+            userDAO.registerUserInfoFromWechat(userId, "", "", "", -1, "");
+            String token = resetTokenCache(userId);
+            resp.setT(token);
+            resp.setUserId(userId);
+        }
+        return resp;
+    }
+
+    /**
+     * 用于注册和登陆时候的重置t以及t和userId的所有对应关系
+     *
+     * @param userId
+     * @return 返回对应的新的token
+     */
+    public String resetTokenCache(int userId) {
+        // 删除老的token和userId2Token
+        String oldT = tokenCache.getUserId2Token(userId);
+        tokenCache.deleteToken2UserId(oldT);
+        tokenCache.deleteUserId2Token(userId);
+        LOG.debug("clean old token. token={}, userId={}", oldT, userId);
+
+        // 生成一个新的token
+        String token = tokenCache.genToken();
+
+        tokenCache.setUserId2Token(userId, token);
+        tokenCache.setToken2UserId(token, userId);
+        LOG.debug("add new token. token={},userId={}", new Object[]{token, userId});
+        return token;
     }
 }

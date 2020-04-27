@@ -15,6 +15,8 @@ public class ErrorCode {
         public static int NEED_LOGIN = 1004;
         public static int USER_HAS_BEEN_LOCKED = 1005;
         public static int USER_HAS_BEEN_UNLOCKED = 1006;
+        // 验证码错误，登陆失败
+        public static int MESSAGE_CODE_WRONG=1007;
 
     }
 

@@ -1,4 +1,4 @@
-package com.j13.ryze.core;
+package com.j13.ryze.facades;
 
 public class UserTokenValue {
     private String sessionKey;
@@ -37,7 +37,6 @@ public class UserTokenValue {
     public void setSessionKey(String sessionKey) {
         this.sessionKey = sessionKey;
     }
-
 
 
 }

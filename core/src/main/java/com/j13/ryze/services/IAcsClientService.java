@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.oss.OSSClient;
+import com.aliyuncs.CommonRequest;
+import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
@@ -11,6 +13,7 @@ import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.green.model.v20180509.TextScanRequest;
 import com.aliyuncs.http.FormatType;
 import com.aliyuncs.http.HttpResponse;
+import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.j13.poppy.config.PropertiesConfiguration;
@@ -41,6 +44,32 @@ public class IAcsClientService {
         IClientProfile profile = DefaultProfile.getProfile("cn-shanghai", accessKeyId, accessKeySecret);
         client = new DefaultAcsClient(profile);
         LOG.info("IAcsClientService init successfully.");
+    }
+
+    /**
+     * 发送验证码短信
+     *
+     * @param mobile
+     * @param messageCode
+     */
+    public void sendMessageCode(String mobile, String messageCode) {
+
+        CommonRequest request = new CommonRequest();
+        request.setMethod(MethodType.POST);
+        request.setDomain("dysmsapi.aliyuncs.com");
+        request.setVersion("2017-05-25");
+        request.setAction("SendSms");
+        request.putQueryParameter("RegionId", "cn-hangzhou");
+        request.putQueryParameter("PhoneNumbers", mobile + "");
+        request.putQueryParameter("SignName", "豆子社区");
+        request.putQueryParameter("TemplateCode", "SMS_189027132");
+        request.putQueryParameter("TemplateParam", "{\"code\":\"" + messageCode + "\"}");
+        try {
+            CommonResponse response = client.getCommonResponse(request);
+            LOG.info("send message code. mobile={},code={},response={}", mobile, messageCode, response.getData());
+        } catch (Exception e) {
+            LOG.error("send message code. mobile={},code={}", mobile, messageCode, e);
+        }
     }
 
 

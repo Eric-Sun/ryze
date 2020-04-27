@@ -1,1 +1,4 @@
 # alter table f_post add column reply_count int default 0 after post_user_id
+
+# 2020-4-27，增加短信验证码登陆需要增加mobile字段
+alter table user add column mobile varchar(12) default '' after id

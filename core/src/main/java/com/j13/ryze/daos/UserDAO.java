@@ -172,9 +172,7 @@ public class UserDAO {
     /**
      * 获取所有机器人用户
      *
-     * @return
-     * 123456
-     *
+     * @return 123456
      */
     public List<Integer> getAllMachineUser() {
         String sql = "select id from user where source_type=?";
@@ -200,5 +198,22 @@ public class UserDAO {
     public void modifyNameAndAvatar(int userId, String newName, int newImgId) {
         String sql = "update user set m_nickname=?, m_avatar_img_id=? where id=?";
         j.update(sql, new Object[]{newName, newImgId, userId});
+    }
+
+    /**
+     * 检查mobile是否已经注册过了，如果注册过返回true，否则false
+     *
+     * @param mobile
+     * @return
+     */
+    public boolean checkMobileLogined(String mobile) {
+        String sql = "select count(1) from user where mobile=? and deleted=?";
+        int count = j.queryForObject(sql, new Object[]{mobile, Constants.DB.NOT_DELETED}, Integer.class);
+        return count == 0 ? false : true;
+    }
+
+    public int getUserIdByMobile(String mobile) {
+        String sql = "select id from user where mobile=? and deleted=?";
+        return j.queryForObject(sql, new Object[]{mobile, Constants.DB.NOT_DELETED}, Integer.class);
     }
 }
