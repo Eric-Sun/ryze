@@ -84,7 +84,7 @@ public class AdminFetchFacade {
 
             String anonNickName = "匿名侠" + random.nextInt(1000000);
             // 插入到user_info表中
-            int userId = userDAO.register(userNickName, anonNickName, imgVO.getId(), Constants.USER_SOURCE_TYPE.MACHINE);
+            int userId = userDAO.register(userNickName, anonNickName, imgVO.getId(), Constants.USER_SOURCE_TYPE.MACHINE,"");
 
             userDAO.registerUserInfoFromWechat(userId, "Chaoyang", "China", "Beijing", Constants.User.Gender.NO, "zh_CN");
             LOG.info("get userName={}  currentId={}", userNickName, currentId);

@@ -334,7 +334,10 @@ public class UserService {
             // 已经注册过，看看是否可以登陆成功
 
             String cachedMessageCode = messageCodeCache.getMessageCode(mobile);
+            if(cachedMessageCode==null)
+                throw new CommonException(ErrorCode.User.MESSAGE_CODE_WRONG);
             if (cachedMessageCode.equals(messageCode)) {
+                messageCodeCache.deleteMessageCode(mobile);
                 // 可以进行登陆
                 int userId = userDAO.getUserIdByMobile(mobile);
                 String token = resetTokenCache(userId);
@@ -346,13 +349,21 @@ public class UserService {
                 throw new CommonException(ErrorCode.User.MESSAGE_CODE_WRONG);
             }
         } else {
-            // 没有注册过，需要注册   默认的图片为25
-            int userId = userDAO.register(randomNickName(), randomAnonNickName(), 25, Constants.USER_SOURCE_TYPE.MOBILE_MESSAGE_CODE);
-            // 全都设置成默认值
-            userDAO.registerUserInfoFromWechat(userId, "", "", "", -1, "");
-            String token = resetTokenCache(userId);
-            resp.setT(token);
-            resp.setUserId(userId);
+            String cachedMessageCode = messageCodeCache.getMessageCode(mobile);
+            if(cachedMessageCode==null)
+                throw new CommonException(ErrorCode.User.MESSAGE_CODE_WRONG);
+            if (cachedMessageCode.equals(messageCode)) {
+                // 没有注册过，需要注册   默认的图片为25
+                int userId = userDAO.register(randomNickName(), randomAnonNickName(), 25, Constants.USER_SOURCE_TYPE.MOBILE_MESSAGE_CODE, mobile);
+                // 全都设置成默认值
+                userDAO.registerUserInfoFromWechat(userId, "", "", "", -1, "");
+                String token = resetTokenCache(userId);
+                resp.setT(token);
+                resp.setUserId(userId);
+                messageCodeCache.deleteMessageCode(mobile);
+            }else{
+                throw new CommonException(ErrorCode.User.MESSAGE_CODE_WRONG);
+            }
         }
         return resp;
     }

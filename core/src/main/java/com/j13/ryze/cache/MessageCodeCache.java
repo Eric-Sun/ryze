@@ -39,4 +39,8 @@ public class MessageCodeCache implements Cache {
         }
     }
 
+    public void deleteMessageCode(String mobile){
+        jedisManager.delete(PREFIX + "code:" + mobile);
+    }
+
 }

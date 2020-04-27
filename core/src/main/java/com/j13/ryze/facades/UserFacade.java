@@ -65,7 +65,7 @@ public class UserFacade {
             String anonNickName = userService.randomAnonNickName();
             // 微信提供的头像存在imgDAO中
             int imgId = imgService.saveWechatAvatar(data.getAvatarUrl());
-            userId = userDAO.register(data.getNickName(), anonNickName, imgId, Constants.USER_SOURCE_TYPE.WECHAT);
+            userId = userDAO.register(data.getNickName(), anonNickName, imgId, Constants.USER_SOURCE_TYPE.WECHAT, "");
             userDAO.registerUserInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
             thirdPartInfoDAO.insert(userId, openId, sessionKey, Constants.USER_SOURCE_TYPE.WECHAT);
         } else {
@@ -127,7 +127,7 @@ public class UserFacade {
             String anonNickName = userService.randomAnonNickName();
             // 微信提供的头像存在imgDAO中
             int imgId = imgService.saveToutiaoAvatar(data.getAvatarUrl());
-            userId = userDAO.register(data.getNickName(), anonNickName, imgId, Constants.USER_SOURCE_TYPE.TOUTIAO);
+            userId = userDAO.register(data.getNickName(), anonNickName, imgId, Constants.USER_SOURCE_TYPE.TOUTIAO, "");
             userDAO.registerUserInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
             thirdPartInfoDAO.insert(userId, openId, sessionKey, Constants.USER_SOURCE_TYPE.TOUTIAO);
         } else {
@@ -188,7 +188,7 @@ public class UserFacade {
             String anonNickName = userService.randomAnonNickName();
             // 微信提供的头像存在imgDAO中
             int imgId = imgService.saveBaiduAvatar(data.getAvatarUrl());
-            userId = userDAO.register(data.getNickName(), anonNickName, imgId, Constants.USER_SOURCE_TYPE.BAIDU);
+            userId = userDAO.register(data.getNickName(), anonNickName, imgId, Constants.USER_SOURCE_TYPE.BAIDU, "");
             userDAO.registerUserInfoFromWechat(userId, data.getCity(), data.getCountry(), data.getProvince(), data.getGender(), data.getLanguage());
             thirdPartInfoDAO.insert(userId, openId, sessionKey, Constants.USER_SOURCE_TYPE.BAIDU);
         } else {
@@ -284,8 +284,6 @@ public class UserFacade {
     @Action(name = "user.mobilePasswordLogin", desc = "暂时不开发这个接口，主推手机验证码登陆")
     public UserMobilePasswordLoginResp mobilePasswordLogin(CommandContext ctxt, UserMobilePasswordLoginReq req) {
         UserMobilePasswordLoginResp resp = new UserMobilePasswordLoginResp();
-
-
         return resp;
     }
 
@@ -293,7 +291,7 @@ public class UserFacade {
     @Action(name = "user.mobileMessageCodeLogin", desc = "首页注册登陆一体接口，如果没有注册就开始注册操作，然后登陆")
     public UserMobileMessageCodeLoginResp mobileMessageCodeLogin(CommandContext ctxt, UserMobileMessageCodeLoginReq req) {
         String mobile = req.getMobile();
-        String messageCode = req.getMessagecode();
+        String messageCode = req.getMessageCode();
         UserMobileMessageCodeLoginResp resp = userService.mobileMessageCodeLogin(mobile, messageCode);
         return resp;
     }

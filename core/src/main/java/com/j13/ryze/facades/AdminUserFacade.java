@@ -48,7 +48,7 @@ public class AdminUserFacade {
                 String nickName = strs[0];
                 int sex = strs[1].equals("男") ? Constants.USER_SEX.MALE : Constants.USER_SEX.FEMALE;
                 String anonNickName = "匿名侠" + random.nextInt(1000000);
-                int userId = userDAO.register(nickName, anonNickName, -1, Constants.USER_SOURCE_TYPE.MACHINE);
+                int userId = userDAO.register(nickName, anonNickName, -1, Constants.USER_SOURCE_TYPE.MACHINE,"");
                 // 插入到user_info表中
                 userDAO.updateInfoFromWechat(userId, "", "", "", sex, "");
                 String newLine = strs[0] + "," + strs[1] + "," + userId + "\n";

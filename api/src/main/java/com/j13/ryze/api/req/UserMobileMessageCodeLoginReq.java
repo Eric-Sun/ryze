@@ -6,7 +6,7 @@ public class UserMobileMessageCodeLoginReq {
     @Parameter(desc = "")
     private String mobile;
     @Parameter(desc = "")
-    private String messagecode;
+    private String messageCode;
 
     public String getMobile() {
         return mobile;
@@ -16,11 +16,11 @@ public class UserMobileMessageCodeLoginReq {
         this.mobile = mobile;
     }
 
-    public String getMessagecode() {
-        return messagecode;
+    public String getMessageCode() {
+        return messageCode;
     }
 
-    public void setMessagecode(String messagecode) {
-        this.messagecode = messagecode;
+    public void setMessageCode(String messageCode) {
+        this.messageCode = messageCode;
     }
 }

@@ -68,10 +68,10 @@ public class UserDAO {
 
 
     public int register(final String nickName, final String anonNickName,
-                        final int avatarImgId, final int sourceType) {
+                        final int avatarImgId, final int sourceType,final String mobile) {
         KeyHolder holder = new GeneratedKeyHolder();
-        final String sql = "insert into user(nickname,anon_nickname,avatar_img_id,source_type,createtime,updatetime) " +
-                "values(?,?,?,?,now(),now())";
+        final String sql = "insert into user(nickname,anon_nickname,avatar_img_id,source_type,createtime,updatetime,mobile) " +
+                "values(?,?,?,?,now(),now(),?)";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -80,6 +80,7 @@ public class UserDAO {
                 pstmt.setString(2, anonNickName);
                 pstmt.setInt(3, avatarImgId);
                 pstmt.setInt(4, sourceType);
+                pstmt.setString(5,mobile);
                 return pstmt;
             }
         }, holder);
