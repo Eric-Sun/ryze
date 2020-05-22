@@ -209,7 +209,7 @@ public class UserDAO {
      */
     public boolean checkMobileLogined(String mobile) {
         String sql = "select count(1) from user where mobile=? and deleted=?";
-        int count = j.queryForObject(sql, new Object[]{mobile, Constants.DB.NOT_DELETED}, Integer.class);
+            int count = j.queryForObject(sql, new Object[]{mobile, Constants.DB.NOT_DELETED}, Integer.class);
         return count == 0 ? false : true;
     }
 
