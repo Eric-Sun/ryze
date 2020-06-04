@@ -98,7 +98,7 @@ public class Constants {
         public static int TOUTIAO = 2;
         public static int BAIDU = 3;
         // 通过短信验证码登陆
-        public static int MOBILE_MESSAGE_CODE=4;
+        public static int MOBILE_MESSAGE_CODE = 4;
     }
 
     public static class POST_STATUS {
@@ -155,6 +155,11 @@ public class Constants {
             public static int READED = 1;
 
         }
+    }
+
+    public static class TOPIC {
+        public static int DEFAULT_TOPIC_FLAG = 1;
+        public static int COMMON_TOPIC_FLAG = 0;
     }
 
     public static class UER_MEMBER {

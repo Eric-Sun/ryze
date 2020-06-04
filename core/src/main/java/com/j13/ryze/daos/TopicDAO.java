@@ -37,7 +37,29 @@ public class TopicDAO {
         return holder.getKey().intValue();
     }
 
-    public TopicVO get(int topicId){
+    public int insertDefaultTopic(final String topicName) {
+        KeyHolder holder = new GeneratedKeyHolder();
+        final String sql = "insert into topic (name,is_default,createtime,updatetime)" +
+                " values (?,?,now(),now())";
+        j.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                pstmt.setString(1, topicName);
+                pstmt.setInt(2, Constants.TOPIC.DEFAULT_TOPIC_FLAG);
+                return pstmt;
+            }
+        }, holder);
+        return holder.getKey().intValue();
+
+    }
+
+    public int getDefaultTopicId() {
+        String sql = "select id from topic where is_default=? and deleted=?";
+        return j.queryForObject(sql, new Object[]{Constants.TOPIC.DEFAULT_TOPIC_FLAG, Constants.DB.NOT_DELETED}, Integer.class);
+    }
+
+    public TopicVO get(int topicId) {
         String sql = "select id,name,createtime from topic where deleted=? order by id desc ";
         return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED}, new RowMapper<TopicVO>() {
             @Override
@@ -61,7 +83,7 @@ public class TopicDAO {
         j.update(sql, new Object[]{Constants.DB.NOT_DELETED}, topicId);
     }
 
-    public List<TopicVO> listTopic(){
+    public List<TopicVO> listTopic() {
         String sql = "select id,name,createtime from topic where deleted=? order by id desc ";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED}, new RowMapper<TopicVO>() {
             @Override

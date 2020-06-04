@@ -45,5 +45,9 @@ public class PostTopicDAO {
         j.update(sql, new Object[]{Constants.DB.NOT_DELETED, postTopicId});
     }
 
+    public void deleteByTopicId(int topicId) {
+        String sql = "update post_topic set deleted=? where topic_id=?";
+        j.update(sql, new Object[]{Constants.DB.NOT_DELETED, topicId});
+    }
 
 }
