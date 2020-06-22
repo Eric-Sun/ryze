@@ -1,6 +1,9 @@
 package com.j13.ryze.api.req;
 
+import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Parameter;
+
+import java.util.List;
 
 public class AdminPostAddReq {
     @Parameter(desc = "")
@@ -17,6 +20,16 @@ public class AdminPostAddReq {
     private int type;
     @Parameter(desc = "")
     private String imgList;
+    @Parameter(desc = "")
+    private List<Integer> topicIdList = Lists.newLinkedList();
+
+    public List<Integer> getTopicIdList() {
+        return topicIdList;
+    }
+
+    public void setTopicIdList(List<Integer> topicIdList) {
+        this.topicIdList = topicIdList;
+    }
 
     public String getImgList() {
         return imgList;

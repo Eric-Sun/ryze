@@ -6,6 +6,7 @@ import com.j13.poppy.config.PropertiesConfiguration;
 import com.j13.poppy.exceptions.CommonException;
 import com.j13.ryze.api.req.PostDetailResp;
 import com.j13.ryze.cache.PostIdListCache;
+import com.j13.ryze.cache.TopicCache;
 import com.j13.ryze.core.Constants;
 import com.j13.ryze.core.ErrorCode;
 import com.j13.ryze.daos.*;
@@ -46,6 +47,11 @@ public class PostService {
     StarPostShowlogDAO starPostShowlogDAO;
     @Autowired
     PostIdListCache postIdListCache;
+    @Autowired
+    PostTopicDAO postTopicDAO;
+    @Autowired
+    TopicCache topicCache;
+
 
     private int POST_CONTENT_CUT_LENGTH;
 
@@ -70,10 +76,25 @@ public class PostService {
             LOG.debug("simplePost exist. catalog={},postId={}", SIMPLE_POST_CATALOG, postId);
         }
         parsePostImgList(vo);
+
+        // user info
+        UserVO user = userService.getUserInfo(vo.getUserId());
+        vo.setUserName(user.getNickName());
+        vo.setUserAvatarUrl(user.getAvatarUrl());
+
+        // 查询帖子的话题信息
+
+        List<Integer> topicIdList = postTopicDAO.getAllTopicIds(postId);
+        for (Integer topicId : topicIdList) {
+            TopicVO topicVO = topicCache.get(topicId);
+            vo.getTopicList().add(topicVO);
+        }
+
+
         return vo;
     }
 
-    public void flushSimplePost(int postId){
+    public void flushSimplePost(int postId) {
         PostVO vo = postDAO.get(postId);
         commonJedisManager.set(SIMPLE_POST_CATALOG, postId, vo);
         LOG.debug("simplePost flushed. catalog={},postId={}", SIMPLE_POST_CATALOG, postId);
@@ -95,9 +116,13 @@ public class PostService {
         LOG.info("update the post object cache. postId={}", postId);
     }
 
-    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList) {
+    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList,List<Integer> topicIdList) {
         int postId = postDAO.add(uid, barId, title, content, anonymous, type, imgList);
         barDAO.addPostCount(barId);
+        // 添加帖子的topic列表
+        for(Integer topicId : topicIdList){
+            postTopicDAO.insert(postId,topicId);
+        }
         return postId;
     }
 
@@ -108,6 +133,7 @@ public class PostService {
 
     /**
      * 客户端模块用到
+     *
      * @param barId
      * @param type
      * @param pageNum
@@ -121,15 +147,11 @@ public class PostService {
 //            postIdList = postDAO.list(barId, pageNum, size);
 //        else
 //            postIdList = postDAO.listByType(barId, type, pageNum, size);
-        List<String> postIdLis =postIdListCache.randomNPostId(size);
+        List<String> postIdLis = postIdListCache.randomNPostId(size);
 
         for (String postIdStr : postIdLis) {
             Integer postId = new Integer(postIdStr);
             PostVO vo = getSimplePost(postId);
-            // user info
-            UserVO user = userService.getUserInfo(vo.getUserId());
-            vo.setUserName(user.getNickName());
-            vo.setUserAvatarUrl(user.getAvatarUrl());
 
             list.add(vo);
         }
@@ -138,6 +160,7 @@ public class PostService {
 
     /**
      * admin模块用到
+     *
      * @param barId
      * @param type
      * @param pageNum
@@ -155,10 +178,7 @@ public class PostService {
         for (Integer postIdStr : postIdList) {
             Integer postId = new Integer(postIdStr);
             PostVO vo = getSimplePost(postId);
-            // user info
-            UserVO user = userService.getUserInfo(vo.getUserId());
-            vo.setUserName(user.getNickName());
-            vo.setUserAvatarUrl(user.getAvatarUrl());
+
 
             list.add(vo);
         }
@@ -199,10 +219,6 @@ public class PostService {
         List<Integer> postIdList = postDAO.offlineList(barId, pageNum, size);
         for (Integer postId : postIdList) {
             PostVO vo = getSimplePost(postId);
-            // user info
-            UserVO user = userService.getUserInfo(vo.getUserId());
-            vo.setUserName(user.getNickName());
-            vo.setUserAvatarUrl(user.getAvatarUrl());
 
             list.add(vo);
         }
@@ -214,10 +230,6 @@ public class PostService {
         List<Integer> postIdList = postDAO.deletedList(barId, pageNum, size);
         for (Integer postId : postIdList) {
             PostVO vo = getSimplePost(postId);
-            // user info
-            UserVO user = userService.getUserInfo(vo.getUserId());
-            vo.setUserName(user.getNickName());
-            vo.setUserAvatarUrl(user.getAvatarUrl());
 
             list.add(vo);
         }
@@ -259,5 +271,15 @@ public class PostService {
      */
     public void addStarPostShowlog(String userToken, Integer postId) {
         starPostShowlogDAO.add(userToken, postId);
+    }
+
+    public void updateTopicList(int postId, List<Integer> topicIdList) {
+        List<Integer> oldTopicIdList = postTopicDAO.getAllTopicIds(postId);
+
+        老的已经不存在的需要删除 新的需要添加 需要数组的策略
+
+
+
+
     }
 }

@@ -15,6 +15,7 @@ import com.j13.ryze.services.ReplyService;
 import com.j13.ryze.services.UserService;
 import com.j13.ryze.vos.ImgVO;
 import com.j13.ryze.vos.PostVO;
+import com.j13.ryze.vos.TopicVO;
 import com.j13.ryze.vos.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -61,7 +62,7 @@ public class AdminPostFacade {
 //        }
 
         int postId = postService.add(req.getUserId(),
-                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgList());
+                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgList(), req.getTopicIdList());
         resp.setPostId(postId);
         return resp;
     }
@@ -92,6 +93,14 @@ public class AdminPostFacade {
                 imgResp.setUrl(imgVO.getUrl());
                 detailResp.getImgList().add(imgResp);
             }
+
+            for (TopicVO topicVO : postVO.getTopicList()) {
+                AdminTopicDetailResp topicResp = new AdminTopicDetailResp();
+                topicResp.setTopicId(topicVO.getId());
+                topicResp.setTopicName(topicVO.getName());
+                detailResp.getTopicList().add(topicResp);
+            }
+
             resp.getList().add(detailResp);
         }
         return resp;
@@ -127,11 +136,25 @@ public class AdminPostFacade {
             resp.getImgList().add(imgResp);
         }
 
+        for (TopicVO topicVO : vo.getTopicList()) {
+            AdminTopicDetailResp topicResp = new AdminTopicDetailResp();
+            topicResp.setTopicId(topicVO.getId());
+            topicResp.setTopicName(topicVO.getName());
+            resp.getTopicList().add(topicResp);
+        }
+
+
         List<AdminLevelInfoResp> levelInfoList = adminLevelInfoService.findLevelInfo(vo.getPostId(), 1);
         resp.setLevelInfo(levelInfoList);
 
         return resp;
     }
+
+    @Action(name="admin.post.updateTopicList")
+    public CommonResultResp updateTopicList(CommandContext ctxt, AdminPostUpdateTopicListReq req){
+        postService.updateTopicList(req.getPostId(),req.getTopicIdList());
+    }
+
 
     @Action(name = "admin.post.updateImg")
     public CommonResultResp updateImg(CommandContext ctxt, AdminPostUpdateImgReq req) {

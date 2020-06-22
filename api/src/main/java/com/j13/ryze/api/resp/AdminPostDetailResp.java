@@ -40,6 +40,16 @@ public class AdminPostDetailResp {
     private int replyCount = 0;
     @Parameter(desc="已经抓取的回复数量，用于后台显示")
     private int fReplyCount=0;
+    @Parameter(desc="帖子topic的列表")
+    private List<AdminTopicDetailResp> topicList = Lists.newLinkedList();
+
+    public List<AdminTopicDetailResp> getTopicList() {
+        return topicList;
+    }
+
+    public void setTopicList(List<AdminTopicDetailResp> topicList) {
+        this.topicList = topicList;
+    }
 
     public int getfReplyCount() {
         return fReplyCount;

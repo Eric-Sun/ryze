@@ -21,6 +21,15 @@ public class PostVO {
     private String imgListStr;
     private List<ImgVO> imgVOList = Lists.newLinkedList();
     private int star;
+    private List<TopicVO> topicList = Lists.newLinkedList();
+
+    public List<TopicVO> getTopicList() {
+        return topicList;
+    }
+
+    public void setTopicList(List<TopicVO> topicList) {
+        this.topicList = topicList;
+    }
 
     public int getStar() {
         return star;
