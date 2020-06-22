@@ -150,9 +150,10 @@ public class AdminPostFacade {
         return resp;
     }
 
-    @Action(name="admin.post.updateTopicList")
-    public CommonResultResp updateTopicList(CommandContext ctxt, AdminPostUpdateTopicListReq req){
-        postService.updateTopicList(req.getPostId(),req.getTopicIdList());
+    @Action(name = "admin.post.updateTopicList")
+    public CommonResultResp updateTopicList(CommandContext ctxt, AdminPostUpdateTopicListReq req) {
+        postService.updateTopicList(req.getPostId(), req.getTopicIdList());
+        return CommonResultResp.success();
     }
 
 

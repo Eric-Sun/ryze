@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -116,12 +117,12 @@ public class PostService {
         LOG.info("update the post object cache. postId={}", postId);
     }
 
-    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList,List<Integer> topicIdList) {
+    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList, List<Integer> topicIdList) {
         int postId = postDAO.add(uid, barId, title, content, anonymous, type, imgList);
         barDAO.addPostCount(barId);
         // 添加帖子的topic列表
-        for(Integer topicId : topicIdList){
-            postTopicDAO.insert(postId,topicId);
+        for (Integer topicId : topicIdList) {
+            postTopicDAO.insert(postId, topicId);
         }
         return postId;
     }
@@ -273,13 +274,29 @@ public class PostService {
         starPostShowlogDAO.add(userToken, postId);
     }
 
+    /**
+     * 更新所有的topicId，该删除删除，该增加的增加
+     *
+     * @param postId
+     * @param topicIdList
+     */
     public void updateTopicList(int postId, List<Integer> topicIdList) {
         List<Integer> oldTopicIdList = postTopicDAO.getAllTopicIds(postId);
+        List<Integer> tmpOldTopicIdList = Lists.newLinkedList();
+        List<Integer> tmpnewTopicIdList = Lists.newLinkedList();
+        Collections.copy(tmpOldTopicIdList, oldTopicIdList);
+        Collections.copy(tmpnewTopicIdList, topicIdList);
 
-        老的已经不存在的需要删除 新的需要添加 需要数组的策略
+        // 要删除的id列表
+        tmpOldTopicIdList.removeAll(topicIdList);
+        // 要增加的列表
+        tmpnewTopicIdList.remove(oldTopicIdList);
 
-
-
-
+        for (Integer needDeleteId : tmpOldTopicIdList) {
+            postTopicDAO.deletePostTopic(needDeleteId);
+        }
+        for (Integer needAddId : tmpnewTopicIdList) {
+            postTopicDAO.insert(postId, needAddId);
+        }
     }
 }
