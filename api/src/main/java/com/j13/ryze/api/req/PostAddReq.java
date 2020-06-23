@@ -13,8 +13,18 @@ public class PostAddReq {
     private int anonymous;
     @Parameter(desc = "")
     private int type;
-    @Parameter(desc="")
+    @Parameter(desc = "")
     private String imgList;
+    @Parameter(desc = "")
+    private String topicIdList;
+
+    public String getTopicIdList() {
+        return topicIdList;
+    }
+
+    public void setTopicIdList(String topicIdList) {
+        this.topicIdList = topicIdList;
+    }
 
     public String getImgList() {
         return imgList;

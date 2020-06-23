@@ -117,11 +117,12 @@ public class PostService {
         LOG.info("update the post object cache. postId={}", postId);
     }
 
-    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList, List<Integer> topicIdList) {
+    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList,String topicIdList) {
         int postId = postDAO.add(uid, barId, title, content, anonymous, type, imgList);
         barDAO.addPostCount(barId);
+        List<Integer> idLIst = JSON.parseArray(topicIdList,Integer.class);
         // 添加帖子的topic列表
-        for (Integer topicId : topicIdList) {
+        for (Integer topicId : idLIst) {
             postTopicDAO.insert(postId, topicId);
         }
         return postId;

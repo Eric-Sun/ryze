@@ -21,13 +21,13 @@ public class AdminPostAddReq {
     @Parameter(desc = "")
     private String imgList;
     @Parameter(desc = "")
-    private List<Integer> topicIdList = Lists.newLinkedList();
+    private String topicIdList ;
 
-    public List<Integer> getTopicIdList() {
+    public String getTopicIdList() {
         return topicIdList;
     }
 
-    public void setTopicIdList(List<Integer> topicIdList) {
+    public void setTopicIdList(String topicIdList) {
         this.topicIdList = topicIdList;
     }
 

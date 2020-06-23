@@ -240,7 +240,7 @@ public class PostFacade {
         }
 
         int postId = postService.add(ctxt.getUid(),
-                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgList());
+                req.getBarId(), req.getTitle(), req.getContent(), req.getAnonymous(), req.getType(), req.getImgList(), req.getTopicIdList());
         resp.setPostId(postId);
 
         postIdListCache.addPostId(postId);
