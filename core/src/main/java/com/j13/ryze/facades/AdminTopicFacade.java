@@ -47,7 +47,7 @@ public class AdminTopicFacade {
     public AdminTopicListResp list(CommandContext ctxt, AdminTopicListReq req) {
         AdminTopicListResp resp = new AdminTopicListResp();
         List<TopicVO> list = topicDAO.listTopic();
-        Logger.COMMON.info("list topic. size=?" + list.size());
+        Logger.COMMON.info("list topic. size=" + list.size());
         for (TopicVO vo : list) {
             AdminTopicDetailResp detail = new AdminTopicDetailResp();
             BeanUtils.copyProperties(detail, vo);

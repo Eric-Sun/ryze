@@ -4,6 +4,15 @@ public class TopicVO {
     private int id;
     private String name;
     private long createtime;
+    private int isDefault;
+
+    public int getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(int isDefault) {
+        this.isDefault = isDefault;
+    }
 
     public long getCreatetime() {
         return createtime;

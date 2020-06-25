@@ -3,6 +3,7 @@ package com.j13.ryze.api.resp;
 import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Parameter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class AdminPostDetailResp {
@@ -41,7 +42,7 @@ public class AdminPostDetailResp {
     @Parameter(desc="已经抓取的回复数量，用于后台显示")
     private int fReplyCount=0;
     @Parameter(desc="帖子topic的列表")
-    private List<AdminTopicDetailResp> topicList = Lists.newLinkedList();
+    private List<AdminTopicDetailResp> topicList = new LinkedList<AdminTopicDetailResp>();
 
     public List<AdminTopicDetailResp> getTopicList() {
         return topicList;

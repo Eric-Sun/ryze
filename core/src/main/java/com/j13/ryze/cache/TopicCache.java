@@ -33,8 +33,10 @@ public class TopicCache {
 
 
     public TopicVO get(int topicId) {
-        String rawTopicObject = jedisManager.get(KEY + ":" + topicId);
-        TopicVO vo = JSON.parseObject(rawTopicObject, TopicVO.class);
+        String topicName = jedisManager.get(KEY + ":" + topicId);
+        TopicVO vo = new TopicVO();
+        vo.setName(topicName);
+        vo.setId(topicId);
         return vo;
     }
 }

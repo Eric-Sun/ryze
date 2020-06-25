@@ -80,11 +80,11 @@ public class TopicDAO {
 
     public void deleteTopic(int topicId) {
         String sql = "update topic set deleted=? where id=?";
-        j.update(sql, new Object[]{Constants.DB.NOT_DELETED}, topicId);
+        j.update(sql, new Object[]{Constants.DB.DELETED, topicId});
     }
 
     public List<TopicVO> listTopic() {
-        String sql = "select id,name,createtime from topic where deleted=? order by id desc ";
+        String sql = "select id,name,createtime,is_default from topic where deleted=? order by id ";
         return j.query(sql, new Object[]{Constants.DB.NOT_DELETED}, new RowMapper<TopicVO>() {
             @Override
             public TopicVO mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -92,6 +92,7 @@ public class TopicDAO {
                 vo.setId(resultSet.getInt(1));
                 vo.setName(resultSet.getString(2));
                 vo.setCreatetime(resultSet.getTimestamp(3).getTime());
+                vo.setIsDefault(resultSet.getInt(4));
                 return vo;
             }
         });

@@ -4,26 +4,36 @@ import com.j13.poppy.anno.Parameter;
 
 public class AdminTopicDetailResp {
     @Parameter(desc = "")
-    private int topicId;
+    private int id;
     @Parameter(desc = "")
-    private String topicName;
+    private String name;
     @Parameter(desc = "")
     private long createtime;
+    @Parameter(desc = "")
+    private int isDefault;
 
-    public int getTopicId() {
-        return topicId;
+    public int getIsDefault() {
+        return isDefault;
     }
 
-    public void setTopicId(int topicId) {
-        this.topicId = topicId;
+    public void setIsDefault(int isDefault) {
+        this.isDefault = isDefault;
     }
 
-    public String getTopicName() {
-        return topicName;
+    public int getId() {
+        return id;
     }
 
-    public void setTopicName(String topicName) {
-        this.topicName = topicName;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getCreatetime() {

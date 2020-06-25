@@ -1,5 +1,6 @@
 package com.j13.ryze.facades;
 
+import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
@@ -20,6 +21,7 @@ import com.j13.ryze.vos.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Component
@@ -80,6 +82,7 @@ public class AdminPostFacade {
         for (PostVO postVO : postVOList) {
             AdminPostDetailResp detailResp = new AdminPostDetailResp();
             BeanUtils.copyProperties(detailResp, postVO);
+            detailResp.setTopicList(new LinkedList<AdminTopicDetailResp>());
             boolean b = starPostDAO.checkStar(postVO.getPostId());
             if (b) {
                 detailResp.setStar(1);
@@ -96,8 +99,8 @@ public class AdminPostFacade {
 
             for (TopicVO topicVO : postVO.getTopicList()) {
                 AdminTopicDetailResp topicResp = new AdminTopicDetailResp();
-                topicResp.setTopicId(topicVO.getId());
-                topicResp.setTopicName(topicVO.getName());
+                topicResp.setId(topicVO.getId());
+                topicResp.setName(topicVO.getName());
                 detailResp.getTopicList().add(topicResp);
             }
 
@@ -138,8 +141,8 @@ public class AdminPostFacade {
 
         for (TopicVO topicVO : vo.getTopicList()) {
             AdminTopicDetailResp topicResp = new AdminTopicDetailResp();
-            topicResp.setTopicId(topicVO.getId());
-            topicResp.setTopicName(topicVO.getName());
+            topicResp.setId(topicVO.getId());
+            topicResp.setName(topicVO.getName());
             resp.getTopicList().add(topicResp);
         }
 
