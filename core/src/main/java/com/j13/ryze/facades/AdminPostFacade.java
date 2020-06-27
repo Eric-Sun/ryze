@@ -1,5 +1,6 @@
 package com.j13.ryze.facades;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
@@ -155,7 +156,7 @@ public class AdminPostFacade {
 
     @Action(name = "admin.post.updateTopicList")
     public CommonResultResp updateTopicList(CommandContext ctxt, AdminPostUpdateTopicListReq req) {
-        postService.updateTopicList(req.getPostId(), req.getTopicIdList());
+        postService.updateTopicList(req.getPostId(), JSON.parseArray(req.getTopicIdListStr(),Integer.class));
         return CommonResultResp.success();
     }
 

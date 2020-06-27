@@ -9,7 +9,8 @@ public class AdminPostUpdateTopicListReq {
     @Parameter(desc = "")
     private int postId;
     @Parameter(desc = "")
-    private List<Integer> topicIdList = Lists.newLinkedList();
+    private String topicIdListStr ;
+
 
     public int getPostId() {
         return postId;
@@ -19,11 +20,11 @@ public class AdminPostUpdateTopicListReq {
         this.postId = postId;
     }
 
-    public List<Integer> getTopicIdList() {
-        return topicIdList;
+    public String getTopicIdListStr() {
+        return topicIdListStr;
     }
 
-    public void setTopicIdList(List<Integer> topicIdList) {
-        this.topicIdList = topicIdList;
+    public void setTopicIdListStr(String topicIdListStr) {
+        this.topicIdListStr = topicIdListStr;
     }
 }

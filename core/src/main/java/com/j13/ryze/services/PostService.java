@@ -18,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -117,10 +119,10 @@ public class PostService {
         LOG.info("update the post object cache. postId={}", postId);
     }
 
-    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList,String topicIdList) {
+    public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList, String topicIdList) {
         int postId = postDAO.add(uid, barId, title, content, anonymous, type, imgList);
         barDAO.addPostCount(barId);
-        List<Integer> idLIst = JSON.parseArray(topicIdList,Integer.class);
+        List<Integer> idLIst = JSON.parseArray(topicIdList, Integer.class);
         // 添加帖子的topic列表
         for (Integer topicId : idLIst) {
             postTopicDAO.insert(postId, topicId);
@@ -283,18 +285,20 @@ public class PostService {
      */
     public void updateTopicList(int postId, List<Integer> topicIdList) {
         List<Integer> oldTopicIdList = postTopicDAO.getAllTopicIds(postId);
-        List<Integer> tmpOldTopicIdList = Lists.newLinkedList();
-        List<Integer> tmpnewTopicIdList = Lists.newLinkedList();
+        List<Integer> tmpOldTopicIdList = new LinkedList<Integer>(Arrays.asList(new Integer[oldTopicIdList.size()]));
+        ;
+        List<Integer> tmpnewTopicIdList = new LinkedList<Integer>(Arrays.asList(new Integer[topicIdList.size()]));
+        ;
         Collections.copy(tmpOldTopicIdList, oldTopicIdList);
         Collections.copy(tmpnewTopicIdList, topicIdList);
 
         // 要删除的id列表
         tmpOldTopicIdList.removeAll(topicIdList);
         // 要增加的列表
-        tmpnewTopicIdList.remove(oldTopicIdList);
+        tmpnewTopicIdList.removeAll(oldTopicIdList);
 
         for (Integer needDeleteId : tmpOldTopicIdList) {
-            postTopicDAO.deletePostTopic(needDeleteId);
+            postTopicDAO.deleteByTopicIdAndPostId(needDeleteId, postId);
         }
         for (Integer needAddId : tmpnewTopicIdList) {
             postTopicDAO.insert(postId, needAddId);

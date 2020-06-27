@@ -20,7 +20,7 @@ public class PostTopicDAO {
 
     public int insert(final int postId, final int topicId) {
         KeyHolder holder = new GeneratedKeyHolder();
-        final String sql = "insert into topic (post_id,topic_id,createtime,updatetime)" +
+        final String sql = "insert into post_topic (post_id,topic_id,createtime,updatetime)" +
                 " values (?,?,now(),now())";
         j.update(new PreparedStatementCreator() {
             @Override
@@ -47,7 +47,12 @@ public class PostTopicDAO {
 
     public void deleteByTopicId(int topicId) {
         String sql = "update post_topic set deleted=? where topic_id=?";
-        j.update(sql, new Object[]{Constants.DB.NOT_DELETED, topicId});
+        j.update(sql, new Object[]{Constants.DB.DELETED, topicId});
+    }
+
+    public void deleteByTopicIdAndPostId(int topicId, int postId) {
+        String sql = "update post_topic set deleted=? where topic_id=? and post_id=?";
+        j.update(sql, new Object[]{Constants.DB.DELETED, topicId, postId});
     }
 
 }
