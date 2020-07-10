@@ -3,9 +3,11 @@ package com.j13.ryze.api.req;
 import com.google.common.collect.Lists;
 import com.j13.poppy.anno.Parameter;
 import com.j13.ryze.api.resp.AdminReplyDetailResp;
+import com.j13.ryze.api.resp.AdminTopicDetailResp;
 import com.j13.ryze.api.resp.PostCursorDetailResp;
 import com.j13.ryze.api.resp.ImgDetailResp;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class PostDetailResp {
@@ -41,6 +43,16 @@ public class PostDetailResp {
     private int level1ReplySize;
     @Parameter(desc="是否是加精，如果为1的话是加精帖子，0为不是")
     private int star=0;
+    @Parameter(desc="帖子topic的列表")
+    private List<AdminTopicDetailResp> topicList = new LinkedList<AdminTopicDetailResp>();
+
+    public List<AdminTopicDetailResp> getTopicList() {
+        return topicList;
+    }
+
+    public void setTopicList(List<AdminTopicDetailResp> topicList) {
+        this.topicList = topicList;
+    }
 
     public int getStar() {
         return star;

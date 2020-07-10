@@ -17,9 +17,11 @@ import com.j13.ryze.services.*;
 import com.j13.ryze.vos.ImgVO;
 import com.j13.ryze.vos.PostCursorVO;
 import com.j13.ryze.vos.PostVO;
+import com.j13.ryze.vos.TopicVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Component
@@ -76,6 +78,8 @@ public class PostFacade {
             starPostIdList = starPostIdList.subList(0, 2);
         }
 
+        starPostIdList.add(0,33);
+
         for (Integer postId : starPostIdList) {
             PostVO tmpPostVO = new PostVO();
             tmpPostVO.setPostId(postId);
@@ -91,12 +95,21 @@ public class PostFacade {
         for (PostVO vo : list) {
             PostDetailResp r = new PostDetailResp();
             BeanUtils.copyProperties(r, vo);
+            r.setTopicList(new LinkedList<AdminTopicDetailResp>());
+
             userService.setUserInfoForPost(r, vo.getUserId());
 
             postService.tryToCutOutContent(r);
 
             r.setReplyCount(postService.replyCount(vo.getPostId()));
             resp.getList().add(r);
+            for (TopicVO topicVO : vo.getTopicList()) {
+                AdminTopicDetailResp topicResp = new AdminTopicDetailResp();
+                topicResp.setId(topicVO.getId());
+                topicResp.setName(topicVO.getName());
+                r.getTopicList().add(topicResp);
+            }
+
 
             for (ImgVO imgVO : vo.getImgVOList()) {
                 ImgDetailResp imgResp = new ImgDetailResp();
