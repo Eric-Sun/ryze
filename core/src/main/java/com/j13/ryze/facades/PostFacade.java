@@ -140,6 +140,14 @@ public class PostFacade {
         int replySize = replyService.getLevel1ReplySize(req.getPostId());
         resp.setLevel1ReplySize(replySize);
 
+        resp.setTopicList(new LinkedList<AdminTopicDetailResp>());
+        for (TopicVO topicVO : vo.getTopicList()) {
+            AdminTopicDetailResp topicResp = new AdminTopicDetailResp();
+            topicResp.setId(topicVO.getId());
+            topicResp.setName(topicVO.getName());
+            resp.getTopicList().add(topicResp);
+        }
+
         if (userId != 0) {
             boolean isCollection = collectionService.checkCollectionExisted(userId, req.getPostId());
             resp.setIsCollection(isCollection == true ? 1 : 0);
@@ -154,6 +162,7 @@ public class PostFacade {
 
         return resp;
     }
+
 
     @Action(name = "post.updateCursor")
     @NeedToken
