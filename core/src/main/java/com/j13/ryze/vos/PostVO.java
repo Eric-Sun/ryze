@@ -22,6 +22,15 @@ public class PostVO {
     private List<ImgVO> imgVOList = Lists.newLinkedList();
     private int star;
     private List<TopicVO> topicList = Lists.newLinkedList();
+    private int auditStatus=0;
+
+    public int getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(int auditStatus) {
+        this.auditStatus = auditStatus;
+    }
 
     public List<TopicVO> getTopicList() {
         return topicList;

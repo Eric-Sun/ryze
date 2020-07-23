@@ -11,11 +11,9 @@ import com.j13.ryze.api.req.*;
 import com.j13.ryze.api.resp.*;
 import com.j13.ryze.cache.PostIdListCache;
 import com.j13.ryze.core.ErrorCode;
-import com.j13.ryze.core.Logger;
 import com.j13.ryze.daos.*;
 import com.j13.ryze.services.*;
 import com.j13.ryze.vos.ImgVO;
-import com.j13.ryze.vos.PostCursorVO;
 import com.j13.ryze.vos.PostVO;
 import com.j13.ryze.vos.TopicVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +76,7 @@ public class PostFacade {
             starPostIdList = starPostIdList.subList(0, 2);
         }
 
-        starPostIdList.add(0,33);
+        starPostIdList.add(0, 33);
 
         for (Integer postId : starPostIdList) {
             PostVO tmpPostVO = new PostVO();
@@ -126,6 +124,7 @@ public class PostFacade {
 
         return resp;
     }
+
 
     @Action(name = "post.detail", desc = "post detail and replies")
     @NeedToken

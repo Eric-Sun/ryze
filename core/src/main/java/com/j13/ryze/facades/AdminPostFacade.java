@@ -156,7 +156,7 @@ public class AdminPostFacade {
 
     @Action(name = "admin.post.updateTopicList")
     public CommonResultResp updateTopicList(CommandContext ctxt, AdminPostUpdateTopicListReq req) {
-        postService.updateTopicList(req.getPostId(), JSON.parseArray(req.getTopicIdListStr(),Integer.class));
+        postService.updateTopicList(req.getPostId(), JSON.parseArray(req.getTopicIdListStr(), Integer.class));
         return CommonResultResp.success();
     }
 
@@ -319,4 +319,40 @@ public class AdminPostFacade {
         postService.offline(req.getPostId());
         return CommonResultResp.success();
     }
+
+
+    @Action(name = "admin.post.unauditList", desc = "后台查询未审核的帖子列表")
+    public AdminPostUnauditListResp unauditList(CommandContext ctxt, AdminPostUnauditReq req) {
+        AdminPostUnauditListResp resp = new AdminPostUnauditListResp();
+
+        List<Integer> unauditList = postDAO.unauditList(req.getBarId(), req.getPageNum(), req.getSize());
+        for (Integer postId : unauditList) {
+
+            PostVO postVO = postService.getSimplePost(postId);
+
+            AdminPostDetailResp detailResp = new AdminPostDetailResp();
+            BeanUtils.copyProperties(detailResp, postVO);
+            boolean b = starPostDAO.checkStar(postVO.getPostId());
+            if (b) {
+                detailResp.setStar(1);
+            }
+
+            for (ImgVO imgVO : postVO.getImgVOList()) {
+                ImgDetailResp imgResp = new ImgDetailResp();
+                imgResp.setImgId(imgVO.getId());
+                imgResp.setUrl(imgVO.getUrl());
+                detailResp.getImgList().add(imgResp);
+            }
+            resp.getList().add(detailResp);
+        }
+
+        return resp;
+    }
+
+    @Action(name = "post.audit", desc = "")
+    public CommonResultResp audit(CommandContext ctxt, AdminPostAuditReq req) {
+        postDAO.updateAuditStatus(req.getPostId(),req.getAuditStatus());
+        return CommonResultResp.success();
+    }
+
 }

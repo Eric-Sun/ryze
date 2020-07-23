@@ -45,6 +45,16 @@ public class PostDetailResp {
     private int star=0;
     @Parameter(desc="帖子topic的列表")
     private List<AdminTopicDetailResp> topicList = new LinkedList<AdminTopicDetailResp>();
+    @Parameter(desc="审核状态")
+    private int auditStatus=0;
+
+    public int getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(int auditStatus) {
+        this.auditStatus = auditStatus;
+    }
 
     public List<AdminTopicDetailResp> getTopicList() {
         return topicList;

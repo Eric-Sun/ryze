@@ -1,0 +1,1 @@
+alter table post add column audit_status int default 1 after status

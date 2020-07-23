@@ -28,9 +28,9 @@ public class PostDAO {
                    final int anonymous, final int type, final String imgList, final int status) {
         KeyHolder holder = new GeneratedKeyHolder();
         final String sql = "insert into post " +
-                "(user_id,bar_id,content,reply_count,createtime,updatetime,title,status,anonymous,`type`,img_list) " +
+                "(user_id,bar_id,content,reply_count,createtime,updatetime,title,status,anonymous,`type`,img_list,audit_status) " +
                 "values" +
-                "(?,?,?,0,now(),now(),?,?,?,?,?)";
+                "(?,?,?,0,now(),now(),?,?,?,?,?,?)";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -43,6 +43,7 @@ public class PostDAO {
                 pstmt.setInt(6, anonymous);
                 pstmt.setInt(7, type);
                 pstmt.setString(8, imgList);
+                pstmt.setInt(9, Constants.POST_AUDIT_STATUS.AUDITING);
                 return pstmt;
             }
         }, holder);
@@ -62,15 +63,15 @@ public class PostDAO {
 
     public List<Integer> list(int barId, int pageNum, int size) {
         String sql = "select id " +
-                "from post where deleted=? and bar_id=? and status=? order by updatetime desc limit ?,?";
-        return j.queryForList(sql, new Object[]{Constants.DB.NOT_DELETED, barId, Constants.POST_STATUS.ONLINE, pageNum * size, size},
+                "from post where deleted=? and bar_id=? and status=? and audit_status=? order by updatetime desc limit ?,?";
+        return j.queryForList(sql, new Object[]{Constants.DB.NOT_DELETED, barId, Constants.POST_STATUS.ONLINE, Constants.POST_AUDIT_STATUS.NORMAL, pageNum * size, size},
                 Integer.class);
     }
 
     public List<Integer> listByType(int barId, int type, int pageNum, int size) {
         String sql = "select id " +
-                "from post where deleted=? and bar_id=? and status=? and `type`=? order by updatetime desc limit ?,?";
-        return j.queryForList(sql, new Object[]{Constants.DB.NOT_DELETED, barId, Constants.POST_STATUS.ONLINE, type,
+                "from post where deleted=? and bar_id=? and status=? and `type`=? and audit_stauts=? order by updatetime desc limit ?,?";
+        return j.queryForList(sql, new Object[]{Constants.DB.NOT_DELETED, barId, Constants.POST_STATUS.ONLINE, type, Constants.POST_AUDIT_STATUS.NORMAL, Constants.POST_AUDIT_STATUS.NORMAL,
                 pageNum * size, size}, Integer.class);
     }
 
@@ -85,10 +86,14 @@ public class PostDAO {
         j.update(sql, new Object[]{Constants.DB.DELETED, postId, Constants.DB.NOT_DELETED});
     }
 
+    public void updateAuditStatus(int postId, int auditStatus) {
+        String sql = "update post set audit_status=? where post_id=? ";
+        j.update(sql, new Object[]{auditStatus, postId});
+    }
 
     public PostVO get(int postId) {
         String sql = "select user_id,bar_id,content,createtime,id," +
-                "reply_count,updatetime,title,status,anonymous,`type`,img_list  from post where id=? ";
+                "reply_count,updatetime,title,status,anonymous,`type`,img_list,audit_status  from post where id=? ";
         return j.queryForObject(sql, new Object[]{postId}, new PostRowMapper());
     }
 
@@ -119,22 +124,27 @@ public class PostDAO {
 
     public List<PostVO> queryByTtile(int barId, String name, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
-                "reply_count,updatetime,title,status,anonymous,`type`,img_list " +
-                "from post where title like ? and bar_id = ? and deleted=?  order by updatetime desc  limit ?,?";
+                "reply_count,updatetime,title,status,anonymous,`type`,img_list, " +
+                "audit_status from post where title like ? and bar_id = ? and deleted=?  order by updatetime desc  limit ?,?";
         return j.query(sql, new Object[]{"%" + name + "%", barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new PostRowMapper());
+    }
+
+    public List<Integer> unauditList(int barId, int pageNum, int size) {
+        String sql = "select id from post where audit_status=? and bar_id = ? and deleted=?  order by updatetime desc  limit ?,?";
+        return j.queryForList(sql, new Object[]{Constants.POST_AUDIT_STATUS.AUDITING, barId, Constants.DB.NOT_DELETED, pageNum * size, size}, Integer.class);
     }
 
 
     public List<PostVO> queryByUserId(int barId, int userId, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
-                "reply_count,updatetime,title,status,anonymous,`type`,img_list " +
+                "reply_count,updatetime,title,status,anonymous,`type`,img_list,audit_status " +
                 "from post where user_id=? and bar_id = ? and deleted=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{userId, barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new PostRowMapper());
     }
 
     public List<PostVO> listByUserId(int barId, int userId, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
-                "reply_count,updatetime,title,status,anonymous,`type`,img_list " +
+                "reply_count,updatetime,title,status,anonymous,`type`,img_list,audit_status " +
                 "from post where user_id=? and deleted=? and bar_id=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{userId, Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new PostRowMapper());
     }
@@ -146,7 +156,7 @@ public class PostDAO {
 
     public List<PostVO> recentlyOtherUserPostList(int otherUserId, int barId, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
-                "reply_count,updatetime,title,status,anonymous,`type`,img_list " +
+                "reply_count,updatetime,title,status,anonymous,`type`,img_list,audit_status " +
                 "from post where user_id=? and deleted=? and bar_id=? and anonymous=? and status=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{otherUserId, Constants.DB.NOT_DELETED, barId,
                 Constants.POST_ANONYMOUS.COMMON, Constants.POST_STATUS.ONLINE, pageNum * size, size}, new PostRowMapper());
@@ -243,6 +253,7 @@ public class PostDAO {
             vo.setAnonymous(rs.getInt(10));
             vo.setType(rs.getInt(11));
             vo.setImgListStr(rs.getString(12));
+            vo.setAuditStatus(rs.getInt(13));
             return vo;
         }
     }

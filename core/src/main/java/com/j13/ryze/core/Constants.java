@@ -135,6 +135,11 @@ public class Constants {
         public static int FEMALE = 1;     // 女
     }
 
+    public static class POST_AUDIT_STATUS {
+        public static int NORMAL = 0;  // 审核通过
+        public static int AUDITING = 1;  // 正在审核
+        public static int ILLEGAL = 2; // 审核不通过
+    }
 
     public static class NOTICE {
 
