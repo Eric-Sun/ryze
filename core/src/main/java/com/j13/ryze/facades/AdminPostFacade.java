@@ -349,7 +349,7 @@ public class AdminPostFacade {
         return resp;
     }
 
-    @Action(name = "post.audit", desc = "")
+    @Action(name = "admin.post.audit", desc = "")
     public CommonResultResp audit(CommandContext ctxt, AdminPostAuditReq req) {
         postDAO.updateAuditStatus(req.getPostId(),req.getAuditStatus());
         return CommonResultResp.success();

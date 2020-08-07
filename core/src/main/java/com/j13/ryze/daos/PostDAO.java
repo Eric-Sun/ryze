@@ -87,7 +87,7 @@ public class PostDAO {
     }
 
     public void updateAuditStatus(int postId, int auditStatus) {
-        String sql = "update post set audit_status=? where post_id=? ";
+        String sql = "update post set audit_status=? where id=? ";
         j.update(sql, new Object[]{auditStatus, postId});
     }
 
@@ -125,8 +125,8 @@ public class PostDAO {
     public List<PostVO> queryByTtile(int barId, String name, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
                 "reply_count,updatetime,title,status,anonymous,`type`,img_list, " +
-                "audit_status from post where title like ? and bar_id = ? and deleted=?  order by updatetime desc  limit ?,?";
-        return j.query(sql, new Object[]{"%" + name + "%", barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new PostRowMapper());
+                "audit_status from post where title like ? and bar_id = ? and deleted=? and audit_status=?  order by updatetime desc  limit ?,?";
+        return j.query(sql, new Object[]{"%" + name + "%", barId, Constants.DB.NOT_DELETED, Constants.POST_AUDIT_STATUS.NORMAL, pageNum * size, size}, new PostRowMapper());
     }
 
     public List<Integer> unauditList(int barId, int pageNum, int size) {
@@ -138,14 +138,14 @@ public class PostDAO {
     public List<PostVO> queryByUserId(int barId, int userId, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
                 "reply_count,updatetime,title,status,anonymous,`type`,img_list,audit_status " +
-                "from post where user_id=? and bar_id = ? and deleted=? order by updatetime desc limit ?,?";
-        return j.query(sql, new Object[]{userId, barId, Constants.DB.NOT_DELETED, pageNum * size, size}, new PostRowMapper());
+                "from post where user_id=? and bar_id = ? and deleted=? and audit_status=? order by updatetime desc limit ?,?";
+        return j.query(sql, new Object[]{userId, barId, Constants.DB.NOT_DELETED, Constants.POST_AUDIT_STATUS.NORMAL, pageNum * size, size}, new PostRowMapper());
     }
 
     public List<PostVO> listByUserId(int barId, int userId, int pageNum, int size) {
         String sql = "select user_id,bar_id,content,createtime,id," +
                 "reply_count,updatetime,title,status,anonymous,`type`,img_list,audit_status " +
-                "from post where user_id=? and deleted=? and bar_id=? order by updatetime desc limit ?,?";
+                "from post where user_id=? and deleted=? and bar_id=? and audit_status=? order by updatetime desc limit ?,?";
         return j.query(sql, new Object[]{userId, Constants.DB.NOT_DELETED, barId, pageNum * size, size}, new PostRowMapper());
     }
 
@@ -163,23 +163,23 @@ public class PostDAO {
     }
 
     public List<Integer> offlineList(int barId, int pageNum, int size) {
-        String sql = "select id from post where status=? and deleted=? and bar_id=? order by createtime desc limit ?,?";
-        return j.queryForList(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId, pageNum * size, size}, Integer.class);
+        String sql = "select id from post where status=? and deleted=? and bar_id=? and audit_status=? order by createtime desc limit ?,?";
+        return j.queryForList(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId, Constants.POST_AUDIT_STATUS.NORMAL, pageNum * size, size}, Integer.class);
     }
 
     public int postCount(int barId) {
-        String sql = "select count(1) from post where bar_id=? and status =? and deleted=?";
-        return j.queryForObject(sql, new Object[]{barId, Constants.POST_STATUS.ONLINE, Constants.DB.NOT_DELETED}, Integer.class);
+        String sql = "select count(1) from post where bar_id=? and audit_status=? and status =? and deleted=?";
+        return j.queryForObject(sql, new Object[]{barId, Constants.POST_AUDIT_STATUS.NORMAL, Constants.POST_STATUS.ONLINE, Constants.DB.NOT_DELETED}, Integer.class);
     }
 
     public List<Integer> deletedList(int barId, int pageNum, int size) {
-        String sql = "select id from post where deleted=? and bar_id=? order by updatetime desc limit ?,? ";
-        return j.queryForList(sql, new Object[]{Constants.DB.DELETED, barId, pageNum * size, size}, Integer.class);
+        String sql = "select id from post where deleted=? and bar_id=? and audit_status=? order by updatetime desc limit ?,? ";
+        return j.queryForList(sql, new Object[]{Constants.DB.DELETED, barId, Constants.POST_AUDIT_STATUS.NORMAL, pageNum * size, size}, Integer.class);
     }
 
     public int deletedListCount(int barId) {
-        String sql = "select count(1) from post where deleted=? and bar_id=? ";
-        return j.queryForObject(sql, new Object[]{Constants.DB.DELETED, barId}, Integer.class);
+        String sql = "select count(1) from post where deleted=? and audit_status=? and bar_id=? ";
+        return j.queryForObject(sql, new Object[]{Constants.DB.DELETED, Constants.POST_AUDIT_STATUS.NORMAL, barId}, Integer.class);
 
     }
 
@@ -190,8 +190,8 @@ public class PostDAO {
     }
 
     public int offlineListCount(int barId) {
-        String sql = "select count(1) from post where status=? and deleted=? and bar_id=? ";
-        return j.queryForObject(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId}, Integer.class);
+        String sql = "select count(1) from post where status=? and deleted=? and bar_id=? and audit_status=? ";
+        return j.queryForObject(sql, new Object[]{Constants.POST_STATUS.OFFLINE, Constants.DB.NOT_DELETED, barId, Constants.POST_AUDIT_STATUS.NORMAL}, Integer.class);
     }
 
     public void updateImg(int postId, String imgIdListStr) {
@@ -232,7 +232,7 @@ public class PostDAO {
         }
         paramList.add(pageNum * size);
         paramList.add(size);
-        String sql = "select id from post where bar_id=? and deleted=? " + postStr + titleStr + userIdStr + "   order by id desc limit ?,?";
+        String sql = "select id from post where bar_id=? and deleted=? " + postStr + titleStr + userIdStr + " and audit_status=0  order by id desc limit ?,?";
         return j.queryForList(sql, paramList.toArray(), Integer.class);
     }
 
@@ -259,7 +259,7 @@ public class PostDAO {
     }
 
     public List<Integer> listPostIdForCache() {
-        String sql = "select id from post where status=? and deleted=?";
-        return j.queryForList(sql, new Object[]{Constants.POST_STATUS.ONLINE, Constants.DB.NOT_DELETED}, Integer.class);
+        String sql = "select id from post where status=? and deleted=? and audit_status=?";
+        return j.queryForList(sql, new Object[]{Constants.POST_STATUS.ONLINE, Constants.DB.NOT_DELETED, Constants.POST_AUDIT_STATUS.NORMAL}, Integer.class);
     }
 }
