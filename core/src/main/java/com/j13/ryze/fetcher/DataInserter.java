@@ -55,7 +55,7 @@ public class DataInserter {
             // 200324 修改为插入为下线状态、
             int postId = postService.addOffLine(userId, defaultBarId, fPostVO.getTitle(), fPostVO.getContent(),
                     Constants.POST_ANONYMOUS.COMMON,
-                    Constants.POST_TYPE.STORE, "[]");
+                    Constants.POST_TYPE.STORE, "[]",Constants.POST_AUDIT_STATUS.NORMAL);
 
             // 修改fpost的状态
             fPostDAO.updateStatusAndPostId(fPostVO.getId(), Constants.Fetcher.Status.PUSHED, postId, userId);

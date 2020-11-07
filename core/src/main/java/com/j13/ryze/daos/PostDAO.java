@@ -49,6 +49,31 @@ public class PostDAO {
         }, holder);
         return holder.getKey().intValue();
     }
+    public int add(final int userId, final int barId, final String title, final String content,
+                   final int anonymous, final int type, final String imgList, final int status,final int auditStatus) {
+        KeyHolder holder = new GeneratedKeyHolder();
+        final String sql = "insert into post " +
+                "(user_id,bar_id,content,reply_count,createtime,updatetime,title,status,anonymous,`type`,img_list,audit_status) " +
+                "values" +
+                "(?,?,?,0,now(),now(),?,?,?,?,?,?)";
+        j.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                final PreparedStatement pstmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                pstmt.setInt(1, userId);
+                pstmt.setInt(2, barId);
+                pstmt.setString(3, content);
+                pstmt.setString(4, title);
+                pstmt.setInt(5, status);
+                pstmt.setInt(6, anonymous);
+                pstmt.setInt(7, type);
+                pstmt.setString(8, imgList);
+                pstmt.setInt(9, auditStatus);
+                return pstmt;
+            }
+        }, holder);
+        return holder.getKey().intValue();
+    }
 
     public int add(final int userId, final int barId, final String title, final String content,
                    final int anonymous, final int type, final String imgList) {
@@ -56,8 +81,8 @@ public class PostDAO {
     }
 
     public int addOffline(final int userId, final int barId, final String title, final String content,
-                          final int anonymous, final int type, final String imgList) {
-        return add(userId, barId, title, content, anonymous, type, imgList, Constants.POST_STATUS.OFFLINE);
+                          final int anonymous, final int type, final String imgList,final int auditStatus) {
+        return add(userId, barId, title, content, anonymous, type, imgList, Constants.POST_STATUS.OFFLINE,auditStatus);
     }
 
 

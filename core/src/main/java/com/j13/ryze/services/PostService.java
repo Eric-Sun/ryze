@@ -130,8 +130,9 @@ public class PostService {
         return postId;
     }
 
-    public int addOffLine(int uid, int barId, String title, String content, int anonymous, int type, String imgList) {
-        int postId = postDAO.addOffline(uid, barId, title, content, anonymous, type, imgList);
+
+    public int addOffLine(int uid, int barId, String title, String content, int anonymous, int type, String imgList,int auditStatus) {
+        int postId = postDAO.addOffline(uid, barId, title, content, anonymous, type, imgList,auditStatus);
         return postId;
     }
 

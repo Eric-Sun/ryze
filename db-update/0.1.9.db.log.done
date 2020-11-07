@@ -20,3 +20,6 @@ CREATE TABLE `user2user_token` (
 
 alter table star_post_showlog drop column user_id;
 alter table star_post_showlog add column user_token varchar(100) default '' after id
+
+alter table post add column audit_status int default 1 after status
+
