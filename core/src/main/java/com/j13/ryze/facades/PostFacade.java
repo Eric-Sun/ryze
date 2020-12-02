@@ -76,7 +76,7 @@ public class PostFacade {
             starPostIdList = starPostIdList.subList(0, 2);
         }
 
-        starPostIdList.add(0, 33);
+//        starPostIdList.add(0, 33);
 
         for (Integer postId : starPostIdList) {
             PostVO tmpPostVO = new PostVO();
