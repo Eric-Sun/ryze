@@ -89,6 +89,7 @@ public class Constants {
         public static int POST_IMG = 2;
         public static int AVATAR_URL_FROM_TOUTIAO = 3;
         public static int AVATAR_URL_FROM_BAIDU = 3;
+        public static int BANNER=4; // banner图
     }
 
     // 用户表中的用户类型

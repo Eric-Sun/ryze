@@ -65,4 +65,6 @@ public class UserLockDAO {
         String sql = "update user_lock set unlock_reason=?,final_unlocktime=now(),unlock_reason_type=?,unlock_operator_type=?,deleted=? where user_id=? and deleted=?";
         j.update(sql, new Object[]{unlockReason, unlockReasonType, unlockOperatorType, Constants.DB.DELETED, userId, Constants.DB.NOT_DELETED});
     }
+
+
 }
