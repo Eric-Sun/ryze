@@ -41,15 +41,15 @@ public class BannerPlanDAO {
         return holder.getKey().intValue();
     }
 
-    private void delete(int id) {
+    public void delete(int id) {
         String sql = "update banner_plan set deleted=? where id=?";
         j.update(sql, new Object[]{Constants.DB.DELETED, id});
     }
 
 
-    public void update(int id, String name, int type) {
-        String sql = "update banner_plan set name=?,type=? where id=?";
-        j.update(sql, new Object[]{name, type, id});
+    public void update(int id, String name) {
+        String sql = "update banner_plan set name=? where id=?";
+        j.update(sql, new Object[]{name, id});
     }
 
     public List<BannerPlanVO> list(int size, int pageNum){

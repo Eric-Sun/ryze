@@ -1,10 +1,32 @@
 package com.j13.ryze.vos;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 public class BannerPlanVO {
     private int id;
     private String name;
     private int type;
     private long createtime;
+    private List<Integer> bannerIdList = Lists.newLinkedList();
+    private List<BannerVO> bannerVOList = Lists.newLinkedList();
+
+    public List<Integer> getBannerIdList() {
+        return bannerIdList;
+    }
+
+    public void setBannerIdList(List<Integer> bannerIdList) {
+        this.bannerIdList = bannerIdList;
+    }
+
+    public List<BannerVO> getBannerVOList() {
+        return bannerVOList;
+    }
+
+    public void setBannerVOList(List<BannerVO> bannerVOList) {
+        this.bannerVOList = bannerVOList;
+    }
 
     public int getId() {
         return id;

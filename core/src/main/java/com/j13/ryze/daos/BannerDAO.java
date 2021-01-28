@@ -66,4 +66,19 @@ public class BannerDAO {
         });
     }
 
+    public BannerVO get(int bannerId){
+        String sql = "select id,name,url_img_id,createtime from banner where deleted=? and id =?  order by id desc limit ?,?";
+        return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED,bannerId}, new RowMapper<BannerVO>() {
+            @Override
+            public BannerVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                BannerVO vo = new BannerVO();
+                vo.setId(rs.getInt(1));
+                vo.setName(rs.getString(2));
+                vo.setUrlImgId(rs.getInt(3));
+                vo.setCreatetime(rs.getTimestamp(4).getTime());
+                return vo;
+            }
+        });
+    }
+
 }

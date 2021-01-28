@@ -41,10 +41,9 @@ public class BannerBannerPlanDAO {
         return holder.getKey().intValue();
     }
 
-    private void delete(int id) {
+    public  void delete(int id) {
         String sql = "update banner_banner_plan set deleted=? where id=?";
         j.update(sql, new Object[]{Constants.DB.DELETED, id});
     }
-
 
 }
