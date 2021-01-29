@@ -1,8 +1,7 @@
-package com.j13.ryze.api.resp;
+package com.j13.ryze.api.req;
 
-public class AdminBannerUpdateReq {
+public class AdminBannerPlanUpdateReq {
     private int id;
-    private int urlImgId;
     private String name;
 
     public int getId() {
@@ -11,14 +10,6 @@ public class AdminBannerUpdateReq {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUrlImgId() {
-        return urlImgId;
-    }
-
-    public void setUrlImgId(int urlImgId) {
-        this.urlImgId = urlImgId;
     }
 
     public String getName() {

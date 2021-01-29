@@ -1,5 +1,6 @@
 package com.j13.ryze.facades;
 
+import com.j13.poppy.anno.Action;
 import com.j13.poppy.core.CommandContext;
 import com.j13.poppy.core.CommonResultResp;
 import com.j13.poppy.util.BeanUtils;
@@ -23,21 +24,22 @@ public class AdminBannerFacade {
     ImgService imgService;
 
 
+    @Action(name="adminBanner.add")
     public CommonResultResp add(CommandContext ctxt, AdminBannerAddReq req) {
         bannerService.addBanner(req.getName(), req.getUrlImgId());
         return CommonResultResp.success();
     }
-
+    @Action(name="adminBanner.delete")
     public CommonResultResp delete(CommandContext ctxt, AdminBannerDeleteReq req) {
-        bannerService.deleteBanner(req.getBannerId());
+        bannerService.deleteBanner(req.getId());
         return CommonResultResp.success();
     }
-
+    @Action(name="adminBanner.update")
     public CommonResultResp update(CommandContext ctxt, AdminBannerUpdateReq req) {
-        bannerService.updateBanner(req.getBannerId(), req.getName(), req.getUrlImgId());
+        bannerService.updateBanner(req.getId(), req.getName(), req.getUrlImgId());
         return CommonResultResp.success();
     }
-
+    @Action(name="adminBanner.list")
     public AdminBannerListResp list(CommandContext ctxt, AdminBannerListReq req) {
         List<BannerVO> bannerList = bannerService.listBanner(req.getSize(), req.getPageNum());
         AdminBannerListResp resp = new AdminBannerListResp();

@@ -1,6 +1,6 @@
-package com.j13.ryze.api.resp;
+package com.j13.ryze.api.req;
 
-public class AdminBannerDeleteReq {
+public class AdminBannerPlanDeleteReq {
     private int id;
 
     public int getId() {

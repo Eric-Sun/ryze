@@ -62,6 +62,7 @@ public class BannerService {
 
     /**
      * 获取单个bannner的信息，并且填充img信息
+     *
      * @param bannerId
      * @return
      */
@@ -92,8 +93,8 @@ public class BannerService {
         bannerBannerPlanDAO.add(bannerId, bannerPlanId);
     }
 
-    public void deleteBannerFromBannerPlan(int bannerBannerPlanId){
-        bannerBannerPlanDAO.delete(bannerBannerPlanId);
+    public void deleteBannerFromBannerPlan(int bannerPlanId, int bannerId) {
+        bannerBannerPlanDAO.delete(bannerPlanId, bannerId);
     }
 
 }
