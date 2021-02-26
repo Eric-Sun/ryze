@@ -21,11 +21,12 @@ public class CourseDAO {
     @Autowired
     JdbcTemplate j;
 
-    public int add(final String name, final int type, final String data) {
+    public int add(final String name, final int type, final String data, final String tips1,
+                   final String tips2, final float price, final float discountedPrice) {
         KeyHolder holder = new GeneratedKeyHolder();
         final String sql = "insert into course " +
-                "(name,type,data,createtime) values " +
-                "(?,?,?,now())";
+                "(name,type,data,createtime,tips1,tips2,price,discounted_price) values " +
+                "(?,?,?,now(),?,?,?,?)";
         j.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -33,6 +34,10 @@ public class CourseDAO {
                 pstmt.setString(1, name);
                 pstmt.setInt(2, type);
                 pstmt.setString(3, data);
+                pstmt.setString(4, tips1);
+                pstmt.setString(5, tips2);
+                pstmt.setFloat(6, price);
+                pstmt.setFloat(7, discountedPrice);
                 return pstmt;
             }
         }, holder);
@@ -45,8 +50,8 @@ public class CourseDAO {
     }
 
     public CourseInfo get(final int id) {
-        String sql = "select name,type,data,status,createtime from course where id=? and deleted=?";
-        return j.queryForObject(sql, new Object[]{id,Constants.DB.NOT_DELETED}, new RowMapper<CourseInfo>() {
+        String sql = "select name,type,data,status,createtime,tips1,tips2,price,discounted_price from course where id=? and deleted=?";
+        return j.queryForObject(sql, new Object[]{id, Constants.DB.NOT_DELETED}, new RowMapper<CourseInfo>() {
 
             @Override
             public CourseInfo mapRow(ResultSet rs, int i) throws SQLException {
@@ -56,12 +61,14 @@ public class CourseDAO {
                 ci.setType(rs.getInt(2));
                 ci.setData(rs.getString(3));
                 ci.setStatus(rs.getInt(4));
+                ci.setTips1(rs.getString(5));
+                ci.setTips2(rs.getString(6));
+                ci.setPrice(rs.getFloat(7));
+                ci.setDiscountedPrice(rs.getFloat(8));
                 return ci;
             }
         });
     }
-
-
 
 
 }

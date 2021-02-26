@@ -8,10 +8,53 @@ public class CourseInfo {
     private int id;
     private String name;
     private int type;
-    private int count;
     private String data;
     private int status;
+    // 第一备注：课程名下面的那行字
+    private String tips1;
+    // 第二备注：红色小气泡里的内容
+    private String tips2;
+    // 标准价格
+    private float price;
+    // 页面显示的打折价格
+    private float discountedPrice;
+
+    // data中的数据JSON解析出来的内容，整个课程的步骤
     private List<CourseStep> stepList = Lists.newLinkedList();
+
+
+
+    public String getTips1() {
+        return tips1;
+    }
+
+    public void setTips1(String tips1) {
+        this.tips1 = tips1;
+    }
+
+    public String getTips2() {
+        return tips2;
+    }
+
+    public void setTips2(String tips2) {
+        this.tips2 = tips2;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public float getDiscountedPrice() {
+        return discountedPrice;
+    }
+
+    public void setDiscountedPrice(float discountedPrice) {
+        this.discountedPrice = discountedPrice;
+    }
 
     public int getStatus() {
         return status;
@@ -29,13 +72,6 @@ public class CourseInfo {
         this.data = data;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
 
     public int getId() {
         return id;
