@@ -46,4 +46,10 @@ public class BannerBannerPlanDAO {
         j.update(sql, new Object[]{Constants.DB.DELETED, bannerPlanId, bannerId});
     }
 
+
+    public List<Integer> getBannerIdList(int bannerPlanId) {
+        String sql = "select banner_id from banner_banner_plan where banner_plan_id=? and deleted=?";
+        return j.queryForList(sql, new Object[]{bannerPlanId, Constants.DB.NOT_DELETED}, Integer.class);
+    }
+
 }

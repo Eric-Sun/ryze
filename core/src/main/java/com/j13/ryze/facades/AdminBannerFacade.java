@@ -29,16 +29,19 @@ public class AdminBannerFacade {
         bannerService.addBanner(req.getName(), req.getUrlImgId());
         return CommonResultResp.success();
     }
+
     @Action(name="adminBanner.delete")
     public CommonResultResp delete(CommandContext ctxt, AdminBannerDeleteReq req) {
         bannerService.deleteBanner(req.getId());
         return CommonResultResp.success();
     }
+
     @Action(name="adminBanner.update")
     public CommonResultResp update(CommandContext ctxt, AdminBannerUpdateReq req) {
         bannerService.updateBanner(req.getId(), req.getName(), req.getUrlImgId());
         return CommonResultResp.success();
     }
+
     @Action(name="adminBanner.list")
     public AdminBannerListResp list(CommandContext ctxt, AdminBannerListReq req) {
         List<BannerVO> bannerList = bannerService.listBanner(req.getSize(), req.getPageNum());
@@ -55,6 +58,5 @@ public class AdminBannerFacade {
         }
         return resp;
     }
-
 
 }

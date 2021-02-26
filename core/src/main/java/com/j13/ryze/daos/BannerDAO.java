@@ -67,7 +67,7 @@ public class BannerDAO {
     }
 
     public BannerVO get(int bannerId){
-        String sql = "select id,name,url_img_id,createtime from banner where deleted=? and id =?  order by id desc limit ?,?";
+        String sql = "select id,name,url_img_id,createtime from banner where deleted=? and id =?";
         return j.queryForObject(sql, new Object[]{Constants.DB.NOT_DELETED,bannerId}, new RowMapper<BannerVO>() {
             @Override
             public BannerVO mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -88,8 +88,12 @@ public class Constants {
         public static int AVATAR_URL_FROM_WECHAT = 1;
         public static int POST_IMG = 2;
         public static int AVATAR_URL_FROM_TOUTIAO = 3;
-        public static int AVATAR_URL_FROM_BAIDU = 3;
-        public static int BANNER=4; // banner图
+        public static int AVATAR_URL_FROM_BAIDU = 4;
+        public static int BANNER = 5; // banner图
+    }
+
+    public static class VIDEO_TYPE{
+        public static int COURSE=100;
     }
 
     // 用户表中的用户类型
@@ -239,6 +243,12 @@ public class Constants {
     public static class Collection {
         public static class Type {
             public static int POST = 0;
+        }
+    }
+
+    public static class Course {
+        public static class Type {
+            public static int VEDIO_FLOW = 0; //视频课程，每个视频中间交互
         }
     }
 }

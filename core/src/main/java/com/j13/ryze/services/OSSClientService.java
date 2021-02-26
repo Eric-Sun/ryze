@@ -95,7 +95,7 @@ public class OSSClientService {
      * @param type
      * @return
      */
-    public String saveFile(String fileName,InputStream is, int type) {
+    public String saveFile(String fileName, InputStream is, int type) {
         String fullFileName = findDir(type) + "/" + fileName;
         ossClient.putObject(bucketName, fullFileName, is);
         return fileName;
@@ -118,6 +118,10 @@ public class OSSClientService {
             return "avatar";
         } else if (type == Constants.IMG_TYPE.POST_IMG) {
             return "post";
+        } else if (type == Constants.VIDEO_TYPE.COURSE) {
+            return "courseVideo";
+        } else if (type == Constants.IMG_TYPE.BANNER) {
+            return "banner";
         } else {
             throw new CommonException(ErrorCode.Img.TYPE_IS_WRONG, "type is " + type);
         }
@@ -142,6 +146,6 @@ public class OSSClientService {
         Date expiration = new Date(new Date().getTime() + EXPIRE_TIME);
         String fullFileName = findDir(type) + "/" + name;
         // 生成URL
-        return  ossClient.getObject(bucketName, fullFileName);
+        return ossClient.getObject(bucketName, fullFileName);
     }
 }

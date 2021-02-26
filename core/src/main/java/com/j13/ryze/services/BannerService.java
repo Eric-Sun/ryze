@@ -17,7 +17,9 @@ public class BannerService {
 
     @Autowired
     BannerDAO bannerDAO;
+    @Autowired
     BannerPlanDAO bannerPlanDAO;
+    @Autowired
     BannerBannerPlanDAO bannerBannerPlanDAO;
     @Autowired
     ImgService imgService;
@@ -73,6 +75,16 @@ public class BannerService {
         imgVO.setUrl(url);
         bannerVO.setImg(imgVO);
         return bannerVO;
+    }
+
+    public BannerPlanVO getBannerPlan(int bannerPlanId) {
+        BannerPlanVO vo = new BannerPlanVO();
+        List<Integer> bannerIdList = bannerBannerPlanDAO.getBannerIdList(bannerPlanId);
+        for (Integer bannerId : bannerIdList) {
+            BannerVO bannerVO = getBanner(bannerId);
+            vo.getBannerVOList().add(bannerVO);
+        }
+        return vo;
     }
 
     public List<BannerPlanVO> bannerPlanList(int size, int pageNum) {
