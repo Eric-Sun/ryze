@@ -8,6 +8,7 @@ import com.j13.ryze.api.req.CourseListReq;
 import com.j13.ryze.api.resp.CourseDetailResp;
 import com.j13.ryze.services.CourseService;
 import com.j13.ryze.vos.course.CourseInfo;
+import com.j13.ryze.vos.course.CourseStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,13 @@ public class CourseFacade {
         resp.setId(ci.getId());
         resp.setName(ci.getName());
         resp.setType(ci.getType());
-        resp.setData(JSON.toJSONString(ci.getStepList()));
-
+        resp.setTips1(ci.getTips1());
+        resp.setTips2(ci.getTips2());
+        resp.setPrice(ci.getPrice());
+        resp.setDiscountedPrice(ci.getDiscountedPrice());
+        for(CourseStep cs : ci.getStepList()){
+            resp.getData().add(cs);
+        }
         return resp;
     }
 

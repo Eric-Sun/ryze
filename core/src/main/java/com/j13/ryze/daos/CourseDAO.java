@@ -50,7 +50,7 @@ public class CourseDAO {
     }
 
     public CourseInfo get(final int id) {
-        String sql = "select name,type,data,status,createtime,tips1,tips2,price,discounted_price from course where id=? and deleted=?";
+        String sql = "select name,type,data,status,tips1,tips2,price,discounted_price from course where id=? and deleted=?";
         return j.queryForObject(sql, new Object[]{id, Constants.DB.NOT_DELETED}, new RowMapper<CourseInfo>() {
 
             @Override

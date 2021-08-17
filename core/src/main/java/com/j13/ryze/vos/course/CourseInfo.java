@@ -4,6 +4,9 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
+/**
+ * 对应的数据库course的表
+ */
 public class CourseInfo {
     private int id;
     private String name;
