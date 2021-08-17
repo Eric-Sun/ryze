@@ -155,7 +155,7 @@ public class PostDAO {
     }
 
     public List<Integer> unauditList(int barId, int pageNum, int size) {
-        String sql = "select id from post where audit_status=? and bar_id = ? and deleted=?  order by updatetime desc  limit ?,?";
+        String sql = "select id from post where audit_status=? and bar_id = ? and deleted=?  order by createtime desc  limit ?,?";
         return j.queryForList(sql, new Object[]{Constants.POST_AUDIT_STATUS.AUDITING, barId, Constants.DB.NOT_DELETED, pageNum * size, size}, Integer.class);
     }
 

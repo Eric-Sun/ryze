@@ -120,7 +120,7 @@ public class PostService {
     }
 
     public int add(int uid, int barId, String title, String content, int anonymous, int type, String imgList, String topicIdList) {
-        int postId = postDAO.add(uid, barId, title, content, anonymous, type, imgList);
+        int postId = postDAO.addOffline(uid, barId, title, content, anonymous, type, imgList,Constants.POST_AUDIT_STATUS.AUDITING);
         barDAO.addPostCount(barId);
         List<Integer> idLIst = JSON.parseArray(topicIdList, Integer.class);
         // 添加帖子的topic列表

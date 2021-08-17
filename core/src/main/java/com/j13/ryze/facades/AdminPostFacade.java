@@ -352,6 +352,9 @@ public class AdminPostFacade {
     @Action(name = "admin.post.audit", desc = "")
     public CommonResultResp audit(CommandContext ctxt, AdminPostAuditReq req) {
         postDAO.updateAuditStatus(req.getPostId(),req.getAuditStatus());
+        if(req.getAuditStatus()==Constants.POST_AUDIT_STATUS.NORMAL) {
+            postDAO.online(req.getPostId());
+        }
         return CommonResultResp.success();
     }
 
